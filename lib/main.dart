@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './partials/maindrawer.dart';
+import './views/signinpage.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,11 +10,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'BusTap Admin',
+      title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'BusTap Admin'),
+      home: MyHomePage(title: 'Sign in Page'),
     );
   }
 }
@@ -32,11 +32,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          iconTheme: IconThemeData(color: Colors.blue),
-        ),
-        body: Container(),
-        drawer: MainDrawer());
+      body: Container(
+          child: ListView(
+        children: <Widget>[SignInPage()],
+      )),
+    );
   }
 }
