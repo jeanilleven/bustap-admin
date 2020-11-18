@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../main.dart';
+import '../views/statistics.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({Key key}) : super(key: key);
@@ -7,7 +8,8 @@ class MainDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-        child: ListView(children: <Widget>[
+      child: ListView(
+      children: <Widget>[
       ListTile(
         leading: Text('BusTap',
             style: TextStyle(color: Colors.lightBlueAccent, fontSize: 28)),
@@ -31,6 +33,12 @@ class MainDrawer extends StatelessWidget {
         leading: Icon(Icons.bar_chart_outlined),
         title: Text('Statistics'),
         hoverColor: Colors.lightBlueAccent,
+        onTap: () {
+          Navigator.push(
+              context,
+              new MaterialPageRoute(
+                  builder: (BuildContext context) => new Statistics()));
+        },
       ),
       ListTile(
         leading: Icon(Icons.supervised_user_circle_outlined),
