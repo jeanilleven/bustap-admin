@@ -33,7 +33,7 @@ class _DashboardState extends State<DashboardPage> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          iconTheme: IconThemeData(color: Colors.blue),
+          iconTheme: IconThemeData(color: Colors.teal),
         ),
         body: Container(child: DashboardGrid()),
         drawer: MainDrawer());
@@ -43,7 +43,32 @@ class _DashboardState extends State<DashboardPage> {
 class DashboardGrid extends StatelessWidget {
   const DashboardGrid({Key key}) : super(key: key);
 
-  Material dashboardItem(Column type) {
+  @override
+  Widget build(BuildContext context) {
+    return StaggeredGridView.count(
+      crossAxisCount: 4,
+      crossAxisSpacing: 16.0,
+      mainAxisSpacing: 20.0,
+      padding: EdgeInsets.all(20),
+      children: <Widget>[
+        dashboardItem(vehicle("Buses Running", Colors.blueGrey[900])),
+        dashboardItem(vehicle("Jeep Running", Colors.blueGrey[900])),
+        dashboardItem(profit("Today's Profit", Colors.blueGrey[900])),
+        dashboardItem(statistics("More stuff here...", Colors.blueGrey[900])),
+        dashboardItem(statistics("Something here...", Colors.blueGrey[900]))
+      ],
+      staggeredTiles: [
+        StaggeredTile.extent(1, 350),
+        StaggeredTile.extent(1, 350),
+        StaggeredTile.extent(2, 300),
+        StaggeredTile.extent(2, 200),
+        StaggeredTile.extent(2, 150),
+      ],
+    );
+  }
+}
+
+ Material dashboardItem(Column type) {
     return Material(
         color: Colors.white,
         elevation: 14,
@@ -120,28 +145,3 @@ class DashboardGrid extends StatelessWidget {
       ]
     );
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return StaggeredGridView.count(
-      crossAxisCount: 4,
-      crossAxisSpacing: 16.0,
-      mainAxisSpacing: 20.0,
-      padding: EdgeInsets.all(20),
-      children: <Widget>[
-        dashboardItem(vehicle("Buses Running", Colors.blueGrey[900])),
-        dashboardItem(vehicle("Jeep Running", Colors.blueGrey[900])),
-        dashboardItem(profit("Today's Profit", Colors.blueGrey[900])),
-        dashboardItem(statistics("More stuff here...", Colors.blueGrey[900])),
-        dashboardItem(statistics("Something here...", Colors.blueGrey[900]))
-      ],
-      staggeredTiles: [
-        StaggeredTile.extent(1, 350),
-        StaggeredTile.extent(1, 350),
-        StaggeredTile.extent(2, 300),
-        StaggeredTile.extent(2, 200),
-        StaggeredTile.extent(2, 150),
-      ],
-    );
-  }
-}

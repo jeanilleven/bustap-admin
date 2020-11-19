@@ -11,7 +11,7 @@ class Statistics extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'BusTap Admin | Statistics',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.teal,
       ),
       home: StatisticsPage(title: 'BusTap Admin | Statistics'),
     );
