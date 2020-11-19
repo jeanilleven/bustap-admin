@@ -8,6 +8,7 @@ class Statistics extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'BusTap Admin | Statistics',
       theme: ThemeData(
         primarySwatch: Colors.blue,

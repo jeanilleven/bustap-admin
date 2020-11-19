@@ -22,11 +22,17 @@ class _ProfitIndicatorState extends State<ProfitIndicator> {
                 .white, // Defaults to the current Theme's backgroundColor.
             borderColor: Colors.teal,
             borderWidth: 2.0,
-            direction: Axis
-                .vertical, // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.vertical.
-            center: Text(
-              "60%",
-              style: TextStyle(fontSize: 40, color: Colors.teal),
-            )));
+            direction: Axis.vertical, // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.vertical.
+            center: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[ 
+                Text('300', style: TextStyle(color: Colors.teal, fontSize: 40)),
+                Padding(
+                  padding: EdgeInsets.only(top: 20),
+                  child: Text('/500', style: TextStyle(fontSize: 10),)
+                )
+              ]
+            )
+    ));
   }
 }
