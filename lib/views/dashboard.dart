@@ -119,9 +119,7 @@ class DashboardGrid extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Padding(
-                padding: EdgeInsets.all(20),
-                child: ProfitIndicator())
+            Padding(padding: EdgeInsets.all(20), child: ProfitIndicator())
           ],
         ),
         Row(
@@ -145,7 +143,7 @@ class DashboardGrid extends StatelessWidget {
       padding: EdgeInsets.all(20),
       children: <Widget>[
         dashboardItem(vehicle("Buses Running", Colors.blueGrey[900])),
-        dashboardItem(profit("Today's Earnings", Colors.blueGrey[900])),
+        dashboardItem(profit("Today's Profit", Colors.blueGrey[900])),
         dashboardItem(vehicle("Jeep Running", Colors.blueGrey[900])),
       ],
       staggeredTiles: [
