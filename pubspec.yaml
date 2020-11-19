@@ -27,7 +27,8 @@ dependencies:
   flutter_sparkline: ^0.1.0
   flutter_staggered_grid_view: ^0.3.2
   percent_indicator: "^2.1.7+2"
-
+  circle_chart: ^0.0.3
+  liquid_progress_indicator: ^0.3.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
