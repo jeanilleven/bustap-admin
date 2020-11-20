@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
+import '../common/packages.dart';
 
 class LineTitles {
   static getTitleData() => FlTitlesData(
@@ -47,7 +47,5 @@ class LineTitles {
                 return '10:30PM';
             }
             return '';
-          }
-        )
-      );
+          }));
 }

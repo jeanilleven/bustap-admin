@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import '../partials/maindrawer.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import '../partials/profitindicator.dart';
-
+import '../partials/partials.dart';
+import '../common/packages.dart';
 
 class Dashboard extends StatelessWidget {
   @override
@@ -68,80 +66,78 @@ class DashboardGrid extends StatelessWidget {
   }
 }
 
- Material dashboardItem(Column type) {
-    return Material(
-        color: Colors.white,
-        elevation: 14,
-        shadowColor: Colors.teal[900],
-        borderRadius: BorderRadius.circular(24),
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.all(20),
-            child: Container(child: type),
-          ),
-        ));
-  }
-
-  Column vehicle(String title, Color textcolor) {
-    return Column(
-      children: <Widget>[
-        Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(title, style: TextStyle(color: textcolor, fontSize: 20)),
-            ]),
-        Divider(
-          height: 20,
-          endIndent: 400,
+Material dashboardItem(Column type) {
+  return Material(
+      color: Colors.white,
+      elevation: 14,
+      shadowColor: Colors.teal[900],
+      borderRadius: BorderRadius.circular(24),
+      child: Center(
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Container(child: type),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+      ));
+}
+
+Column vehicle(String title, Color textcolor) {
+  return Column(
+    children: <Widget>[
+      Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(title, style: TextStyle(color: textcolor, fontSize: 20)),
+          ]),
+      Divider(
+        height: 20,
+        endIndent: 400,
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Padding(padding: EdgeInsets.all(20), child: ProfitIndicator())
+        ],
+      ),
+    ],
+  );
+}
+
+Column profit(String title, Color textcolor) {
+  return Column(
+    children: <Widget>[
+      Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(title, style: TextStyle(color: textcolor, fontSize: 20)),
+          ]),
+      Divider(
+        height: 10,
+        endIndent: 400,
+      ),
+      Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Padding(padding: EdgeInsets.all(20), child: ProfitIndicator())
-          ],
-        ),
-      ],
-    );
-  }
+            Text("100,000.00",
+                style: TextStyle(
+                    color: textcolor,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600)),
+          ]),
+    ],
+  );
+}
 
-  Column profit(String title, Color textcolor) {
-    return Column(
-      children: <Widget>[
-        Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(title, style: TextStyle(color: textcolor, fontSize: 20)),
-            ]),
-        Divider(
-          height: 10,
-          endIndent: 400,
-        ),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text("100,000.00",
-                  style: TextStyle(
-                      color: textcolor,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600)),
-            ]),
-      ],
-    );
-  }
-
-  Column statistics(String title, Color textcolor) {
-    return Column(
-      children: <Widget>[ 
-        Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(title, style: TextStyle(color: textcolor, fontSize: 20)),
-            ]),
-      ]
-    );
-  }
+Column statistics(String title, Color textcolor) {
+  return Column(children: <Widget>[
+    Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(title, style: TextStyle(color: textcolor, fontSize: 20)),
+        ]),
+  ]);
+}

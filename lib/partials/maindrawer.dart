@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '../main.dart';
-import '../views/statistics.dart';
-import '../views/dashboard.dart';
-import '../views/operators.dart';
+import '../views/views.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({Key key}) : super(key: key);
@@ -48,17 +46,15 @@ class MainDrawer extends StatelessWidget {
         },
       ),
       ListTile(
-        leading: Icon(Icons.supervised_user_circle_outlined),
-        title: Text('Operators'),
-        hoverColor: Colors.lightBlue[100],
-        onTap: (){
-          Navigator.push(
-            context,
-            new MaterialPageRoute(
-               builder: (BuildContext context) => new Operators())
-            );
-        }
-      ),
+          leading: Icon(Icons.supervised_user_circle_outlined),
+          title: Text('Operators'),
+          hoverColor: Colors.lightBlue[100],
+          onTap: () {
+            Navigator.push(
+                context,
+                new MaterialPageRoute(
+                    builder: (BuildContext context) => new Operators()));
+          }),
       ListTile(
         leading: Icon(Icons.directions_bus_rounded),
         title: Text('Drivers'),

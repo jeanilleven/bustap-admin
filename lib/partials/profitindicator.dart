@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
+import '../common/packages.dart';
 
 class ProfitIndicator extends StatefulWidget {
   ProfitIndicator({Key key}) : super(key: key);

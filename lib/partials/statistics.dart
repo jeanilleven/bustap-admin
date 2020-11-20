@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
-import './linetitles.dart';
+import 'partials.dart';
+import '../common/packages.dart';
 
 class Chart extends StatefulWidget {
   Chart({Key key}) : super(key: key);
@@ -33,7 +33,6 @@ class _ChartState extends State<Chart> {
               }),
           borderData: FlBorderData(show: false),
           titlesData: LineTitles.getTitleData(),
-          
           lineBarsData: [
             LineChartBarData(
                 isCurved: true,
