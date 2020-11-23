@@ -56,10 +56,15 @@ class MainDrawer extends StatelessWidget {
                     builder: (BuildContext context) => new Operators()));
           }),
       ListTile(
-        leading: Icon(Icons.directions_bus_rounded),
-        title: Text('Drivers'),
-        hoverColor: Colors.lightBlueAccent,
-      ),
+          leading: Icon(Icons.directions_bus_rounded),
+          title: Text('Drivers'),
+          hoverColor: Colors.lightBlueAccent,
+          onTap: () {
+            Navigator.push(
+                context,
+                new MaterialPageRoute(
+                    builder: (BuildContext context) => new Drivers()));
+          }),
       ListTile(
         leading: Icon(Icons.person),
         title: Text('User Management'),
