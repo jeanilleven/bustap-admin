@@ -10,7 +10,7 @@ class Operators extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'BusTap Admin',
+      title: 'BusTap Admin | Operators',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -53,28 +53,32 @@ class _OperatorsPageState extends State<OperatorsPage> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           iconTheme: IconThemeData(color: Colors.teal),
+          title: Text("Operators",
+              style: TextStyle(color: Colors.lightBlue, fontSize: 20)),
         ),
         body: Container(
+            color: Colors.pink[100],
             child: Padding(
-                padding: EdgeInsets.all(50), child: operatorsData(context))),
-        drawer: MainDrawer(),
-        floatingActionButton: Container(
-          width: 100,
-          height: 100,
-          child: FloatingActionButton(
-              backgroundColor: Colors.teal,
-              child: Icon(CupertinoIcons.add, size: 50),
-              tooltip: "Add an operator",
-              onPressed: () {
-                addOperatorModal(context);
-              }),
-        ));
+                padding: EdgeInsets.all(50),
+                // child: operatorsData(context)
+                child: Text('hello')
+            )
+        ),
+        drawer: MainDrawer());
   }
 }
 
-Material operatorsData(context) {
-  // int iconSize = 40;
+const tableColumnWidths = {
+  0: FlexColumnWidth(4),
+  1: FlexColumnWidth(6),
+  2: FlexColumnWidth(10),
+  3: FlexColumnWidth(2),
+  4: FlexColumnWidth(2),
+  5: FlexColumnWidth(2),
+  6: FlexColumnWidth(2)
+};
 
+Material operatorTableHeader(context) {
   addOperatorModal(BuildContext context) {
     TextEditingController customController = TextEditingController();
 
@@ -95,6 +99,76 @@ Material operatorsData(context) {
               ]);
         });
   }
+  return Material(
+      color: Colors.white,
+      elevation: 14,
+      shadowColor: Colors.teal[900],
+      borderRadius: BorderRadius.circular(24),
+      child: Padding(
+        padding: EdgeInsets.all(30), 
+        child: Table(
+          border: TableBorder(
+            horizontalInside: BorderSide(
+              color: Colors.blueGrey[200], width: 0.5
+            )
+          ),
+          children: [ 
+            TableRow(children: [
+                        Column(
+                          children: [
+                            Padding(
+                                padding: EdgeInsets.all(8),
+                                child:
+                                    Text('ID', style: TextStyle(fontSize: 18)))
+                          ],
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                        ),
+                        Column(
+                          children: [
+                            Padding(
+                                padding: EdgeInsets.all(8),
+                                child: Text('Name',
+                                    style: TextStyle(fontSize: 18)))
+                          ],
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                        ),
+                        Column(
+                          children: [
+                            Padding(
+                                padding: EdgeInsets.all(8),
+                                child: Text('Email',
+                                    style: TextStyle(fontSize: 18)))
+                          ],
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                        ),
+                        Column(),
+                        Column(),
+                        Column(),
+                        Column(
+                          children: <Widget>[
+                            RaisedButton(
+                                color: Colors.lightBlueAccent,
+                                child: Text('Add',
+                                    style: TextStyle(color: Colors.white)),
+                                onPressed: () {
+                                  addOperatorModal(context);
+                                })
+                          ],
+                        ),
+                      ]),
+          ]
+        )
+      )
+  );
+}
+
+Material operatorsData(context) {
+  // int iconSize = 40;
+
+  
 
   var op1 =
       new OperatorDetails('OP18400179', 'Johnny Dooe', 'johnny@email.com');
@@ -112,71 +186,25 @@ Material operatorsData(context) {
       borderRadius: BorderRadius.circular(24),
       child: Padding(
           padding: EdgeInsets.all(30),
-          child: Table(
-              columnWidths: {
-                0: FlexColumnWidth(4),
-                1: FlexColumnWidth(6),
-                2: FlexColumnWidth(10),
-                3: FlexColumnWidth(2),
-                4: FlexColumnWidth(2),
-                5: FlexColumnWidth(2),
-                6: FlexColumnWidth(2)
-              },
-              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-              border: TableBorder(
-                  horizontalInside:
-                      BorderSide(color: Colors.blueGrey[200], width: 0.5)),
-              children: [
-                TableRow(children: [
-                  Column(
+          child: DraggableScrollableSheet(builder: (context, scrollController) {
+            return SingleChildScrollView(
+                controller: scrollController,
+                child: Table(
+                    columnWidths: tableColumnWidths,
+                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                    border: TableBorder(
+                        horizontalInside: BorderSide(
+                            color: Colors.blueGrey[200], width: 0.5)),
                     children: [
-                      Padding(
-                          padding: EdgeInsets.all(8),
-                          child: Text('ID', style: TextStyle(fontSize: 18)))
-                    ],
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                  ),
-                  Column(
-                    children: [
-                      Padding(
-                          padding: EdgeInsets.all(8),
-                          child: Text('Name', style: TextStyle(fontSize: 18)))
-                    ],
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                  ),
-                  Column(
-                    children: [
-                      Padding(
-                          padding: EdgeInsets.all(8),
-                          child: Text('Email', style: TextStyle(fontSize: 18)))
-                    ],
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                  ),
-                  Column(),
-                  Column(),
-                  Column(),
-                  Column(
-                    children: <Widget>[
-                      RaisedButton(
-                          color: Colors.lightBlueAccent,
-                          child: Text('Add',
-                              style: TextStyle(color: Colors.white)),
-                          onPressed: () {
-                            addOperatorModal(context);
-                          })
-                    ],
-                  ),
-                ]),
-                getOperatorDetails(opDetails[0]),
-                getOperatorDetails(opDetails[1]),
-                getOperatorDetails(opDetails[2]),
-                getOperatorDetails(opDetails[0]),
-                getOperatorDetails(opDetails[1]),
-                getOperatorDetails(opDetails[2]),
-              ])));
+                      
+                      getOperatorDetails(opDetails[0]),
+                      getOperatorDetails(opDetails[1]),
+                      getOperatorDetails(opDetails[2]),
+                      getOperatorDetails(opDetails[0]),
+                      getOperatorDetails(opDetails[1]),
+                      getOperatorDetails(opDetails[2]),
+                    ]));
+          })));
 }
 
 TableRow getOperatorDetails(OperatorDetails op) {

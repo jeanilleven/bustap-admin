@@ -32,6 +32,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           iconTheme: IconThemeData(color: Colors.blue),
+          title: Text("Statistics", style: TextStyle(color: Colors.lightBlue, fontSize: 20)),
         ),
         body: Container(  
           child: Column(

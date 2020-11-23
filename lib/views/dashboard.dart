@@ -7,7 +7,7 @@ class Dashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'BusTap Admin',
+      title: 'BusTap Admin | Dashboard',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -32,6 +32,7 @@ class _DashboardState extends State<DashboardPage> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           iconTheme: IconThemeData(color: Colors.teal),
+          title: Text("Dashboard", style: TextStyle(color: Colors.lightBlue, fontSize: 20)),
         ),
         body: Container(child: DashboardGrid()),
         drawer: MainDrawer());

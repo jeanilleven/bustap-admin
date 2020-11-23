@@ -99,6 +99,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  dot_pagination_swiper:
+    dependency: "direct main"
+    description:
+      name: dot_pagination_swiper
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1"
   equatable:
     dependency: transitive
     description:
