@@ -62,17 +62,16 @@ class _StatisticsPageState extends State<StatisticsPage> {
             Container(
                   color: Colors.grey[250],
                   child: Padding(
-                  padding: EdgeInsets.all(50),
+                  padding: EdgeInsets.all(30),
                   child: ListView(
                     children: [
                       Chart()
                     ],
               ))), 
             Container(
-              padding: EdgeInsets.all(30),
               color: Colors.grey[250],
               child: Padding(
-              padding: EdgeInsets.all(50),
+              padding: EdgeInsets.all(30),
               child: ListView(
                 children: [
                   Chart()

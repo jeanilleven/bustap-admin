@@ -102,13 +102,14 @@ class MainDrawer extends StatelessWidget {
         title: Text('Settings'),
       ),
       ListTile(
-          leading: Icon(Icons.logout),
-          title: Text('Logout'),
-          onTap: () {
-            Navigator.push(
-                context,
-                new MaterialPageRoute(
-                    builder: (BuildContext context) => new MyApp()));
+        hoverColor: Colors.lightBlue[100],
+        leading: Icon(Icons.logout),
+        title: Text('Logout'),
+        onTap: () {
+          Navigator.push(         
+            context,
+            new MaterialPageRoute(
+              builder: (BuildContext context) => new MyApp()));
           }),
     ]));
   }

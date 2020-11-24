@@ -83,14 +83,14 @@ class _DriversPageState extends State<DriversPage> {
             Container(
                 color: Colors.grey[250],
                 child: Padding(
-                    padding: EdgeInsets.all(50),
+                    padding: EdgeInsets.all(30),
                     child: ListView(
                       children: busDrvrs.map((drv) => listdriver(drv)).toList(),
                     ))),
             Container(
                 color: Colors.grey[250],
                 child: Padding(
-                    padding: EdgeInsets.all(50),
+                    padding: EdgeInsets.all(30),
                     child: ListView(
                       children:
                           jeepDrvrs.map((drv) => listdriver(drv)).toList(),
@@ -107,28 +107,65 @@ class _DriversPageState extends State<DriversPage> {
 
   Container listdriver(drv) {
     return Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(7),
-        ),
-        child: Padding(
-          padding: EdgeInsets.all(2),
-          child: ListTile(
-            leading: CircleAvatar(),
-            title: Text(drv.name),
-            subtitle: Text(drv.email),
-            trailing: IconButton(
-              tooltip: 'Delete',
-              icon: Icon(CupertinoIcons.trash, color: Colors.red),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  new MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                      new DriverDetails()));
-              }),
-            tileColor: Colors.white,
-          ),
-        ));
+        margin: EdgeInsets.all(5),
+        child: Material(
+            elevation: 14,
+            shadowColor: Colors.blueGrey,
+            borderRadius: BorderRadius.circular(24),
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                Expanded(
+                  child: Text(drv.id,
+                      style: TextStyle(color: Colors.blue, fontSize: 20)),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Text(drv.name, style: TextStyle(fontSize: 20)),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Text(drv.email, style: TextStyle(fontSize: 16)),
+                ),
+                Spacer(),
+                Column(children: [
+                  IconButton(
+                    onPressed: () {},
+                    tooltip: 'View Managed Drivers',
+                    icon: Icon(CupertinoIcons.person, color: Colors.blue[200]),
+                  )
+                ]),
+                Column(children: [
+                  IconButton(
+                    onPressed: () {},
+                    tooltip: 'View Managed Buses',
+                    icon: Icon(CupertinoIcons.bus, color: Colors.blue[200]),
+                  )
+                ]),
+                Column(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            new MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    new DriverDetails()));
+                      },
+                      tooltip: 'View Profile',
+                      icon: Icon(CupertinoIcons.eye, color: Colors.blue[200]),
+                    )
+                  ],
+                ),
+                Column(children: [
+                  IconButton(
+                    onPressed: () {},
+                    tooltip: 'Delete',
+                    icon: Icon(CupertinoIcons.trash, color: Colors.red[200]),
+                  )
+                ])
+              ]),
+            )));
   }
 }
 

@@ -83,21 +83,23 @@ class _VehiclesPageState extends State<VehiclesPage> {
         body: TabBarView(
           children: [
             Container(
-                color: Colors.grey[250],
                 child: Padding(
-                    padding: EdgeInsets.all(50),
+                    padding: EdgeInsets.all(30),
                     child: ListView(
                       children: buses.map((bus) => listvehicle(bus)).toList(),
                     ))),
             Container(
-                padding: EdgeInsets.all(30),
-                color: Colors.grey[250],
                 child: Padding(
-                    padding: EdgeInsets.all(50),
+                    padding: EdgeInsets.all(30),
                     child: ListView(
                       children: jeeps.map((jeep) => listvehicle(jeep)).toList(),
                     ))),
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          tooltip: 'Add a new vehicle',
+          onPressed: (){},
+          child: Icon(CupertinoIcons.add)
         ),
       ),
     );
@@ -105,29 +107,47 @@ class _VehiclesPageState extends State<VehiclesPage> {
 
   Container listvehicle(vehicle) {
     return Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(7),
-        ),
+      margin: EdgeInsets.all(5),
+      child: Material(
+      elevation: 14,
+      shadowColor: Colors.blueGrey,
+      borderRadius: BorderRadius.circular(24),
         child: Padding(
-          padding: EdgeInsets.all(2),
-          child: ListTile(
-            onTap: (){},
-            leading: CircleAvatar(),
-            title: Text(vehicle.id),
-            subtitle: Text(vehicle.platenumber),
-            trailing: IconButton(
-              tooltip: 'Delete',
-                icon: Icon(CupertinoIcons.trash, color: Colors.red),
-                onPressed: () {
-                  // Navigator.push(
-                  //     context,
-                  //     new MaterialPageRoute(
-                  //         builder: (BuildContext context) =>
-                  //             new DriverDetails()));
-                }),
-            tileColor: Colors.white,
+          padding: EdgeInsets.all(20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Text(vehicle.id, style: TextStyle(fontSize: 20)),
+              ),
+              Expanded(
+                flex: 2, 
+                child: Text(vehicle.platenumber, style: TextStyle(fontSize: 16)),
+              ),
+              Spacer(),
+              Column(
+                children: [IconButton(
+                  onPressed: (){
+                    // new MaterialPageRoute(
+                    //   context, 
+                    //   builder: (BuildContext context) => new 
+                    // )
+                  },
+                  tooltip: 'View',
+                  icon: Icon(CupertinoIcons.eye, color: Colors.blue[200]),
+                )],
+              ),
+              Column(
+                children: [IconButton(
+                  onPressed: (){},
+                  tooltip: 'Delete',
+                  icon: Icon(CupertinoIcons.trash, color: Colors.red[200]),
+                )]
+              )
+            ]
           ),
-        ));
+        ))
+    );
   }
 }
 
