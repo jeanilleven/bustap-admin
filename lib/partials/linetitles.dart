@@ -43,8 +43,6 @@ class LineTitles {
                 return '8:30PM';
               case 15:
                 return '9:30PM';
-              case 16:
-                return '10:30PM';
             }
             return '';
           }));

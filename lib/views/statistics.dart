@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../partials/maindrawer.dart';
-import '../partials/statistics.dart';
+import '../partials/partials.dart';
+import '../common/packages.dart';
 
 class Statistics extends StatelessWidget {
   const Statistics({Key key}) : super(key: key);
@@ -11,7 +11,7 @@ class Statistics extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'BusTap Admin | Statistics',
       theme: ThemeData(
-        primarySwatch: Colors.teal,
+        primarySwatch: Colors.blue,
       ),
       home: StatisticsPage(title: 'BusTap Admin | Statistics'),
     );
@@ -26,53 +26,63 @@ class StatisticsPage extends StatefulWidget {
 }
 
 class _StatisticsPageState extends State<StatisticsPage> {
+
+
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        drawer: MainDrawer(),
         appBar: AppBar(
           backgroundColor: Colors.white,
-          iconTheme: IconThemeData(color: Colors.blue),
-          title: Text("Statistics", style: TextStyle(color: Colors.lightBlue, fontSize: 20)),
-        ),
-        body: Container(  
-          child: Column(
-            children: <Widget>[
-              Container(
-                alignment: Alignment.centerLeft,
-                child:  Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(20),
-                      child: RaisedButton(  
-                        child: Text('Bus'),
-                        onPressed: (){}
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(20),
-                      child: RaisedButton(  
-                        child: Text('Jeep'),
-                        onPressed: (){}
-                      ),
-                    ),
-                  ]
-                ),
+          iconTheme: IconThemeData(color: Colors.teal),
+          title: Text("Statistics",
+            style: TextStyle(color: Colors.lightBlue, fontSize: 20)),
+          bottom: TabBar(
+            labelColor: Colors.blue,
+            labelStyle: TextStyle(
+              fontSize: 15
+            ),
+            tabs: [
+              Tab(
+                text: 'Bus',
+                icon: Icon(Icons.directions_car, color: Colors.blue),
               ),
-              Container(
-                width: 1000,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded( 
-                      child:Chart()
-                    )
-                  ]
-                )
+              Tab(
+                text: 'Jeep',
+                icon: Icon(Icons.directions_transit, color: Colors.blue)
               ),
             ],
-          )
+          ),
         ),
-        drawer: MainDrawer());
+        body: TabBarView(
+          children: [
+            Container(
+                  color: Colors.grey[250],
+                  child: Padding(
+                  padding: EdgeInsets.all(50),
+                  child: ListView(
+                    children: [
+                      Chart()
+                    ],
+              ))), 
+            Container(
+              padding: EdgeInsets.all(30),
+              color: Colors.grey[250],
+              child: Padding(
+              padding: EdgeInsets.all(50),
+              child: ListView(
+                children: [
+                  Chart()
+                ],
+            ))), 
+          ],
+        ),
+      ),
+    );
   }
 }
+
+

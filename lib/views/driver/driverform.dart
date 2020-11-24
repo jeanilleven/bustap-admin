@@ -2,32 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import '../views.dart';
 
-class OperatorDetails extends StatelessWidget {
-  const OperatorDetails({Key key}) : super(key: key);
+class DriverDetails extends StatelessWidget {
+  const DriverDetails({Key key}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'BusTap Admin | Operators',
+      title: 'BusTap Admin | Drivers',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: OperatorDetailsPage(title: 'BusTap Admin | Operators'),
+      home: DriverDetailsPage(title: 'BusTap Admin | Drivers'),
     );
   }
 }
 
-class OperatorDetailsPage extends StatefulWidget {
-  OperatorDetailsPage({Key key, this.title}) : super(key: key);
+class DriverDetailsPage extends StatefulWidget {
+  DriverDetailsPage({Key key, this.title}) : super(key: key);
   final String title;
   
 
   @override
-  _OperatorDetailsPageState createState() => _OperatorDetailsPageState();
+  _DriverDetailsPageState createState() => _DriverDetailsPageState();
 }
 
-class _OperatorDetailsPageState extends State<OperatorDetailsPage> {
+class _DriverDetailsPageState extends State<DriverDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +40,7 @@ class _OperatorDetailsPageState extends State<OperatorDetailsPage> {
               Navigator.push(
                   context,
                   new MaterialPageRoute(
-                      builder: (BuildContext context) => new Operators()));
+                      builder: (BuildContext context) => new Drivers()));
             },
             icon: Icon(CupertinoIcons.arrow_left),
           )

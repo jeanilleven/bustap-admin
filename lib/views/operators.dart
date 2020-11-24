@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../partials/partials.dart';
 import '../common/packages.dart';
 import './operator/operatorform.dart';
-// import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class Operators extends StatelessWidget {
   const Operators({Key key}) : super(key: key);
@@ -65,18 +64,22 @@ class _OperatorsPageState extends State<OperatorsPage> {
         child: Padding(
           padding: EdgeInsets.all(2),
           child: ListTile(
-            leading: CircleAvatar(),
-            title: Text(op.name),
-            subtitle: Text(op.email),
-            trailing: IconButton(
-                icon: Icon(CupertinoIcons.eye),
-                onPressed: () {
-                  Navigator.push(
+            onTap: (){
+              Navigator.push(
                       context,
                       new MaterialPageRoute(
                           builder: (BuildContext context) =>
                               new OperatorDetails()));
-                }),
+            },
+            leading: CircleAvatar(),
+            title: Text(op.name),
+            subtitle: Text(op.email),
+            trailing: IconButton(
+              tooltip: 'Delete',
+              icon: Icon(CupertinoIcons.trash, color: Colors.red),
+              onPressed: () {
+                
+              }),
             tileColor: Colors.white,
           ),
         ));

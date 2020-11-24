@@ -19,9 +19,9 @@ class _ChartState extends State<Chart> {
   @override
   Widget build(BuildContext context) => LineChart(LineChartData(
           minX: 0,
-          maxX: 16,
+          maxX: 15,
           minY: 0,
-          maxY: 6,
+          maxY: 10,
           backgroundColor: Colors.white,
           gridData: FlGridData(
               show: true,
