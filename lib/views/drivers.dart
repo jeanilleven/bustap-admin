@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../partials/partials.dart';
 import '../common/packages.dart';
+import '../views/views.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
 class Drivers extends StatelessWidget {
   const Drivers({Key key}) : super(key: key);
@@ -24,31 +26,40 @@ class DriversPage extends StatefulWidget {
 }
 
 class _DriversPageState extends State<DriversPage> {
-  var _currentSelected;
-  var vehicles = ["Bus", "Jeepney"];
+  String _myActivity;
+  String _myActivityResult;
+
+  @override
+  void initState() {
+    super.initState();
+    _myActivity = '';
+    _myActivityResult = '';
+  }
+  
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String _firstName, _lastName, _email, _fullName;
-  addDriver(BuildContext context, String header, String option){
+  String _firstName, _lastName, _email, _fullName, _dLicense, _phoneNum;
+    addDriver(BuildContext context, String header, String option){
     // TextEditingController customerController = TextEditingController();
     return showDialog(context: context, builder: (context){
       return Dialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
+        
         child: Form(
           key:_formKey,
           child: Container(
-          height: 500,
-          width: 500,
+          height: 800,
+          width: 550,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20.0, 35.0, 20.0, 20.0),
-            child: IntrinsicWidth(
+            child: IntrinsicWidth(              
               child: ListView(
               // mainAxisAlignment: MainAxisAlignment.start,
               // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(header,
-                  textAlign: TextAlign.left,
+                  textAlign: TextAlign.center,
                   style: TextStyle(  
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -57,7 +68,7 @@ class _DriversPageState extends State<DriversPage> {
                 ),
                 Divider(height:15,color: Colors.white),
                 Divider(height:5,color: Colors.grey[300]),
-                Divider(height:15,color: Colors.white),
+                Divider(height:5,color: Colors.white),
                 Container(
                   height: 75,
                   child: TextFormField(
@@ -71,7 +82,7 @@ class _DriversPageState extends State<DriversPage> {
                         borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
                       ),
                     ),
-                    validator: (input) => input.length < 1 ? 'Not a valid First Name' : null,
+                    validator: (input) => input.length < 1 ? 'Invalid First Name' : null,
                     onSaved: (input) => _firstName = input,
                   ),
                 ),
@@ -88,7 +99,7 @@ class _DriversPageState extends State<DriversPage> {
                         borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
                       ),
                     ),
-                    validator: (input) => input.length < 1 ? 'Not a valid Last Name' : null,
+                    validator: (input) => input.length < 1 ? 'Invalid Last Name' : null,
                     onSaved: (input) => _lastName = input,
                   ),
                 ),
@@ -105,15 +116,17 @@ class _DriversPageState extends State<DriversPage> {
                         borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
                       ),
                     ),
-                    validator: (input) => !input.contains('@') ? 'Not a valid E-mail' : null,
+                    validator: (input) => !input.contains('@') ? 'Invalid E-mail Address' : null,
                     onSaved: (input) => _email = input,
                   ),
                 ),
                 Container(
                   height: 75,
-                  child: TextFormField(
+                  width: 250,
+                  child:
+                  TextFormField(
                     decoration: InputDecoration( 
-                      labelText: 'Email Address',
+                      labelText: 'License Number',
                       labelStyle: TextStyle(color: Colors.blueAccent),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey, width: 0.5)
@@ -122,79 +135,99 @@ class _DriversPageState extends State<DriversPage> {
                         borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
                       ),
                     ),
-                    validator: (input) => !input.contains('@') ? 'Not a valid E-mail' : null,
-                    onSaved: (input) => _email = input,
+                    validator: (input) => input.length != 13 ? 'Invalid License Number' : null,
+                    onSaved: (input) => _dLicense = input
                   ),
                 ),
                 Container(
-                  height: 50, 
-                  width: 150,
-                  child:(
-                    DropdownButton<String>(
-                      hint: Text("Select a Vehicle"),
-                      items: vehicles.map((String dropDownStringItem){
-                        return DropdownMenuItem <String>(
-                          value: dropDownStringItem,
-                          child: Text(dropDownStringItem),
-                        );
-                      }).toList(),
-                      onChanged: (selectedVehicle) {
-                        setState(() {
-                          this._currentSelected= selectedVehicle;
-                        });
-                      },
-                      value: this._currentSelected,
-                    )
-                  )
-                ),
-                Divider(height:35,color: Colors.white),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                  FlatButton(
-                    child: Text("Cancel"),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    }
-                  ),
-                  RaisedButton(
-                    color: Colors.lightBlue,
-                    child: Text(
-                      option,
-                      style: TextStyle(color: Colors.white),
+                  height: 75,
+                  child: TextFormField(
+                    decoration: InputDecoration( 
+                      labelText: 'Phone Number',
+                      labelStyle: TextStyle(color: Colors.blueAccent),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 0.5)
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
+                      ),
                     ),
-                    onPressed: _submit,
-                    // onPressed: (){
-                    //   setState(() {
-                    //     _fullName = _firstName + ' ' + _lastName;
-                    //     DrvrDetails newDriver = new DrvrDetails('18400175', _fullName, _email);
-                    //     busDrvrs.add(newDriver);
-                    //   });
-                    //   Navigator.pop(context);
-                    // }
-                  )
-                ],)
-              ],
+                    validator: (input) => input.length != 11 ? 'Invalid Phone Number' : null,
+                    onSaved: (input) => _phoneNum = input,
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(5),
+                  child:DropdownSearch(
+                      dialogMaxWidth: 500,
+                      maxHeight: 100,
+                      items: ["Bus", "Jeepney"],
+                      label: "Vehicle",
+                      onChanged: print,
+                      hint:"Select a Vehicle",
+                      validator: (String item) {
+                        if (item == null)
+                          return "Not a ";
+                        else
+                          return null;
+                      },
+                      onSaved: (input) => _myActivity = input,
+                    ),
+                ),
+                Divider(height:25,color: Colors.white),
+                Container(
+                  padding: EdgeInsets.only(bottom: 15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      FlatButton(
+                        child: Text("Cancel"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        }
+                      ),
+                      RaisedButton(
+                        color: Colors.lightBlue,
+                        child: Text(
+                          option,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: _submit,
+                        // onPressed: (){
+                        //   setState(() {
+                        //     _fullName = _firstName + ' ' + _lastName;
+                        //     DrvrDetails newDriver = new DrvrDetails('18400175', _fullName, _email);
+                        //     busDrvrs.add(newDriver);
+                        //   });
+                        //   Navigator.pop(context);
+                        // }
+                      )
+                    ],
+                  ),
+                ),
+              ]
             ))
-          )
-        )
+          ),
         ),
+        )
       );
     });
   }
-
   void _submit()
   {
     if(_formKey.currentState.validate()){
       _formKey.currentState.save();
       _fullName = _firstName + ' ' + _lastName;
       setState(() {
+        _myActivityResult = _myActivity;
+        print(_myActivityResult);
         DrvrDetails newDriver = new DrvrDetails('18400175', _fullName, _email);
         busDrvrs.add(newDriver);
       });
       Navigator.of(context, rootNavigator: true).pop(context);
     }
   }
+
 
   List<DrvrDetails> busDrvrs = [
     new DrvrDetails('18400175', 'BUSDRV Berna Ferolin', 'berna@email.com'),
