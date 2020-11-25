@@ -43,9 +43,9 @@ class _DriversPageState extends State<DriversPage> {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20.0, 35.0, 20.0, 20.0),
             child: IntrinsicWidth(
-              child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              child: ListView(
+              // mainAxisAlignment: MainAxisAlignment.start,
+              // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(header,
                   textAlign: TextAlign.left,
@@ -90,6 +90,23 @@ class _DriversPageState extends State<DriversPage> {
                     ),
                     validator: (input) => input.length < 1 ? 'Not a valid Last Name' : null,
                     onSaved: (input) => _lastName = input,
+                  ),
+                ),
+                Container(
+                  height: 75,
+                  child: TextFormField(
+                    decoration: InputDecoration( 
+                      labelText: 'Email Address',
+                      labelStyle: TextStyle(color: Colors.blueAccent),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 0.5)
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
+                      ),
+                    ),
+                    validator: (input) => !input.contains('@') ? 'Not a valid E-mail' : null,
+                    onSaved: (input) => _email = input,
                   ),
                 ),
                 Container(
