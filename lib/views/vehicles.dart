@@ -97,57 +97,71 @@ class _VehiclesPageState extends State<VehiclesPage> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          tooltip: 'Add a new vehicle',
-          onPressed: (){},
-          child: Icon(CupertinoIcons.add)
-        ),
+            tooltip: 'Add a new vehicle',
+            onPressed: () {},
+            child: Icon(CupertinoIcons.add)),
       ),
     );
   }
 
   Container listvehicle(vehicle) {
     return Container(
-      margin: EdgeInsets.all(5),
-      child: Material(
-      elevation: 14,
-      shadowColor: Colors.blueGrey,
-      borderRadius: BorderRadius.circular(24),
-        child: Padding(
-          padding: EdgeInsets.all(20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Text(vehicle.id, style: TextStyle(fontSize: 20)),
-              ),
-              Expanded(
-                flex: 2, 
-                child: Text(vehicle.platenumber, style: TextStyle(fontSize: 16)),
-              ),
-              Spacer(),
-              Column(
-                children: [IconButton(
-                  onPressed: (){
-                    // new MaterialPageRoute(
-                    //   context, 
-                    //   builder: (BuildContext context) => new 
-                    // )
-                  },
-                  tooltip: 'View',
-                  icon: Icon(CupertinoIcons.eye, color: Colors.blue[200]),
-                )],
-              ),
-              Column(
-                children: [IconButton(
-                  onPressed: (){},
-                  tooltip: 'Delete',
-                  icon: Icon(CupertinoIcons.trash, color: Colors.red[200]),
-                )]
-              )
-            ]
-          ),
-        ))
-    );
+        margin: EdgeInsets.all(5),
+        child: Material(
+            elevation: 14,
+            shadowColor: Colors.blueGrey,
+            borderRadius: BorderRadius.circular(24),
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                Expanded(
+                  child: Text(vehicle.id, style: TextStyle(fontSize: 20)),
+                ),
+                Expanded(
+                  flex: 2,
+                  child:
+                      Text(vehicle.platenumber, style: TextStyle(fontSize: 16)),
+                ),
+                Spacer(),
+                Column(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        // new MaterialPageRoute(
+                        //   context,
+                        //   builder: (BuildContext context) => new
+                        // )
+                      },
+                      tooltip: 'View Details',
+                      icon: Icon(CupertinoIcons.eye, color: Colors.blue[200]),
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            new MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    new ScheduleTable()));
+                      },
+                      tooltip: 'View Schedule and Assignments',
+                      icon: Icon(CupertinoIcons.calendar,
+                          color: Colors.blue[200]),
+                    )
+                  ],
+                ),
+                Column(children: [
+                  IconButton(
+                    onPressed: () {},
+                    tooltip: 'Delete',
+                    icon: Icon(CupertinoIcons.trash, color: Colors.red[200]),
+                  )
+                ])
+              ]),
+            )));
   }
 }
 

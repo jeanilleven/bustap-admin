@@ -34,6 +34,7 @@ dependencies:
   horizontal_data_table: ^1.0.8
   adaptive_dialog: ^0.9.0+1
   dot_pagination_swiper: ^0.1.1
+  table_calendar: ^2.3.1
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0

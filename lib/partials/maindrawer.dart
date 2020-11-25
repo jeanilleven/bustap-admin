@@ -77,16 +77,6 @@ class MainDrawer extends StatelessWidget {
                     builder: (BuildContext context) => new Vehicles()));
           }),
       ListTile(
-          leading: Icon(CupertinoIcons.clock),
-          title: Text('Assignment'),
-          hoverColor: Colors.lightBlue[100],
-          onTap: () {
-            Navigator.push(
-                context,
-                new MaterialPageRoute(
-                    builder: (BuildContext context) => new Drivers()));
-          }),
-      ListTile(
         leading: Icon(Icons.person),
         title: Text('User Management'),
       ),

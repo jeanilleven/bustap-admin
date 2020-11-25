@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../partials/partials.dart';
 import '../common/packages.dart';
-import '../views/views.dart';
 
 class Drivers extends StatelessWidget {
   const Drivers({Key key}) : super(key: key);
