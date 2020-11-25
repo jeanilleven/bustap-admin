@@ -25,6 +25,161 @@ class DriversPage extends StatefulWidget {
 }
 
 class _DriversPageState extends State<DriversPage> {
+  var _currentSelected;
+  var vehicles = ["Bus", "Jeepney"];
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String _firstName, _lastName, _email, _fullName;
+  addDriver(BuildContext context, String header, String option){
+    // TextEditingController customerController = TextEditingController();
+    return showDialog(context: context, builder: (context){
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: Form(
+          key:_formKey,
+          child: Container(
+          height: 500,
+          width: 500,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20.0, 35.0, 20.0, 20.0),
+            child: IntrinsicWidth(
+              child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(header,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(  
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+
+                  ) 
+                ),
+                Divider(height:15,color: Colors.white),
+                Divider(height:5,color: Colors.grey[300]),
+                Divider(height:15,color: Colors.white),
+                Container(
+                  height: 75,
+                  child: TextFormField(
+                    decoration: InputDecoration( 
+                      labelText: 'First Name',
+                      labelStyle: TextStyle(color: Colors.blueAccent),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 0.5)
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
+                      ),
+                    ),
+                    validator: (input) => input.length < 1 ? 'Not a valid First Name' : null,
+                    onSaved: (input) => _firstName = input,
+                  ),
+                ),
+                Container(
+                  height: 75,
+                  child: TextFormField(
+                    decoration: InputDecoration( 
+                      labelText: 'Last Name',
+                      labelStyle: TextStyle(color: Colors.blueAccent),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 0.5)
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
+                      ),
+                    ),
+                    validator: (input) => input.length < 1 ? 'Not a valid Last Name' : null,
+                    onSaved: (input) => _lastName = input,
+                  ),
+                ),
+                Container(
+                  height: 75,
+                  child: TextFormField(
+                    decoration: InputDecoration( 
+                      labelText: 'Email Address',
+                      labelStyle: TextStyle(color: Colors.blueAccent),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 0.5)
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
+                      ),
+                    ),
+                    validator: (input) => !input.contains('@') ? 'Not a valid E-mail' : null,
+                    onSaved: (input) => _email = input,
+                  ),
+                ),
+                Container(
+                  height: 50, 
+                  width: 150,
+                  child:(
+                    DropdownButton<String>(
+                      hint: Text("Select a Vehicle"),
+                      items: vehicles.map((String dropDownStringItem){
+                        return DropdownMenuItem <String>(
+                          value: dropDownStringItem,
+                          child: Text(dropDownStringItem),
+                        );
+                      }).toList(),
+                      onChanged: (selectedVehicle) {
+                        setState(() {
+                          this._currentSelected= selectedVehicle;
+                        });
+                      },
+                      value: this._currentSelected,
+                    )
+                  )
+                ),
+                Divider(height:35,color: Colors.white),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                  FlatButton(
+                    child: Text("Cancel"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    }
+                  ),
+                  RaisedButton(
+                    color: Colors.lightBlue,
+                    child: Text(
+                      option,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: _submit,
+                    // onPressed: (){
+                    //   setState(() {
+                    //     _fullName = _firstName + ' ' + _lastName;
+                    //     DrvrDetails newDriver = new DrvrDetails('18400175', _fullName, _email);
+                    //     busDrvrs.add(newDriver);
+                    //   });
+                    //   Navigator.pop(context);
+                    // }
+                  )
+                ],)
+              ],
+            ))
+          )
+        )
+        ),
+      );
+    });
+  }
+
+  void _submit()
+  {
+    if(_formKey.currentState.validate()){
+      _formKey.currentState.save();
+      _fullName = _firstName + ' ' + _lastName;
+      setState(() {
+        DrvrDetails newDriver = new DrvrDetails('18400175', _fullName, _email);
+        busDrvrs.add(newDriver);
+      });
+      Navigator.of(context, rootNavigator: true).pop(context);
+    }
+  }
+
   List<DrvrDetails> busDrvrs = [
     new DrvrDetails('18400175', 'BUSDRV Berna Ferolin', 'berna@email.com'),
     new DrvrDetails('18400175', 'BUSDRVJustin Ferolin', 'berna@email.com'),
@@ -100,7 +255,9 @@ class _DriversPageState extends State<DriversPage> {
         floatingActionButton: FloatingActionButton(
             tooltip: 'Add a new driver',
             child: Icon(CupertinoIcons.add),
-            onPressed: () {}),
+            onPressed: () {
+              addDriver(context, "Add Driver", "Add");
+            }),
       ),
     );
   }
@@ -146,11 +303,7 @@ class _DriversPageState extends State<DriversPage> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            new MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    new DriverDetails()));
+                        addDriver(context, "View Driver Details", "Update");
                       },
                       tooltip: 'View Profile',
                       icon: Icon(CupertinoIcons.eye, color: Colors.blue[200]),
