@@ -33,202 +33,207 @@ class _VehiclesPageState extends State<VehiclesPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _vehicleNum, _plateNum, _make, initial, _opt;
   int _seatCnt;
-    addVehicle(BuildContext context, String header, String option, VehicleDetails v){
-    _opt = option;   
-    return showDialog(context: context, builder: (context){
-      return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        
-        child: Form(
-          key:_formKey,
-          child: Container(
-          height: 540,
-          width: 550,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 35.0, 20.0, 20.0),
-            child: IntrinsicWidth(              
-              child: ListView(
-              children: [
-                Text(header,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(  
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-
-                  ) 
-                ),
-                Divider(height:15,color: Colors.white),
-                Divider(height:5,color: Colors.grey[300]),
-                Divider(height:5,color: Colors.white),
-                Container(
-                  height: 75,
-                  child: TextFormField(
-                    controller: TextEditingController(text: v.id),
-                    decoration: InputDecoration( 
-                      labelText: "Vehicle Number",
-                      hintText: v.id,
-                      labelStyle: TextStyle(color: Colors.blueAccent),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey, width: 0.5)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
-                      ),
-                    ),
-                    validator: (input) => input.length < 1 ? 'This field is required' : null,
-                    onSaved: (input) => _vehicleNum = input,
-                  ),
-                ),
-                Container(
-                  height: 75,
-                  child: TextFormField(
-                    controller: TextEditingController(text: v.platenumber),
-                    decoration: InputDecoration( 
-                      labelText: "Plate Number",
-                      labelStyle: TextStyle(color: Colors.blueAccent),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey, width: 0.5)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
-                      ),
-                    ),
-                    validator: (input) => input.length != 6 ? 'Invalid Plate Number' : null,
-                    onSaved: (input) => _plateNum = input,
-                  ),
-                ),
-                Container(
-                  height: 75,
-                  child: TextFormField(
-                    decoration: InputDecoration( 
-                      labelText: 'Vehicle Manufacturer',
-                      labelStyle: TextStyle(color: Colors.blueAccent),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey, width: 0.5)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
-                      ),
-                    ),
-                    validator: (input) => input.length < 1 ? 'This field is required' : null,
-                    onSaved: (input) => _make = input,
-                  ),
-                ),
-                Container(
-                  height: 75,
-                  child: TextFormField(
-                    decoration: InputDecoration( 
-                      labelText: 'Maximum Seat Capacity',
-                      labelStyle: TextStyle(color: Colors.blueAccent),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey, width: 0.5)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
-                      ),
-                    ),
-                    validator: (input) => input.length < 1 ? 'This field is required' : null,
-                    onSaved: (input) => _seatCnt = int.parse(input),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(5),
-                  child:DropdownSearch(
-                      dialogMaxWidth: 500,
-                      maxHeight: 100,
-                      items: ["Bus", "Jeepney"],
-                      label: "Vehicle Type",
-                      // onChanged: print,
-                      hint:"Vehicle",
-                      showClearButton: true,
-                      validator: (String item) {
-                        if (item == null)
-                          return "Invalid Vehicle";
-                        else
-                          return null;
-                      },
-                      onSaved: (input) => _vType = input,
-                    ),
-                ),
-                Divider(height:25,color: Colors.white),
-                Container(
-                  padding: EdgeInsets.only(bottom: 15.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      FlatButton(
-                        child: Text("Cancel"),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        }
-                      ),
-                      RaisedButton(
-                        color: Colors.lightBlue,
-                        child: Text(
-                          option,
-                          style: TextStyle(color: Colors.white),
+  addVehicle(
+      BuildContext context, String header, String option, VehicleDetails v) {
+    _opt = option;
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: Form(
+                key: _formKey,
+                child: Container(
+                  height: 540,
+                  width: 550,
+                  child: Padding(
+                      padding:
+                          const EdgeInsets.fromLTRB(20.0, 35.0, 20.0, 20.0),
+                      child: IntrinsicWidth(
+                          child: ListView(children: [
+                        Text(header,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            )),
+                        Divider(height: 15, color: Colors.white),
+                        Divider(height: 5, color: Colors.grey[300]),
+                        Divider(height: 5, color: Colors.white),
+                        Container(
+                          height: 75,
+                          child: TextFormField(
+                            controller: TextEditingController(text: v.id),
+                            decoration: InputDecoration(
+                              labelText: "Vehicle Number",
+                              hintText: v.id,
+                              labelStyle: TextStyle(color: Colors.blueAccent),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.grey, width: 0.5)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.blueAccent, width: 0.5)),
+                            ),
+                            validator: (input) => input.length < 1
+                                ? 'This field is required'
+                                : null,
+                            onSaved: (input) => _vehicleNum = input,
+                          ),
                         ),
-                        onPressed: _submit,
-                      )
-                    ],
-                  ),
+                        Container(
+                          height: 75,
+                          child: TextFormField(
+                            controller:
+                                TextEditingController(text: v.platenumber),
+                            decoration: InputDecoration(
+                              labelText: "Plate Number",
+                              labelStyle: TextStyle(color: Colors.blueAccent),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.grey, width: 0.5)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.blueAccent, width: 0.5)),
+                            ),
+                            validator: (input) => input.length != 6
+                                ? 'Invalid Plate Number'
+                                : null,
+                            onSaved: (input) => _plateNum = input,
+                          ),
+                        ),
+                        Container(
+                          height: 75,
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              labelText: 'Vehicle Manufacturer',
+                              labelStyle: TextStyle(color: Colors.blueAccent),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.grey, width: 0.5)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.blueAccent, width: 0.5)),
+                            ),
+                            validator: (input) => input.length < 1
+                                ? 'This field is required'
+                                : null,
+                            onSaved: (input) => _make = input,
+                          ),
+                        ),
+                        Container(
+                          height: 75,
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              labelText: 'Maximum Seat Capacity',
+                              labelStyle: TextStyle(color: Colors.blueAccent),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.grey, width: 0.5)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.blueAccent, width: 0.5)),
+                            ),
+                            validator: (input) => input.length < 1
+                                ? 'This field is required'
+                                : null,
+                            onSaved: (input) => _seatCnt = int.parse(input),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(5),
+                          child: DropdownSearch(
+                            dialogMaxWidth: 500,
+                            maxHeight: 100,
+                            items: ["Bus", "Jeepney"],
+                            label: "Vehicle Type",
+                            // onChanged: print,
+                            hint: "Vehicle",
+                            showClearButton: true,
+                            validator: (String item) {
+                              if (item == null)
+                                return "Invalid Vehicle";
+                              else
+                                return null;
+                            },
+                            onSaved: (input) => _vType = input,
+                          ),
+                        ),
+                        Divider(height: 25, color: Colors.white),
+                        Container(
+                          padding: EdgeInsets.only(bottom: 15.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              FlatButton(
+                                  child: Text("Cancel"),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  }),
+                              RaisedButton(
+                                color: Colors.lightBlue,
+                                child: Text(
+                                  option,
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                onPressed: _submit,
+                              )
+                            ],
+                          ),
+                        ),
+                      ]))),
                 ),
-              ]
-            ))
-          ),
-        ),
-        )
-      );
-    });
+              ));
+        });
   }
-  void _submit()
-  {
-    if(_formKey.currentState.validate()){
+
+  void _submit() {
+    if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       setState(() {
-        if(_opt=="Update"){
+        if (_opt == "Update") {
           //some update code here
-        }else{
+        } else {
           //this adds to the list
-          VehicleDetails newVehicle = new VehicleDetails(_vehicleNum, _plateNum);
-          if(_vType == "Bus"){
-            buses.add(newVehicle);
-          }else{
-            jeeps.add(newVehicle);
+          if (_vType == "Bus") {
+            buses.add(new VehicleDetails(_vehicleNum, _plateNum, 1));
+          } else {
+            jeeps.add(new VehicleDetails(_vehicleNum, _plateNum, 2));
           }
         }
       });
       Navigator.of(context, rootNavigator: true).pop(context);
     }
   }
+
   List<VehicleDetails> buses = [
-    new VehicleDetails('BUS001', 'ABC123'),
-    new VehicleDetails('BUS002', 'ABC123'),
-    new VehicleDetails('BUS003', 'ABC123'),
-    new VehicleDetails('BUS004', 'ABC123'),
-    new VehicleDetails('BUS005', 'ABC123'),
-    new VehicleDetails('BUS006', 'ABC123'),
-    new VehicleDetails('BUS007', 'ABC123'),
-    new VehicleDetails('BUS008', 'ABC123'),
-    new VehicleDetails('BUS009', 'ABC123'),
-    new VehicleDetails('BUS0010', 'ABC123'),
-    new VehicleDetails('BUS0011', 'ABC123'),
+    new VehicleDetails('BUS001', 'ABC123', 1),
+    new VehicleDetails('BUS002', 'ABC123', 1),
+    new VehicleDetails('BUS003', 'ABC123', 1),
+    new VehicleDetails('BUS004', 'ABC123', 1),
+    new VehicleDetails('BUS005', 'ABC123', 1),
+    new VehicleDetails('BUS006', 'ABC123', 1),
+    new VehicleDetails('BUS007', 'ABC123', 1),
+    new VehicleDetails('BUS008', 'ABC123', 1),
+    new VehicleDetails('BUS009', 'ABC123', 1),
+    new VehicleDetails('BUS0010', 'ABC123', 1),
+    new VehicleDetails('BUS0011', 'ABC123', 1),
   ];
 
   List<VehicleDetails> jeeps = [
-    new VehicleDetails('JEEP001', 'ABC123'),
-    new VehicleDetails('JEEP002', 'ABC123'),
-    new VehicleDetails('JEEP003', 'ABC123'),
-    new VehicleDetails('JEEP004', 'ABC123'),
-    new VehicleDetails('JEEP005', 'ABC123'),
-    new VehicleDetails('JEEP006', 'ABC123'),
-    new VehicleDetails('JEEP007', 'ABC123'),
-    new VehicleDetails('JEEP008', 'ABC123'),
-    new VehicleDetails('JEEP009', 'ABC123'),
-    new VehicleDetails('JEEP0010', 'ABC123'),
-    new VehicleDetails('JEEP0011', 'ABC123'),
+    new VehicleDetails('JEEP001', 'ABC123', 2),
+    new VehicleDetails('JEEP002', 'ABC123', 2),
+    new VehicleDetails('JEEP003', 'ABC123', 2),
+    new VehicleDetails('JEEP004', 'ABC123', 2),
+    new VehicleDetails('JEEP005', 'ABC123', 2),
+    new VehicleDetails('JEEP006', 'ABC123', 2),
+    new VehicleDetails('JEEP007', 'ABC123', 2),
+    new VehicleDetails('JEEP008', 'ABC123', 2),
+    new VehicleDetails('JEEP009', 'ABC123', 2),
+    new VehicleDetails('JEEP0010', 'ABC123', 2),
+    new VehicleDetails('JEEP0011', 'ABC123', 2),
   ];
 
   @override
@@ -275,7 +280,7 @@ class _VehiclesPageState extends State<VehiclesPage> {
         floatingActionButton: FloatingActionButton(
             tooltip: 'Add a new vehicle',
             onPressed: () {
-              VehicleDetails vehicle = new VehicleDetails('',''); 
+              VehicleDetails vehicle = new VehicleDetails('', '', 1);
               addVehicle(context, "Add Vehice", "Add", vehicle);
             },
             child: Icon(CupertinoIcons.add)),
@@ -306,7 +311,8 @@ class _VehiclesPageState extends State<VehiclesPage> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        addVehicle(context, "View Vehicle Details", "Update", vehicle);
+                        addVehicle(
+                            context, "View Vehicle Details", "Update", vehicle);
                       },
                       tooltip: 'View Details',
                       icon: Icon(CupertinoIcons.eye, color: Colors.blue[200]),
@@ -331,13 +337,51 @@ class _VehiclesPageState extends State<VehiclesPage> {
                 ),
                 Column(children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      askConfirmation(context, vehicle);
+                    },
                     tooltip: 'Delete',
                     icon: Icon(CupertinoIcons.trash, color: Colors.red[200]),
                   )
                 ])
               ]),
             )));
+  }
+
+  askConfirmation(BuildContext context, object) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text('Removal Confirmation'),
+              content: Text('Are you sure you want to remove ' +
+                  object.id +
+                  ' from the list of vehicles?'),
+              actions: [
+                FlatButton(
+                  child: Text('No'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                FlatButton(
+                  child: Text('Yes'),
+                  onPressed: () {
+                    Navigator.of(context).pop(removeVehicle(object));
+                  },
+                )
+              ]);
+        });
+  }
+
+  removeVehicle(object) {
+    setState(() {
+      if (object.type == 1) {
+        buses.remove(object);
+      } else {
+        jeeps.remove(object);
+      }
+    });
   }
 }
 
@@ -356,5 +400,7 @@ class _VehiclesPageState extends State<VehiclesPage> {
 class VehicleDetails {
   String id;
   String platenumber;
-  VehicleDetails(this.id, this.platenumber);
+  int type; //Type 1 is Bus, Type 2 is Jeep
+
+  VehicleDetails(this.id, this.platenumber, this.type);
 }

@@ -32,44 +32,82 @@ class _TerminalsState extends State<Terminals> {
   ];
 
   Container listTerminal(td) {
-      return Container(
+    return Container(
         margin: EdgeInsets.all(5),
         child: Material(
-          elevation: 14,
-          shadowColor: Colors.blueGrey,
-          borderRadius: BorderRadius.circular(24),
-          child: Padding(
-            padding: EdgeInsets.all(20),
-            child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Expanded(
-                child: Text(td.id,
-                      style: TextStyle(color: Colors.blue, fontSize: 20)),
-              ),
-              Expanded(
-                flex: 2,
-                child: Text(td.name, style: TextStyle(fontSize: 20)),
-              ),
-              Expanded(
-                flex: 4,
-                child: Text(td.street+", "+td.city+", "+td.province, style: TextStyle(fontSize: 16)),
-              ),
-              Spacer(),
-              Column(children: [
-                IconButton(
-                  onPressed: () {},
-                  tooltip: 'View Terminal Details',
-                  icon: Icon(CupertinoIcons.eye, color: Colors.blue[200]),
+            elevation: 14,
+            shadowColor: Colors.blueGrey,
+            borderRadius: BorderRadius.circular(24),
+            child: Padding(
+                padding: EdgeInsets.all(20),
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  Expanded(
+                    flex: 3,
+                    child: Text(td.id,
+                        style: TextStyle(color: Colors.blue, fontSize: 20)),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: Text(td.name, style: TextStyle(fontSize: 20)),
+                  ),
+                  Expanded(
+                    flex: 4,
+                    child: Text(td.street + ", " + td.city + ", " + td.province,
+                        style: TextStyle(fontSize: 16)),
+                  ),
+                  Spacer(),
+                  Column(children: [
+                    IconButton(
+                      onPressed: () {},
+                      tooltip: 'View Terminal Details',
+                      icon: Icon(CupertinoIcons.eye, color: Colors.blue[200]),
+                    )
+                  ]),
+                  Column(children: [
+                    IconButton(
+                      onPressed: () {
+                        askConfirmation(context, td);
+                      },
+                      tooltip: 'Delete',
+                      icon: Icon(CupertinoIcons.trash, color: Colors.red[200]),
+                    )
+                  ]),
+                ]))));
+  }
+
+  askConfirmation(BuildContext context, object) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text('Removal Confirmation'),
+              content: Text('Are you sure you want to remove ' +
+                  object.id +
+                  ' from the list of terminals?'),
+              actions: [
+                FlatButton(
+                  child: Text('No'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                FlatButton(
+                  child: Text('Yes'),
+                  onPressed: () {
+                    Navigator.of(context).pop(removeTerminal(object));
+                  },
                 )
-              ]),
-              Column(children: [
-                IconButton(
-                  onPressed: () {},
-                  tooltip: 'Delete',
-                  icon: Icon(CupertinoIcons.trash, color: Colors.red[200]),
-                )
-              ]) ,
-            ]))));
-    }
+              ]);
+        });
+  }
+
+  removeTerminal(object) {
+    setState(() {
+      terminaldetails.remove(object);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,14 +124,10 @@ class _TerminalsState extends State<Terminals> {
         body: Container(
           child: Padding(
               padding: EdgeInsets.all(30),
-              child: 
-                ListView(
-                  children: terminaldetails.map((td)=>listTerminal(td)).toList()
-                )
-              ),
+              child: ListView(
+                  children:
+                      terminaldetails.map((td) => listTerminal(td)).toList())),
         ));
-
-    
   }
 }
 

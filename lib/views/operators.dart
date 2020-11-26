@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../partials/partials.dart';
 import '../common/packages.dart';
-import './operator/operatorform.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:email_validator/email_validator.dart';
 
@@ -31,180 +30,190 @@ class OperatorsPage extends StatefulWidget {
 class _OperatorsPageState extends State<OperatorsPage> {
   String _operatorVehicle = '';
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String _firstName, _lastName, _email, _fullName,_phoneNum, fName, lName, _opt;
-    addOperator(BuildContext context, String header, String option, OpDetails o){
+  String _firstName,
+      _lastName,
+      _email,
+      _fullName,
+      _phoneNum,
+      fName,
+      lName,
+      _opt;
+  addOperator(BuildContext context, String header, String option, OpDetails o) {
     _opt = option;
-    if(o.name != ''){
+    if (o.name != '') {
       fName = o.name.split(" ")[0];
-      if(o.name.split(" ").length > 1){
+      if (o.name.split(" ").length > 1) {
         lName = o.name.split(" ")[1];
-      }else{
+      } else {
         lName = '';
       }
-    }else{
+    } else {
       fName = lName = '';
     }
-    return showDialog(context: context, builder: (context){
-      return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        
-        child: Form(
-          key:_formKey,
-          child: Container(
-          height: 540,
-          width: 550,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 35.0, 20.0, 20.0),
-            child: IntrinsicWidth(              
-              child: ListView(
-              children: [
-                Text(header,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(  
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-
-                  ) 
-                ),
-                Divider(height:15,color: Colors.white),
-                Divider(height:5,color: Colors.grey[300]),
-                Divider(height:5,color: Colors.white),
-                Container(
-                  height: 75,
-                  child: TextFormField(
-                    controller: TextEditingController(text: fName),
-                    decoration: InputDecoration( 
-                      labelText: 'First Name',
-                      labelStyle: TextStyle(color: Colors.blueAccent),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey, width: 0.5)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
-                      ),
-                    ),
-                    validator: (input) => input.length < 1 ? 'This field is required' : null,
-                    onSaved: (input) => _firstName = input,
-                  ),
-                ),
-                Container(
-                  height: 75,
-                  child: TextFormField(
-                    controller: TextEditingController(text: lName),
-                    decoration: InputDecoration( 
-                      labelText: 'Last Name',
-                      labelStyle: TextStyle(color: Colors.blueAccent),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey, width: 0.5)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
-                      ),
-                    ),
-                    validator: (input) => input.length < 1 ? 'This field is required' : null,
-                    onSaved: (input) => _lastName = input,
-                  ),
-                ),
-                Container(
-                  height: 75,
-                  child: TextFormField(
-                    controller: TextEditingController(text: o.email),
-                    decoration: InputDecoration( 
-                      labelText: 'Email Address',
-                      labelStyle: TextStyle(color: Colors.blueAccent),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey, width: 0.5)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
-                      ),
-                    ),
-                    validator: (input) => EmailValidator.validate(input)? null:"Invalid E-mail Address",
-                    onSaved: (input) => _email = input,
-                  ),
-                ),
-                Container(
-                  height: 75,
-                  child: TextFormField(
-                    decoration: InputDecoration( 
-                      labelText: 'Phone Number',
-                      labelStyle: TextStyle(color: Colors.blueAccent),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey, width: 0.5)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
-                      ),
-                    ),
-                    validator: (input) => input.length != 11 ? 'Invalid Phone Number' : null,
-                    onSaved: (input) => _phoneNum = input,
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(5),
-                  child:DropdownSearch(
-                      dialogMaxWidth: 500,
-                      maxHeight: 100,
-                      items: ["Bus", "Jeepney"],
-                      label: "Select a Vehicle",
-                      hint:"Vehicle",
-                      showClearButton: true,
-                      validator: (String item) {
-                        if (item == null)
-                          return "Invalid Vehicle";
-                        else
-                          return null;
-                      },
-                      onSaved: (input) => _operatorVehicle = input,
-                    ),
-                ),
-                Divider(height:25,color: Colors.white),
-                Container(
-                  padding: EdgeInsets.only(bottom: 15.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      FlatButton(
-                        child: Text("Cancel"),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        }
-                      ),
-                      RaisedButton(
-                        color: Colors.lightBlue,
-                        child: Text(
-                          option,
-                          style: TextStyle(color: Colors.white),
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: Form(
+                key: _formKey,
+                child: Container(
+                  height: 540,
+                  width: 550,
+                  child: Padding(
+                      padding:
+                          const EdgeInsets.fromLTRB(20.0, 35.0, 20.0, 20.0),
+                      child: IntrinsicWidth(
+                          child: ListView(children: [
+                        Text(header,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            )),
+                        Divider(height: 15, color: Colors.white),
+                        Divider(height: 5, color: Colors.grey[300]),
+                        Divider(height: 5, color: Colors.white),
+                        Container(
+                          height: 75,
+                          child: TextFormField(
+                            controller: TextEditingController(text: fName),
+                            decoration: InputDecoration(
+                              labelText: 'First Name',
+                              labelStyle: TextStyle(color: Colors.blueAccent),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.grey, width: 0.5)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.blueAccent, width: 0.5)),
+                            ),
+                            validator: (input) => input.length < 1
+                                ? 'This field is required'
+                                : null,
+                            onSaved: (input) => _firstName = input,
+                          ),
                         ),
-                        onPressed: _submit,
-                      )
-                    ],
-                  ),
+                        Container(
+                          height: 75,
+                          child: TextFormField(
+                            controller: TextEditingController(text: lName),
+                            decoration: InputDecoration(
+                              labelText: 'Last Name',
+                              labelStyle: TextStyle(color: Colors.blueAccent),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.grey, width: 0.5)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.blueAccent, width: 0.5)),
+                            ),
+                            validator: (input) => input.length < 1
+                                ? 'This field is required'
+                                : null,
+                            onSaved: (input) => _lastName = input,
+                          ),
+                        ),
+                        Container(
+                          height: 75,
+                          child: TextFormField(
+                            controller: TextEditingController(text: o.email),
+                            decoration: InputDecoration(
+                              labelText: 'Email Address',
+                              labelStyle: TextStyle(color: Colors.blueAccent),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.grey, width: 0.5)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.blueAccent, width: 0.5)),
+                            ),
+                            validator: (input) => EmailValidator.validate(input)
+                                ? null
+                                : "Invalid E-mail Address",
+                            onSaved: (input) => _email = input,
+                          ),
+                        ),
+                        Container(
+                          height: 75,
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              labelText: 'Phone Number',
+                              labelStyle: TextStyle(color: Colors.blueAccent),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.grey, width: 0.5)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.blueAccent, width: 0.5)),
+                            ),
+                            validator: (input) => input.length != 11
+                                ? 'Invalid Phone Number'
+                                : null,
+                            onSaved: (input) => _phoneNum = input,
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(5),
+                          child: DropdownSearch(
+                            dialogMaxWidth: 500,
+                            maxHeight: 100,
+                            items: ["Bus", "Jeepney"],
+                            label: "Select a Vehicle",
+                            hint: "Vehicle",
+                            showClearButton: true,
+                            validator: (String item) {
+                              if (item == null)
+                                return "Invalid Vehicle";
+                              else
+                                return null;
+                            },
+                            onSaved: (input) => _operatorVehicle = input,
+                          ),
+                        ),
+                        Divider(height: 25, color: Colors.white),
+                        Container(
+                          padding: EdgeInsets.only(bottom: 15.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              FlatButton(
+                                  child: Text("Cancel"),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  }),
+                              RaisedButton(
+                                color: Colors.lightBlue,
+                                child: Text(
+                                  option,
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                onPressed: _submit,
+                              )
+                            ],
+                          ),
+                        ),
+                      ]))),
                 ),
-              ]
-            ))
-          ),
-        ),
-        )
-      );
-    });
+              ));
+        });
   }
-  void _submit()
-  {
-    if(_formKey.currentState.validate()){
+
+  void _submit() {
+    if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       _fullName = _firstName + ' ' + _lastName;
       setState(() {
-        if(_opt == "Update"){
+        if (_opt == "Update") {
           //Some update code here
-        }else{
+        } else {
           //this adds to the list
           OpDetails newOperator = new OpDetails('18400175', _fullName, _email);
-          if(_operatorVehicle == "Bus"){
+          if (_operatorVehicle == "Bus") {
             busOps.add(newOperator);
-          }else{
+          } else {
             jeepOps.add(newOperator);
           }
         }
@@ -212,6 +221,7 @@ class _OperatorsPageState extends State<OperatorsPage> {
       Navigator.of(context, rootNavigator: true).pop(context);
     }
   }
+
   List<OpDetails> busOps = [
     new OpDetails('18400175', 'Berna Ferolin', 'berna@email.com'),
     new OpDetails('18400175', 'Justin Ferolin', 'berna@email.com'),
@@ -252,13 +262,14 @@ class _OperatorsPageState extends State<OperatorsPage> {
               child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 Expanded(
                   flex: 1,
-                  child: Text(op.id, style: TextStyle(color: Colors.blue,fontSize: 20)),
+                  child: Text(op.id,
+                      style: TextStyle(color: Colors.blue, fontSize: 20)),
                 ),
                 Expanded(
                   flex: 2,
                   child: Text(op.name, style: TextStyle(fontSize: 20)),
                 ),
-                Expanded( 
+                Expanded(
                   flex: 2,
                   child: Text(op.email, style: TextStyle(fontSize: 16)),
                 ),
@@ -281,7 +292,8 @@ class _OperatorsPageState extends State<OperatorsPage> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        addOperator(context, "View Operator Details", "Update", op);
+                        addOperator(
+                            context, "View Operator Details", "Update", op);
                       },
                       tooltip: 'View Profile',
                       icon: Icon(CupertinoIcons.eye, color: Colors.blue[200]),
@@ -290,13 +302,47 @@ class _OperatorsPageState extends State<OperatorsPage> {
                 ),
                 Column(children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      askConfirmation(context, op);
+                    },
                     tooltip: 'Delete',
                     icon: Icon(CupertinoIcons.trash, color: Colors.red[200]),
                   )
                 ])
               ]),
             )));
+  }
+
+  askConfirmation(BuildContext context, object) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text('Removal Confirmation'),
+              content: Text('Are you sure you want to remove ' +
+                  object.id +' - '+object.name+
+                  ' from the list of operators?'),
+              actions: [
+                FlatButton(
+                  child: Text('No'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                FlatButton(
+                  child: Text('Yes'),
+                  onPressed: () {
+                    Navigator.of(context).pop(removeOperator(object));
+                  },
+                )
+              ]);
+        });
+  }
+
+  removeOperator(object) {
+    setState(() {
+      busOps.remove(object);
+    });
   }
 
   @override
