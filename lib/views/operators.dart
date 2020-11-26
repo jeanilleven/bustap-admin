@@ -3,6 +3,7 @@ import '../partials/partials.dart';
 import '../common/packages.dart';
 import './operator/operatorform.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:email_validator/email_validator.dart';
 
 class Operators extends StatelessWidget {
   const Operators({Key key}) : super(key: key);
@@ -30,9 +31,19 @@ class OperatorsPage extends StatefulWidget {
 class _OperatorsPageState extends State<OperatorsPage> {
   String _operatorVehicle = '';
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String _firstName, _lastName, _email, _fullName,_phoneNum;
-    addOperator(BuildContext context, String header, String option){
-    // TextEditingController customerController = TextEditingController();
+  String _firstName, _lastName, _email, _fullName,_phoneNum, fName, lName, _opt;
+    addOperator(BuildContext context, String header, String option, OpDetails o){
+    _opt = option;
+    if(o.name != ''){
+      fName = o.name.split(" ")[0];
+      if(o.name.split(" ").length > 1){
+        lName = o.name.split(" ")[1];
+      }else{
+        lName = '';
+      }
+    }else{
+      fName = lName = '';
+    }
     return showDialog(context: context, builder: (context){
       return Dialog(
         shape: RoundedRectangleBorder(
@@ -63,6 +74,7 @@ class _OperatorsPageState extends State<OperatorsPage> {
                 Container(
                   height: 75,
                   child: TextFormField(
+                    controller: TextEditingController(text: fName),
                     decoration: InputDecoration( 
                       labelText: 'First Name',
                       labelStyle: TextStyle(color: Colors.blueAccent),
@@ -80,6 +92,7 @@ class _OperatorsPageState extends State<OperatorsPage> {
                 Container(
                   height: 75,
                   child: TextFormField(
+                    controller: TextEditingController(text: lName),
                     decoration: InputDecoration( 
                       labelText: 'Last Name',
                       labelStyle: TextStyle(color: Colors.blueAccent),
@@ -97,6 +110,7 @@ class _OperatorsPageState extends State<OperatorsPage> {
                 Container(
                   height: 75,
                   child: TextFormField(
+                    controller: TextEditingController(text: o.email),
                     decoration: InputDecoration( 
                       labelText: 'Email Address',
                       labelStyle: TextStyle(color: Colors.blueAccent),
@@ -107,7 +121,7 @@ class _OperatorsPageState extends State<OperatorsPage> {
                         borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
                       ),
                     ),
-                    validator: (input) => !input.contains('@') ? 'Invalid E-mail Address' : null,
+                    validator: (input) => EmailValidator.validate(input)? null:"Invalid E-mail Address",
                     onSaved: (input) => _email = input,
                   ),
                 ),
@@ -183,11 +197,16 @@ class _OperatorsPageState extends State<OperatorsPage> {
       _formKey.currentState.save();
       _fullName = _firstName + ' ' + _lastName;
       setState(() {
-        OpDetails newOperator = new OpDetails('18400175', _fullName, _email);
-        if(_operatorVehicle == "Bus"){
-          busOps.add(newOperator);
+        if(_opt == "Update"){
+          //Some update code here
         }else{
-          jeepOps.add(newOperator);
+          //this adds to the list
+          OpDetails newOperator = new OpDetails('18400175', _fullName, _email);
+          if(_operatorVehicle == "Bus"){
+            busOps.add(newOperator);
+          }else{
+            jeepOps.add(newOperator);
+          }
         }
       });
       Navigator.of(context, rootNavigator: true).pop(context);
@@ -262,7 +281,7 @@ class _OperatorsPageState extends State<OperatorsPage> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        addOperator(context, "View Operator Details", "Update");
+                        addOperator(context, "View Operator Details", "Update", op);
                       },
                       tooltip: 'View Profile',
                       icon: Icon(CupertinoIcons.eye, color: Colors.blue[200]),
@@ -327,7 +346,8 @@ class _OperatorsPageState extends State<OperatorsPage> {
             tooltip: 'Add a new operator',
             child: Icon(CupertinoIcons.add),
             onPressed: () {
-              addOperator(context, "Add Operator", "Add");
+              OpDetails op = new OpDetails('', '', '');
+              addOperator(context, "Add Operator", "Add", op);
             }),
       ),
     );

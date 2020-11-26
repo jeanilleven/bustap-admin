@@ -3,6 +3,7 @@ import '../partials/partials.dart';
 import '../common/packages.dart';
 // import '../views/views.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:email_validator/email_validator.dart';
 
 class Drivers extends StatelessWidget {
   const Drivers({Key key}) : super(key: key);
@@ -28,9 +29,20 @@ class DriversPage extends StatefulWidget {
 class _DriversPageState extends State<DriversPage> {
   String _driverVehicle = '';
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String _firstName, _lastName, _email, _fullName, _dLicense, _phoneNum;
-    addDriver(BuildContext context, String header, String option){
+  String _firstName, _lastName, _email, _fullName, _dLicense, _phoneNum, _opt, fName, lName;
+    addDriver(BuildContext context, String header, String option, DrvrDetails d){
     // TextEditingController customerController = TextEditingController();
+    _opt = option;
+    if(d.name != ''){
+      fName = d.name.split(" ")[0];
+      if(d.name.split(" ").length > 1){
+        lName = d.name.split(" ")[1];
+      }else{
+        lName = '';
+      }
+    }else{
+      fName = lName = '';
+    }
     return showDialog(context: context, builder: (context){
       return Dialog(
         shape: RoundedRectangleBorder(
@@ -61,6 +73,7 @@ class _DriversPageState extends State<DriversPage> {
                 Container(
                   height: 75,
                   child: TextFormField(
+                    controller: TextEditingController(text: fName),
                     decoration: InputDecoration( 
                       labelText: 'First Name',
                       labelStyle: TextStyle(color: Colors.blueAccent),
@@ -78,6 +91,7 @@ class _DriversPageState extends State<DriversPage> {
                 Container(
                   height: 75,
                   child: TextFormField(
+                    controller: TextEditingController(text: lName),
                     decoration: InputDecoration( 
                       labelText: 'Last Name',
                       labelStyle: TextStyle(color: Colors.blueAccent),
@@ -95,6 +109,7 @@ class _DriversPageState extends State<DriversPage> {
                 Container(
                   height: 75,
                   child: TextFormField(
+                    controller: TextEditingController(text: d.email),
                     decoration: InputDecoration( 
                       labelText: 'Email Address',
                       labelStyle: TextStyle(color: Colors.blueAccent),
@@ -105,7 +120,7 @@ class _DriversPageState extends State<DriversPage> {
                         borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
                       ),
                     ),
-                    validator: (input) => !input.contains('@') ? 'Invalid E-mail Address' : null,
+                    validator: (input) => EmailValidator.validate(input)? null:"Invalid E-mail Address",
                     onSaved: (input) => _email = input,
                   ),
                 ),
@@ -209,11 +224,15 @@ class _DriversPageState extends State<DriversPage> {
       _formKey.currentState.save();
       _fullName = _firstName + ' ' + _lastName;
       setState(() {
-        DrvrDetails newDriver = new DrvrDetails('18400175', _fullName, _email);
-        if(_driverVehicle == "Bus"){
-          busDrvrs.add(newDriver);
+        if(_opt == "Update"){
+          //Some code to update here
         }else{
-          jeepDrvrs.add(newDriver);
+          DrvrDetails newDriver = new DrvrDetails('18400175', _fullName, _email);
+          if(_driverVehicle == "Bus"){
+            busDrvrs.add(newDriver);
+          }else{
+            jeepDrvrs.add(newDriver);
+          }
         }
       });
       Navigator.of(context, rootNavigator: true).pop(context);
@@ -297,7 +316,8 @@ class _DriversPageState extends State<DriversPage> {
             tooltip: 'Add a new driver',
             child: Icon(CupertinoIcons.add),
             onPressed: () {
-              addDriver(context, "Add Driver", "Add");
+              DrvrDetails drv = new DrvrDetails('', '', '');
+              addDriver(context, "Add Driver", "Add", drv);
             }),
       ),
     );
@@ -344,7 +364,7 @@ class _DriversPageState extends State<DriversPage> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        addDriver(context, "View Driver Details", "Update");
+                        addDriver(context, "View Driver Details", "Update", drv);
                       },
                       tooltip: 'View Profile',
                       icon: Icon(CupertinoIcons.eye, color: Colors.blue[200]),

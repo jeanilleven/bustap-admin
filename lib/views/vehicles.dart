@@ -1,3 +1,4 @@
+import 'package:bustap/views/dashboard.dart';
 import 'package:flutter/material.dart';
 import '../partials/partials.dart';
 import '../common/packages.dart';
@@ -30,10 +31,10 @@ class VehiclesPage extends StatefulWidget {
 class _VehiclesPageState extends State<VehiclesPage> {
   String _vType = '';
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String _vehicleNum, _plateNum, _make;
+  String _vehicleNum, _plateNum, _make, initial, _opt;
   int _seatCnt;
-    addVehicle(BuildContext context, String header, String option){
-    // TextEditingController customerController = TextEditingController();
+    addVehicle(BuildContext context, String header, String option, VehicleDetails v){
+    _opt = option;   
     return showDialog(context: context, builder: (context){
       return Dialog(
         shape: RoundedRectangleBorder(
@@ -64,8 +65,10 @@ class _VehiclesPageState extends State<VehiclesPage> {
                 Container(
                   height: 75,
                   child: TextFormField(
+                    controller: TextEditingController(text: v.id),
                     decoration: InputDecoration( 
-                      labelText: 'Vehicle Number',
+                      labelText: "Vehicle Number",
+                      hintText: v.id,
                       labelStyle: TextStyle(color: Colors.blueAccent),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey, width: 0.5)
@@ -81,8 +84,9 @@ class _VehiclesPageState extends State<VehiclesPage> {
                 Container(
                   height: 75,
                   child: TextFormField(
+                    controller: TextEditingController(text: v.platenumber),
                     decoration: InputDecoration( 
-                      labelText: 'Plate Number',
+                      labelText: "Plate Number",
                       labelStyle: TextStyle(color: Colors.blueAccent),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey, width: 0.5)
@@ -184,11 +188,16 @@ class _VehiclesPageState extends State<VehiclesPage> {
     if(_formKey.currentState.validate()){
       _formKey.currentState.save();
       setState(() {
-        VehicleDetails newVehicle = new VehicleDetails(_vehicleNum, _plateNum);
-        if(_vType == "Bus"){
-          buses.add(newVehicle);
+        if(_opt=="Update"){
+          //some update code here
         }else{
-          jeeps.add(newVehicle);
+          //this adds to the list
+          VehicleDetails newVehicle = new VehicleDetails(_vehicleNum, _plateNum);
+          if(_vType == "Bus"){
+            buses.add(newVehicle);
+          }else{
+            jeeps.add(newVehicle);
+          }
         }
       });
       Navigator.of(context, rootNavigator: true).pop(context);
@@ -266,7 +275,8 @@ class _VehiclesPageState extends State<VehiclesPage> {
         floatingActionButton: FloatingActionButton(
             tooltip: 'Add a new vehicle',
             onPressed: () {
-              addVehicle(context, "Add Vehice", "Add");
+              VehicleDetails vehicle = new VehicleDetails('',''); 
+              addVehicle(context, "Add Vehice", "Add", vehicle);
             },
             child: Icon(CupertinoIcons.add)),
       ),
@@ -296,7 +306,7 @@ class _VehiclesPageState extends State<VehiclesPage> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        addVehicle(context, "View Vehicle Details", "Update");
+                        addVehicle(context, "View Vehicle Details", "Update", vehicle);
                       },
                       tooltip: 'View Details',
                       icon: Icon(CupertinoIcons.eye, color: Colors.blue[200]),
