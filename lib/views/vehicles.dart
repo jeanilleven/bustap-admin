@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../partials/partials.dart';
 import '../common/packages.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
 class Vehicles extends StatelessWidget {
   const Vehicles({Key key}) : super(key: key);
@@ -27,6 +28,172 @@ class VehiclesPage extends StatefulWidget {
 }
 
 class _VehiclesPageState extends State<VehiclesPage> {
+  String _vType = '';
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String _vehicleNum, _plateNum, _make;
+  int _seatCnt;
+    addVehicle(BuildContext context, String header, String option){
+    // TextEditingController customerController = TextEditingController();
+    return showDialog(context: context, builder: (context){
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        
+        child: Form(
+          key:_formKey,
+          child: Container(
+          height: 540,
+          width: 550,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20.0, 35.0, 20.0, 20.0),
+            child: IntrinsicWidth(              
+              child: ListView(
+              children: [
+                Text(header,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(  
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+
+                  ) 
+                ),
+                Divider(height:15,color: Colors.white),
+                Divider(height:5,color: Colors.grey[300]),
+                Divider(height:5,color: Colors.white),
+                Container(
+                  height: 75,
+                  child: TextFormField(
+                    decoration: InputDecoration( 
+                      labelText: 'Vehicle Number',
+                      labelStyle: TextStyle(color: Colors.blueAccent),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 0.5)
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
+                      ),
+                    ),
+                    validator: (input) => input.length < 1 ? 'This field is required' : null,
+                    onSaved: (input) => _vehicleNum = input,
+                  ),
+                ),
+                Container(
+                  height: 75,
+                  child: TextFormField(
+                    decoration: InputDecoration( 
+                      labelText: 'Plate Number',
+                      labelStyle: TextStyle(color: Colors.blueAccent),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 0.5)
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
+                      ),
+                    ),
+                    validator: (input) => input.length != 6 ? 'Invalid Plate Number' : null,
+                    onSaved: (input) => _plateNum = input,
+                  ),
+                ),
+                Container(
+                  height: 75,
+                  child: TextFormField(
+                    decoration: InputDecoration( 
+                      labelText: 'Vehicle Manufacturer',
+                      labelStyle: TextStyle(color: Colors.blueAccent),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 0.5)
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
+                      ),
+                    ),
+                    validator: (input) => input.length < 1 ? 'This field is required' : null,
+                    onSaved: (input) => _make = input,
+                  ),
+                ),
+                Container(
+                  height: 75,
+                  child: TextFormField(
+                    decoration: InputDecoration( 
+                      labelText: 'Maximum Seat Capacity',
+                      labelStyle: TextStyle(color: Colors.blueAccent),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 0.5)
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
+                      ),
+                    ),
+                    validator: (input) => input.length < 1 ? 'This field is required' : null,
+                    onSaved: (input) => _seatCnt = int.parse(input),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(5),
+                  child:DropdownSearch(
+                      dialogMaxWidth: 500,
+                      maxHeight: 100,
+                      items: ["Bus", "Jeepney"],
+                      label: "Select a Vehicle",
+                      // onChanged: print,
+                      hint:"Vehicle",
+                      showClearButton: true,
+                      validator: (String item) {
+                        if (item == null)
+                          return "Invalid Vehicle";
+                        else
+                          return null;
+                      },
+                      onSaved: (input) => _vType = input,
+                    ),
+                ),
+                Divider(height:25,color: Colors.white),
+                Container(
+                  padding: EdgeInsets.only(bottom: 15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      FlatButton(
+                        child: Text("Cancel"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        }
+                      ),
+                      RaisedButton(
+                        color: Colors.lightBlue,
+                        child: Text(
+                          option,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: _submit,
+                      )
+                    ],
+                  ),
+                ),
+              ]
+            ))
+          ),
+        ),
+        )
+      );
+    });
+  }
+  void _submit()
+  {
+    if(_formKey.currentState.validate()){
+      _formKey.currentState.save();
+      setState(() {
+        VehicleDetails newVehicle = new VehicleDetails(_vehicleNum, _plateNum);
+        if(_vType == "Bus"){
+          buses.add(newVehicle);
+        }else{
+          jeeps.add(newVehicle);
+        }
+      });
+      Navigator.of(context, rootNavigator: true).pop(context);
+    }
+  }
   List<VehicleDetails> buses = [
     new VehicleDetails('BUS001', 'ABC123'),
     new VehicleDetails('BUS002', 'ABC123'),
@@ -98,7 +265,9 @@ class _VehiclesPageState extends State<VehiclesPage> {
         ),
         floatingActionButton: FloatingActionButton(
             tooltip: 'Add a new vehicle',
-            onPressed: () {},
+            onPressed: () {
+              addVehicle(context, "Add Vehice", "Add");
+            },
             child: Icon(CupertinoIcons.add)),
       ),
     );
@@ -127,10 +296,7 @@ class _VehiclesPageState extends State<VehiclesPage> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        // new MaterialPageRoute(
-                        //   context,
-                        //   builder: (BuildContext context) => new
-                        // )
+                        addVehicle(context, "View Vehicle Details", "Update");
                       },
                       tooltip: 'View Details',
                       icon: Icon(CupertinoIcons.eye, color: Colors.blue[200]),

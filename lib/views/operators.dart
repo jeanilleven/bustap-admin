@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../partials/partials.dart';
 import '../common/packages.dart';
 import './operator/operatorform.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
 class Operators extends StatelessWidget {
   const Operators({Key key}) : super(key: key);
@@ -27,6 +28,171 @@ class OperatorsPage extends StatefulWidget {
 }
 
 class _OperatorsPageState extends State<OperatorsPage> {
+  String _operatorVehicle = '';
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String _firstName, _lastName, _email, _fullName,_phoneNum;
+    addOperator(BuildContext context, String header, String option){
+    // TextEditingController customerController = TextEditingController();
+    return showDialog(context: context, builder: (context){
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        
+        child: Form(
+          key:_formKey,
+          child: Container(
+          height: 540,
+          width: 550,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20.0, 35.0, 20.0, 20.0),
+            child: IntrinsicWidth(              
+              child: ListView(
+              children: [
+                Text(header,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(  
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+
+                  ) 
+                ),
+                Divider(height:15,color: Colors.white),
+                Divider(height:5,color: Colors.grey[300]),
+                Divider(height:5,color: Colors.white),
+                Container(
+                  height: 75,
+                  child: TextFormField(
+                    decoration: InputDecoration( 
+                      labelText: 'First Name',
+                      labelStyle: TextStyle(color: Colors.blueAccent),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 0.5)
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
+                      ),
+                    ),
+                    validator: (input) => input.length < 1 ? 'This field is required' : null,
+                    onSaved: (input) => _firstName = input,
+                  ),
+                ),
+                Container(
+                  height: 75,
+                  child: TextFormField(
+                    decoration: InputDecoration( 
+                      labelText: 'Last Name',
+                      labelStyle: TextStyle(color: Colors.blueAccent),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 0.5)
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
+                      ),
+                    ),
+                    validator: (input) => input.length < 1 ? 'This field is required' : null,
+                    onSaved: (input) => _lastName = input,
+                  ),
+                ),
+                Container(
+                  height: 75,
+                  child: TextFormField(
+                    decoration: InputDecoration( 
+                      labelText: 'Email Address',
+                      labelStyle: TextStyle(color: Colors.blueAccent),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 0.5)
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
+                      ),
+                    ),
+                    validator: (input) => !input.contains('@') ? 'Invalid E-mail Address' : null,
+                    onSaved: (input) => _email = input,
+                  ),
+                ),
+                Container(
+                  height: 75,
+                  child: TextFormField(
+                    decoration: InputDecoration( 
+                      labelText: 'Phone Number',
+                      labelStyle: TextStyle(color: Colors.blueAccent),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 0.5)
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
+                      ),
+                    ),
+                    validator: (input) => input.length != 11 ? 'Invalid Phone Number' : null,
+                    onSaved: (input) => _phoneNum = input,
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(5),
+                  child:DropdownSearch(
+                      dialogMaxWidth: 500,
+                      maxHeight: 100,
+                      items: ["Bus", "Jeepney"],
+                      label: "Select a Vehicle",
+                      hint:"Vehicle",
+                      showClearButton: true,
+                      validator: (String item) {
+                        if (item == null)
+                          return "Invalid Vehicle";
+                        else
+                          return null;
+                      },
+                      onSaved: (input) => _operatorVehicle = input,
+                    ),
+                ),
+                Divider(height:25,color: Colors.white),
+                Container(
+                  padding: EdgeInsets.only(bottom: 15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      FlatButton(
+                        child: Text("Cancel"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        }
+                      ),
+                      RaisedButton(
+                        color: Colors.lightBlue,
+                        child: Text(
+                          option,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: _submit,
+                      )
+                    ],
+                  ),
+                ),
+              ]
+            ))
+          ),
+        ),
+        )
+      );
+    });
+  }
+  void _submit()
+  {
+    if(_formKey.currentState.validate()){
+      _formKey.currentState.save();
+      _fullName = _firstName + ' ' + _lastName;
+      setState(() {
+        OpDetails newOperator = new OpDetails('18400175', _fullName, _email);
+        if(_operatorVehicle == "Bus"){
+          busOps.add(newOperator);
+        }else{
+          jeepOps.add(newOperator);
+        }
+      });
+      Navigator.of(context, rootNavigator: true).pop(context);
+    }
+  }
   List<OpDetails> busOps = [
     new OpDetails('18400175', 'Berna Ferolin', 'berna@email.com'),
     new OpDetails('18400175', 'Justin Ferolin', 'berna@email.com'),
@@ -96,12 +262,7 @@ class _OperatorsPageState extends State<OperatorsPage> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        Navigator.push(
-                          context, 
-                          new MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                new OperatorDetails())
-                        );
+                        addOperator(context, "View Operator Details", "Update");
                       },
                       tooltip: 'View Profile',
                       icon: Icon(CupertinoIcons.eye, color: Colors.blue[200]),
@@ -165,7 +326,9 @@ class _OperatorsPageState extends State<OperatorsPage> {
         floatingActionButton: FloatingActionButton(
             tooltip: 'Add a new operator',
             child: Icon(CupertinoIcons.add),
-            onPressed: () {}),
+            onPressed: () {
+              addOperator(context, "Add Operator", "Add");
+            }),
       ),
     );
   }

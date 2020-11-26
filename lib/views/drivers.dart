@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../partials/partials.dart';
 import '../common/packages.dart';
-import '../views/views.dart';
+// import '../views/views.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
 class Drivers extends StatelessWidget {
@@ -26,16 +26,7 @@ class DriversPage extends StatefulWidget {
 }
 
 class _DriversPageState extends State<DriversPage> {
-  String _myActivity;
-  String _myActivityResult;
-
-  @override
-  void initState() {
-    super.initState();
-    _myActivity = '';
-    _myActivityResult = '';
-  }
-  
+  String _driverVehicle = '';
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _firstName, _lastName, _email, _fullName, _dLicense, _phoneNum;
     addDriver(BuildContext context, String header, String option){
@@ -49,14 +40,12 @@ class _DriversPageState extends State<DriversPage> {
         child: Form(
           key:_formKey,
           child: Container(
-          height: 800,
+          height: 550,
           width: 550,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20.0, 35.0, 20.0, 20.0),
             child: IntrinsicWidth(              
               child: ListView(
-              // mainAxisAlignment: MainAxisAlignment.start,
-              // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(header,
                   textAlign: TextAlign.center,
@@ -82,7 +71,7 @@ class _DriversPageState extends State<DriversPage> {
                         borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
                       ),
                     ),
-                    validator: (input) => input.length < 1 ? 'Invalid First Name' : null,
+                    validator: (input) => input.length < 1 ? 'This field is required' : null,
                     onSaved: (input) => _firstName = input,
                   ),
                 ),
@@ -99,7 +88,7 @@ class _DriversPageState extends State<DriversPage> {
                         borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
                       ),
                     ),
-                    validator: (input) => input.length < 1 ? 'Invalid Last Name' : null,
+                    validator: (input) => input.length < 1 ? 'This field is required' : null,
                     onSaved: (input) => _lastName = input,
                   ),
                 ),
@@ -162,16 +151,17 @@ class _DriversPageState extends State<DriversPage> {
                       dialogMaxWidth: 500,
                       maxHeight: 100,
                       items: ["Bus", "Jeepney"],
-                      label: "Vehicle",
-                      onChanged: print,
-                      hint:"Select a Vehicle",
+                      label: "Select a Vehicle",
+                      // onChanged: print,
+                      hint:"Vehicle",
+                      showClearButton: true,
                       validator: (String item) {
                         if (item == null)
-                          return "Not a ";
+                          return "Invalid Vehicle";
                         else
                           return null;
                       },
-                      onSaved: (input) => _myActivity = input,
+                      onSaved: (input) => _driverVehicle = input,
                     ),
                 ),
                 Divider(height:25,color: Colors.white),
@@ -219,10 +209,12 @@ class _DriversPageState extends State<DriversPage> {
       _formKey.currentState.save();
       _fullName = _firstName + ' ' + _lastName;
       setState(() {
-        _myActivityResult = _myActivity;
-        print(_myActivityResult);
         DrvrDetails newDriver = new DrvrDetails('18400175', _fullName, _email);
-        busDrvrs.add(newDriver);
+        if(_driverVehicle == "Bus"){
+          busDrvrs.add(newDriver);
+        }else{
+          jeepDrvrs.add(newDriver);
+        }
       });
       Navigator.of(context, rootNavigator: true).pop(context);
     }
