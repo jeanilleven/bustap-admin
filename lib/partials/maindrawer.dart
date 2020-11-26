@@ -77,6 +77,16 @@ class MainDrawer extends StatelessWidget {
                     builder: (BuildContext context) => new Vehicles()));
           }),
       ListTile(
+        leading: Icon(CupertinoIcons.location),
+        title: Text('Terminals'),
+        hoverColor: Colors.lightBlue[100],
+        onTap: () {
+          Navigator.push(
+            context,
+            new MaterialPageRoute(
+              builder: (BuildContext context) => new Terminals()));
+      }),
+      ListTile(
         leading: Icon(Icons.person),
         title: Text('User Management'),
       ),

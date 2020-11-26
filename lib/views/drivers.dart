@@ -349,14 +349,7 @@ class _DriversPageState extends State<DriversPage> {
                 Column(children: [
                   IconButton(
                     onPressed: () {},
-                    tooltip: 'View Managed Drivers',
-                    icon: Icon(CupertinoIcons.person, color: Colors.blue[200]),
-                  )
-                ]),
-                Column(children: [
-                  IconButton(
-                    onPressed: () {},
-                    tooltip: 'View Managed Buses',
+                    tooltip: 'View Managed Vehicles',
                     icon: Icon(CupertinoIcons.bus, color: Colors.blue[200]),
                   )
                 ]),

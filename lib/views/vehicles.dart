@@ -139,7 +139,7 @@ class _VehiclesPageState extends State<VehiclesPage> {
                       dialogMaxWidth: 500,
                       maxHeight: 100,
                       items: ["Bus", "Jeepney"],
-                      label: "Select a Vehicle",
+                      label: "Vehicle Type",
                       // onChanged: print,
                       hint:"Vehicle",
                       showClearButton: true,
