@@ -114,6 +114,7 @@ class _TerminalsState extends State<Terminals> {
                       hint:"City/Municipality",
                       showClearButton: true,
                       showSearchBox: true,
+                      selectedItem: t.city,
                       validator: (String item) {
                         if (item == null)
                           return "This field is required";
@@ -133,6 +134,7 @@ class _TerminalsState extends State<Terminals> {
                       hint:"Province",
                       showClearButton: true,
                       showSearchBox: true,
+                      selectedItem: t.province,
                       validator: (String item) {
                         if (item == null)
                           return "This field is required";
@@ -159,6 +161,7 @@ class _TerminalsState extends State<Terminals> {
                           return null;
                       },
                       onSaved: (input) => _country = input,
+                      selectedItem: t.country,
                     ),
                 ),
                 Divider(height:25,color: Colors.white),
