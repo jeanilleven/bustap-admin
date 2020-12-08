@@ -5,3 +5,4 @@ export 'package:percent_indicator/linear_percent_indicator.dart';
 export 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 export 'package:dot_pagination_swiper/dot_pagination_swiper.dart';
 export 'package:table_calendar/table_calendar.dart';
+export 'package:cloud_firestore/cloud_firestore.dart';

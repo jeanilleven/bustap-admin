@@ -16,7 +16,9 @@ class _SignInPageState extends State<SignInPage> {
       decoration: BoxDecoration(  
         color: Colors.white,
       ),
-      child: Column( 
+      child: Padding(
+        padding: EdgeInsets.all(30), 
+        child: Column( 
             children: <Widget>[
               Divider(height: 50, color: Colors.white),
               Text("Wecome back!",
@@ -94,6 +96,7 @@ class _SignInPageState extends State<SignInPage> {
               
             ]
           )
+      )
     );
   }
 }

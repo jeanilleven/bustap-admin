@@ -385,18 +385,6 @@ class _VehiclesPageState extends State<VehiclesPage> {
   }
 }
 
-// List<VehicleDetails>
-// List<VehicleDetails> populateVehicleDetails(String type) {
-//   List<VehicleDetails> vehicle;
-//   String id;
-//   for (var x = 0; x < 10; x++) {
-//     id = type + '00' + x.toString();
-//     vehicle.add(new VehicleDetails(id, 'ABCD123'));
-//   }
-
-//   return vehicle;
-// }
-
 class VehicleDetails {
   String id;
   String platenumber;

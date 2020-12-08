@@ -32,7 +32,8 @@ class _DashboardState extends State<DashboardPage> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           iconTheme: IconThemeData(color: Colors.teal),
-          title: Text("Dashboard", style: TextStyle(color: Colors.lightBlue, fontSize: 20)),
+          title: Text("Dashboard",
+              style: TextStyle(color: Colors.lightBlue, fontSize: 20)),
         ),
         body: Container(child: DashboardGrid()),
         drawer: MainDrawer());
@@ -50,7 +51,13 @@ class DashboardGrid extends StatelessWidget {
       mainAxisSpacing: 20.0,
       padding: EdgeInsets.all(20),
       children: <Widget>[
-        dashboardItem(vehicle("Buses Running", Colors.blueGrey[900])),
+        ListView(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          children: [
+            dashboardItem(vehicle("Buses Running", Colors.blueGrey[900])),
+          ],
+        ),
         dashboardItem(vehicle("Jeep Running", Colors.blueGrey[900])),
         dashboardItem(profit("Today's Profit", Colors.blueGrey[900])),
         dashboardItem(statistics("More stuff here...", Colors.blueGrey[900])),
