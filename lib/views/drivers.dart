@@ -151,9 +151,6 @@ class _DriversPageState extends State<DriversPage> {
                                     borderSide: BorderSide(
                                         color: Colors.blueAccent, width: 0.5)),
                               ),
-                              validator: (input) => input.length != 13
-                                  ? 'Invalid License Number'
-                                  : null,
                               onSaved: (input) => _dLicense = input),
                         ),
                         Container(
@@ -297,11 +294,11 @@ class _DriversPageState extends State<DriversPage> {
                 icon: Icon(Icons.directions_car, color: Colors.blue),
               ),
               Tab(
-                text: 'Jeep',
-                icon: Icon(Icons.directions_transit, color: Colors.blue)),
+                  text: 'Jeep',
+                  icon: Icon(Icons.directions_transit, color: Colors.blue)),
               Tab(
-                text: 'Conductors',
-                icon: Icon(Icons.assistant, color: Colors.blue)),
+                  text: 'Conductors',
+                  icon: Icon(Icons.assistant, color: Colors.blue)),
             ],
           ),
         ),
@@ -405,7 +402,9 @@ class _DriversPageState extends State<DriversPage> {
           return AlertDialog(
               title: Text('Removal Confirmation'),
               content: Text('Are you sure you want to remove ' +
-                  object.id +' - '+object.name+
+                  object.id +
+                  ' - ' +
+                  object.name +
                   ' from the list of drivers?'),
               actions: [
                 FlatButton(
@@ -428,10 +427,9 @@ class _DriversPageState extends State<DriversPage> {
     setState(() {
       if (object.type == 1) {
         busDrvrs.remove(object);
-      }else{ 
+      } else {
         jeepDrvrs.remove(object);
       }
-      
     });
   }
 }
