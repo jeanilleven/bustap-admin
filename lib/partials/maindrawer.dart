@@ -58,7 +58,7 @@ class MainDrawer extends StatelessWidget {
           }),
       ListTile(
           leading: Icon(CupertinoIcons.person),
-          title: Text('Drivers'),
+          title: Text('Employees'),
           hoverColor: Colors.lightBlue[100],
           onTap: () {
             Navigator.push(
