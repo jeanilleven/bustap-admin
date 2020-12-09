@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../partials/partials.dart';
 import '../common/packages.dart';
-import 'package:dropdown_search/dropdown_search.dart';
+import '../controller/terminalcontroller.dart';
 
 class Terminals extends StatefulWidget {
   Terminals({Key key}) : super(key: key);
@@ -12,205 +12,263 @@ class Terminals extends StatefulWidget {
 
 class _TerminalsState extends State<Terminals> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String _stationNo, _adStreet, _adCity, _adProvince, _terminalName, street, province, city, _country, _opt;
-    addTerminal(BuildContext context, String header, String option, TerminalDetails t){
+  String _stationNo,
+      _adStreet,
+      _adCity,
+      _adProvince,
+      _terminalName,
+      street,
+      province,
+      city,
+      _country,
+      _opt;
+  addTerminal(
+      BuildContext context, String header, String option, TerminalDetails t) {
     _opt = option;
-    return showDialog(context: context, builder: (context){
-      return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        child: Form(
-          key:_formKey,
-          child: Container(
-          height: 600,
-          width: 550,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 35.0, 20.0, 20.0),
-            child: IntrinsicWidth(              
-              child: ListView(
-              children: [
-                Text(header,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(  
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-
-                  ) 
-                ),
-                Divider(height:15,color: Colors.white),
-                Divider(height:5,color: Colors.grey[300]),
-                Divider(height:5,color: Colors.white),
-                Container(
-                  height: 75,
-                  child: TextFormField(
-                    controller: TextEditingController(text: t.id),
-                    decoration: InputDecoration( 
-                      labelText: 'Terminal ID',
-                      labelStyle: TextStyle(color: Colors.blueAccent),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey, width: 0.5)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
-                      ),
-                    ),
-                    validator: (input) => input.length < 1 ? 'This field is required' : null,
-                    onSaved: (input) => _stationNo = input,
-                  ),
-                ),
-                Container(
-                  height: 75,
-                  child: TextFormField(
-                    controller: TextEditingController(text: t.name),
-                    decoration: InputDecoration( 
-                      labelText: 'Terminal Name',
-                      labelStyle: TextStyle(color: Colors.blueAccent),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey, width: 0.5)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
-                      ),
-                    ),
-                    validator: (input) => input.length < 1 ? 'This field is required' : null,
-                    onSaved: (input) => _terminalName = input,
-                  ),
-                ),
-                Container(
-                  height: 75,
-                  child: TextFormField(
-                    controller: TextEditingController(text: t.street),
-                    decoration: InputDecoration( 
-                      labelText: 'Street Name',
-                      labelStyle: TextStyle(color: Colors.blueAccent),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey, width: 0.5)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blueAccent, width: 0.5)
-                      ),
-                    ),
-                    validator: (input) => input.length < 1 ? "This field is required" : null,
-                    onSaved: (input) => _adStreet = input,
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(5),
-                  child:DropdownSearch(
-                      dialogMaxWidth: 500,
-                      maxHeight: 600,
-                      items: ["Alcantara", "Alcoy", "Alegria", "Aloguinsan", "Argao", "Asturias", "Badian", 
-                              "Balamban", "Bantayan", "Barile", "Bogo", "Boljoon", "Borbon", "Carcar", "Carmen", 
-                              "Catmon",  "Cebu City", "Compostela", "Consolacion","Cordova", "Daang-Bantayan", 
-                              "Dalaguete", "Danao City", "Dumanjug", "Ginatilan", "Lapu-Lapu City", "Liloan", 
-                              "Madridejos", "Malabuyoc", "Mandaue City", "Medellin", "Minglanilla", 
-                              "Moalboal", "Naga", "Oslob", "Pilar", "Pinamungahan", "Poro", "Ronda",
-                              "Samboan", "San Fernando", "San Francisco", "San Remegio", "Santa Fe", 
-                              "Santander", "Sibonga", "Sogod", "Tabogon", "Tabuelan", "Talisay",
-                              "Toledo City", "Tuburan", "Tudela"
-                            ],
-                      label: "Select a City/Municipality",
-                      hint:"City/Municipality",
-                      showClearButton: true,
-                      showSearchBox: true,
-                      selectedItem: t.city,
-                      validator: (String item) {
-                        if (item == null)
-                          return "This field is required";
-                        else
-                          return null;
-                      },
-                      onSaved: (input) => _adCity = input,
-                    ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(5),
-                  child:DropdownSearch(
-                      dialogMaxWidth: 500,
-                      maxHeight: 200,
-                      items: ["Cebu"],
-                      label: "Select a Province",
-                      hint:"Province",
-                      showClearButton: true,
-                      showSearchBox: true,
-                      selectedItem: t.province,
-                      validator: (String item) {
-                        if (item == null)
-                          return "This field is required";
-                        else
-                          return null;
-                      },
-                      onSaved: (input) => _adProvince = input,
-                    ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(5),
-                  child:DropdownSearch(
-                      dialogMaxWidth: 500,
-                      maxHeight: 200,
-                      items: ["Philippines"],
-                      label: "Select a Country",
-                      hint:"Country",
-                      showClearButton: true,
-                      showSearchBox: true,
-                      validator: (String item) {
-                        if (item == null)
-                          return "This field is required";
-                        else
-                          return null;
-                      },
-                      onSaved: (input) => _country = input,
-                      selectedItem: t.country,
-                    ),
-                ),
-                Divider(height:25,color: Colors.white),
-                Container(
-                  padding: EdgeInsets.only(bottom: 15.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      FlatButton(
-                        child: Text("Cancel"),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        }
-                      ),
-                      RaisedButton(
-                        color: Colors.lightBlue,
-                        child: Text(
-                          option,
-                          style: TextStyle(color: Colors.white),
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: Form(
+                key: _formKey,
+                child: Container(
+                  height: 600,
+                  width: 550,
+                  child: Padding(
+                      padding:
+                          const EdgeInsets.fromLTRB(20.0, 35.0, 20.0, 20.0),
+                      child: IntrinsicWidth(
+                          child: ListView(children: [
+                        Text(header,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            )),
+                        Divider(height: 15, color: Colors.white),
+                        Divider(height: 5, color: Colors.grey[300]),
+                        Divider(height: 5, color: Colors.white),
+                        Container(
+                          height: 75,
+                          child: TextFormField(
+                            controller: TextEditingController(text: t.id),
+                            decoration: InputDecoration(
+                              labelText: 'Terminal Code(Station Number)',
+                              labelStyle: TextStyle(color: Colors.blueAccent),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.grey, width: 0.5)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.blueAccent, width: 0.5)),
+                            ),
+                            validator: (input) => input.length < 1
+                                ? 'This field is required'
+                                : null,
+                            onSaved: (input) => _stationNo = input,
+                          ),
                         ),
-                        onPressed: _submit,
-                      )
-                    ],
-                  ),
+                        Container(
+                          height: 75,
+                          child: TextFormField(
+                            controller: TextEditingController(text: t.name),
+                            decoration: InputDecoration(
+                              labelText: 'Terminal Name',
+                              labelStyle: TextStyle(color: Colors.blueAccent),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.grey, width: 0.5)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.blueAccent, width: 0.5)),
+                            ),
+                            validator: (input) => input.length < 1
+                                ? 'This field is required'
+                                : null,
+                            onSaved: (input) => _terminalName = input,
+                          ),
+                        ),
+                        Container(
+                          height: 75,
+                          child: TextFormField(
+                            controller: TextEditingController(text: t.street),
+                            decoration: InputDecoration(
+                              labelText: 'Street Name',
+                              labelStyle: TextStyle(color: Colors.blueAccent),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.grey, width: 0.5)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.blueAccent, width: 0.5)),
+                            ),
+                            validator: (input) => input.length < 1
+                                ? "This field is required"
+                                : null,
+                            onSaved: (input) => _adStreet = input,
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(5),
+                          child: DropdownSearch(
+                            dialogMaxWidth: 500,
+                            maxHeight: 600,
+                            items: [
+                              "Alcantara",
+                              "Alcoy",
+                              "Alegria",
+                              "Aloguinsan",
+                              "Argao",
+                              "Asturias",
+                              "Badian",
+                              "Balamban",
+                              "Bantayan",
+                              "Barile",
+                              "Bogo",
+                              "Boljoon",
+                              "Borbon",
+                              "Carcar",
+                              "Carmen",
+                              "Catmon",
+                              "Cebu City",
+                              "Compostela",
+                              "Consolacion",
+                              "Cordova",
+                              "Daang-Bantayan",
+                              "Dalaguete",
+                              "Danao City",
+                              "Dumanjug",
+                              "Ginatilan",
+                              "Lapu-Lapu City",
+                              "Liloan",
+                              "Madridejos",
+                              "Malabuyoc",
+                              "Mandaue City",
+                              "Medellin",
+                              "Minglanilla",
+                              "Moalboal",
+                              "Naga",
+                              "Oslob",
+                              "Pilar",
+                              "Pinamungahan",
+                              "Poro",
+                              "Ronda",
+                              "Samboan",
+                              "San Fernando",
+                              "San Francisco",
+                              "San Remegio",
+                              "Santa Fe",
+                              "Santander",
+                              "Sibonga",
+                              "Sogod",
+                              "Tabogon",
+                              "Tabuelan",
+                              "Talisay",
+                              "Toledo City",
+                              "Tuburan",
+                              "Tudela"
+                            ],
+                            label: "Select a City/Municipality",
+                            hint: "City/Municipality",
+                            showClearButton: true,
+                            showSearchBox: true,
+                            selectedItem: t.city,
+                            validator: (String item) {
+                              if (item == null)
+                                return "This field is required";
+                              else
+                                return null;
+                            },
+                            onSaved: (input) => _adCity = input,
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(5),
+                          child: DropdownSearch(
+                            dialogMaxWidth: 500,
+                            maxHeight: 200,
+                            items: ["Cebu"],
+                            label: "Select a Province",
+                            hint: "Province",
+                            showClearButton: true,
+                            showSearchBox: true,
+                            selectedItem: t.province,
+                            validator: (String item) {
+                              if (item == null)
+                                return "This field is required";
+                              else
+                                return null;
+                            },
+                            onSaved: (input) => _adProvince = input,
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(5),
+                          child: DropdownSearch(
+                            dialogMaxWidth: 500,
+                            maxHeight: 200,
+                            items: ["Philippines"],
+                            label: "Select a Country",
+                            hint: "Country",
+                            showClearButton: true,
+                            showSearchBox: true,
+                            validator: (String item) {
+                              if (item == null)
+                                return "This field is required";
+                              else
+                                return null;
+                            },
+                            onSaved: (input) => _country = input,
+                            selectedItem: t.country,
+                          ),
+                        ),
+                        Divider(height: 25, color: Colors.white),
+                        Container(
+                          padding: EdgeInsets.only(bottom: 15.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              FlatButton(
+                                  child: Text("Cancel"),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  }),
+                              RaisedButton(
+                                color: Colors.lightBlue,
+                                child: Text(
+                                  option,
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                onPressed: _submit,
+                              )
+                            ],
+                          ),
+                        ),
+                      ]))),
                 ),
-              ]
-            ))
-          ),
-        ),
-        )
-      );
-    });
+              ));
+        });
   }
-  void _submit()
-  {
-    if(_formKey.currentState.validate()){
+
+  void _submit() {
+    if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       setState(() {
-        if(_opt == "Update"){
+        if (_opt == "Update") {
           //Some update code here
-        }else{
+        } else {
           //this adds to the list
-          TerminalDetails newTerminal = new TerminalDetails(_stationNo, _terminalName, _country, _adProvince, _adStreet, _adCity);
-          terminaldetails.add(newTerminal);
+          createTerminal(_stationNo, _terminalName, _adCity, _adStreet,
+              _adProvince, _country);
         }
       });
       Navigator.of(context, rootNavigator: true).pop(context);
     }
   }
+
   List<TerminalDetails> terminaldetails = [
     new TerminalDetails(
         'TRMNL001', 'Termina 01', 'Philippines', 'Cebu', 'Osmena', 'Cebu City'),
@@ -261,7 +319,8 @@ class _TerminalsState extends State<Terminals> {
                   Column(children: [
                     IconButton(
                       onPressed: () {
-                        addTerminal(context, "View Terminal Details", "Update", td);
+                        addTerminal(
+                            context, "View Terminal Details", "Update", td);
                       },
                       tooltip: 'View Terminal Details',
                       icon: Icon(CupertinoIcons.eye, color: Colors.blue[200]),
