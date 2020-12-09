@@ -32,7 +32,6 @@ class _OperatorsPageState extends State<OperatorsPage> {
   String _firstName,
       _lastName,
       _email,
-      _fullName,
       _phoneNum,
       fName,
       lName,
@@ -203,7 +202,6 @@ class _OperatorsPageState extends State<OperatorsPage> {
   void _submit() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      _fullName = _firstName + ' ' + _lastName;
       setState(() {
         if (_opt == "Update") {
           //Some update code here

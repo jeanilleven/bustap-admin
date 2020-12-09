@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import '../partials/partials.dart';
 import '../common/packages.dart';
-// import '../views/views.dart';
-import 'package:dropdown_search/dropdown_search.dart';
-import 'package:email_validator/email_validator.dart';
+import '../controller/employeecontroller.dart';
 
 class Drivers extends StatelessWidget {
   const Drivers({Key key}) : super(key: key);
@@ -14,7 +12,7 @@ class Drivers extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'BusTap Admin | Drivers',
       theme: ThemeData(primaryColor: Colors.blue),
-      home: DriversPage(title: 'BusTap Admin | Drivers'),
+      home: DriversPage(title: 'BusTap Admin | Employees'),
     );
   }
 }
@@ -32,7 +30,6 @@ class _DriversPageState extends State<DriversPage> {
   String _firstName,
       _lastName,
       _email,
-      _fullName,
       _dLicense,
       _phoneNum,
       _opt,
@@ -176,9 +173,13 @@ class _DriversPageState extends State<DriversPage> {
                           padding: EdgeInsets.all(5),
                           child: DropdownSearch(
                             dialogMaxWidth: 500,
-                            maxHeight: 100,
-                            items: ["Bus", "Jeepney"],
-                            label: "Select a Vehicle",
+                            maxHeight: 150,
+                            items: [
+                              "Bus Driver",
+                              "Jeepney Driver",
+                              "Conductor"
+                            ],
+                            label: "Select Employment type",
                             // onChanged: print,
                             hint: "Vehicle",
                             showClearButton: true,
@@ -209,14 +210,6 @@ class _DriversPageState extends State<DriversPage> {
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 onPressed: _submit,
-                                // onPressed: (){
-                                //   setState(() {
-                                //     _fullName = _firstName + ' ' + _lastName;
-                                //     DrvrDetails newDriver = new DrvrDetails('18400175', _fullName, _email);
-                                //     busDrvrs.add(newDriver);
-                                //   });
-                                //   Navigator.pop(context);
-                                // }
                               )
                             ],
                           ),
@@ -230,16 +223,16 @@ class _DriversPageState extends State<DriversPage> {
   void _submit() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      _fullName = _firstName + ' ' + _lastName;
       setState(() {
         if (_opt == "Update") {
           //Some code to update here
         } else {
-          if (_driverVehicle == "Bus") {
-            busDrvrs.add(new DrvrDetails('18400175', _fullName, _email, 1));
-          } else {
-            jeepDrvrs.add(new DrvrDetails('18400175', _fullName, _email, 2));
-          }
+          createEmployee(_firstName, _lastName, _email, _phoneNum, _dLicense, _driverVehicle);
+          // if (_driverVehicle == "Bus") {
+          // busDrvrs.add(new DrvrDetails('18400175', _fullName, _email, 1));
+          // } else {
+          //   jeepDrvrs.add(new DrvrDetails('18400175', _fullName, _email, 2));
+          // }
         }
       });
       Navigator.of(context, rootNavigator: true).pop(context);
@@ -330,11 +323,11 @@ class _DriversPageState extends State<DriversPage> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-            tooltip: 'Add a new driver',
+            tooltip: 'Add a new employee',
             child: Icon(CupertinoIcons.add),
             onPressed: () {
               DrvrDetails drv = new DrvrDetails('', '', '', 0);
-              addDriver(context, "Add Driver", "Add", drv);
+              addDriver(context, "Add Employee", "Add", drv);
             }),
       ),
     );
