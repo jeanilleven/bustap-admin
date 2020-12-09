@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../partials/partials.dart';
 import '../common/packages.dart';
-import 'package:dropdown_search/dropdown_search.dart';
+import '../controller/vehiclecontroller.dart';
 
 class Vehicles extends StatelessWidget {
   const Vehicles({Key key}) : super(key: key);
@@ -196,11 +196,7 @@ class _VehiclesPageState extends State<VehiclesPage> {
           //some update code here
         } else {
           //this adds to the list
-          if (_vType == "Bus") {
-            buses.add(new VehicleDetails(_vehicleNum, _plateNum, 1));
-          } else {
-            jeeps.add(new VehicleDetails(_vehicleNum, _plateNum, 2));
-          }
+          createVehicle(_vehicleNum, _seatCnt, _plateNum, _make, _vType);
         }
       });
       Navigator.of(context, rootNavigator: true).pop(context);
