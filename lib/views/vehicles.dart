@@ -1,4 +1,3 @@
-import 'package:bustap/views/dashboard.dart';
 import 'package:flutter/material.dart';
 import '../partials/partials.dart';
 import '../common/packages.dart';

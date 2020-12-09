@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import '../partials/partials.dart';
 import '../common/packages.dart';
-import 'package:dropdown_search/dropdown_search.dart';
-import 'package:email_validator/email_validator.dart';
+import '../controller/operatorcontroller.dart';
 
 class Operators extends StatelessWidget {
   const Operators({Key key}) : super(key: key);
@@ -210,12 +209,13 @@ class _OperatorsPageState extends State<OperatorsPage> {
           //Some update code here
         } else {
           //this adds to the list
-          OpDetails newOperator = new OpDetails('18400175', _fullName, _email);
-          if (_operatorVehicle == "Bus") {
-            busOps.add(newOperator);
-          } else {
-            jeepOps.add(newOperator);
-          }
+          createOperator(
+            _firstName,
+            _lastName,
+            _email,
+            _phoneNum,
+            _operatorVehicle,
+          );
         }
       });
       Navigator.of(context, rootNavigator: true).pop(context);
@@ -320,7 +320,9 @@ class _OperatorsPageState extends State<OperatorsPage> {
           return AlertDialog(
               title: Text('Removal Confirmation'),
               content: Text('Are you sure you want to remove ' +
-                  object.id +' - '+object.name+
+                  object.id +
+                  ' - ' +
+                  object.name +
                   ' from the list of operators?'),
               actions: [
                 FlatButton(
