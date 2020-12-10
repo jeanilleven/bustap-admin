@@ -44,9 +44,9 @@ dependencies:
   # cloud_firestore_web: ^0.2.1+2
   # firebase_auth_web: ^0.3.2+3
   # firebase_core_web: ^0.2.1+1
-  cloud_firestore: ^0.14.4
-  firebase_core: ^0.5.3
-  firebase_auth: ^0.18.4+1
+  cloud_firestore: ^0.14.2
+  firebase_core: ^0.5.1
+  firebase_auth: ^0.18.2
   google_sign_in_all: ^0.0.3  
   provider: ^4.3.2+3
   auth_buttons: ^0.0.4
