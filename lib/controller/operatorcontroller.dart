@@ -36,6 +36,7 @@ class OperatorController {
 
   Stream<List<Operator>> get retrieveAllOperators {
     try {
+      print(operators.snapshots().map(_operatorList));
       return operators.snapshots().map(_operatorList);
     } catch (e) {
       print(e.toString());

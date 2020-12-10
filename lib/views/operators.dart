@@ -3,6 +3,7 @@ import '../partials/partials.dart';
 import '../common/packages.dart';
 import '../controller/operatorcontroller.dart';
 import '../models/operator.dart';
+import '../partials/operatorslist.dart';
 
 class Operators extends StatelessWidget {
   const Operators({Key key}) : super(key: key);
@@ -243,69 +244,6 @@ class _OperatorsPageState extends State<OperatorsPage> {
     new OpDetails('18400175', 'Jeanille', 'berna@email.com'),
   ];
 
-  Container listoperator(op) {
-    return Container(
-        margin: EdgeInsets.all(5),
-        child: Material(
-            elevation: 14,
-            shadowColor: Colors.blueGrey,
-            borderRadius: BorderRadius.circular(24),
-            child: Padding(
-              padding: EdgeInsets.all(20),
-              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                Expanded(
-                  flex: 1,
-                  child: Text(op.id,
-                      style: TextStyle(color: Colors.blue, fontSize: 20)),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Text(op.name, style: TextStyle(fontSize: 20)),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Text(op.email, style: TextStyle(fontSize: 16)),
-                ),
-                Spacer(),
-                Column(children: [
-                  IconButton(
-                    onPressed: () {},
-                    tooltip: 'View Managed Drivers',
-                    icon: Icon(CupertinoIcons.person, color: Colors.blue[200]),
-                  )
-                ]),
-                Column(children: [
-                  IconButton(
-                    onPressed: () {},
-                    tooltip: 'View Managed Buses',
-                    icon: Icon(CupertinoIcons.bus, color: Colors.blue[200]),
-                  )
-                ]),
-                Column(
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        addOperator(
-                            context, "View Operator Details", "Update", op);
-                      },
-                      tooltip: 'View Profile',
-                      icon: Icon(CupertinoIcons.eye, color: Colors.blue[200]),
-                    )
-                  ],
-                ),
-                Column(children: [
-                  IconButton(
-                    onPressed: () {
-                      askConfirmation(context, op);
-                    },
-                    tooltip: 'Delete',
-                    icon: Icon(CupertinoIcons.trash, color: Colors.red[200]),
-                  )
-                ])
-              ]),
-            )));
-  }
-
   askConfirmation(BuildContext context, object) {
     showDialog(
         context: context,
@@ -379,9 +317,11 @@ class _OperatorsPageState extends State<OperatorsPage> {
                   child: Padding(
                       padding: EdgeInsets.all(30),
                       child: ListView(
-                        children:
-                            jeepOps.map((op) => listoperator(op)).toList(),
-                      ))),
+                        // children:
+                        //     jeepOps.map((op) => listoperator(op)).toList(),
+                      )
+                      )
+                      ),
             ],
           ),
         ),
