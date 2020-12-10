@@ -203,6 +203,7 @@ class _VehiclesPageState extends State<VehiclesPage> {
     }
   }
 
+  Future<dynamic> vehicles = retrieveVehicle();
   List<VehicleDetails> buses = [
     new VehicleDetails('BUS001', 'ABC123', 1),
     new VehicleDetails('BUS002', 'ABC123', 1),

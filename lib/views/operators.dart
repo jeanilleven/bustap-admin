@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../partials/partials.dart';
 import '../common/packages.dart';
 import '../controller/operatorcontroller.dart';
+import '../models/operator.dart';
 
 class Operators extends StatelessWidget {
   const Operators({Key key}) : super(key: key);
@@ -29,13 +30,7 @@ class OperatorsPage extends StatefulWidget {
 class _OperatorsPageState extends State<OperatorsPage> {
   String _operatorVehicle = '';
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String _firstName,
-      _lastName,
-      _email,
-      _phoneNum,
-      fName,
-      lName,
-      _opt;
+  String _firstName, _lastName, _email, _phoneNum, fName, lName, _opt;
   addOperator(BuildContext context, String header, String option, OpDetails o) {
     _opt = option;
     if (o.name != '') {
@@ -207,7 +202,7 @@ class _OperatorsPageState extends State<OperatorsPage> {
           //Some update code here
         } else {
           //this adds to the list
-          createOperator(
+          OperatorController().createOperator(
             _firstName,
             _lastName,
             _email,
@@ -370,23 +365,25 @@ class _OperatorsPageState extends State<OperatorsPage> {
             ],
           ),
         ),
-        body: TabBarView(
-          children: [
-            Container(
-                color: Colors.grey[250],
-                child: Padding(
-                    padding: EdgeInsets.all(30),
-                    child: ListView(
-                      children: busOps.map((op) => listoperator(op)).toList(),
-                    ))),
-            Container(
-                color: Colors.grey[250],
-                child: Padding(
-                    padding: EdgeInsets.all(30),
-                    child: ListView(
-                      children: jeepOps.map((op) => listoperator(op)).toList(),
-                    ))),
-          ],
+        body: StreamProvider<List<Operator>>.value(
+            value: OperatorController().retrieveAllOperators,
+                  child: TabBarView(
+            children: [
+              Container(
+                  color: Colors.grey[250],
+                  child: Padding(padding: EdgeInsets.all(30), 
+                  child: 
+                  OperatorList())),
+              Container(
+                  color: Colors.grey[250],
+                  child: Padding(
+                      padding: EdgeInsets.all(30),
+                      child: ListView(
+                        children:
+                            jeepOps.map((op) => listoperator(op)).toList(),
+                      ))),
+            ],
+          ),
         ),
         floatingActionButton: FloatingActionButton(
             tooltip: 'Add a new operator',
