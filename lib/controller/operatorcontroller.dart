@@ -3,14 +3,14 @@ import '../models/operator.dart';
 
 class OperatorController {
   CollectionReference operators = FirebaseFirestore.instance.collection('operators');
-  createOperator(fname, lname, email, phonenum, type) {
+  createOperator(Operator op) {
     return operators
         .add({
-          'fname': fname,
-          'lname': lname,
-          'email': email,
-          'phone_number': phonenum,
-          'type': type,
+          'fname': op.fname,
+          'lname': op.lname,
+          'email': op.email,
+          'phone_number': op.phonenum,
+          'type': op.type,
           'deleted': false
         })
         .then((value) => print("Operator Added"))
@@ -43,19 +43,3 @@ class OperatorController {
     }
   }
 }
-
-CollectionReference operators = FirebaseFirestore.instance.collection('operators');
-  createOperator(fname, lname, email, phonenum, type) {
-    return operators
-        .add({
-          'fname': fname,
-          'lname': lname,
-          'email': email,
-          'phone_number': phonenum,
-          'type': type,
-          'deleted': false
-        })
-        .then((value) => print("Operator Added"))
-        .catchError((error) => print("Failed to add operator: $error"));
-  }
-

@@ -111,7 +111,8 @@ class _OperatorsPageState extends State<OperatorsPage> {
             tooltip: 'Add a new operator',
             child: Icon(CupertinoIcons.add),
             onPressed: () {
-              addOperatorForm(context, "Add Operator", "Add", _formKey);
+              Operator op = new Operator(fname: "", lname: "", email: "", phonenum: "", type: "");
+              addOperatorForm(context, "Add Operator", "Add", _formKey, op);
             }),
       ),
     );

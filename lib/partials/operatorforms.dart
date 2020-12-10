@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import '../common/packages.dart';
 import '../controller/operatorcontroller.dart';
+import '../models/operator.dart';
 import '../partials/partials.dart';
 
 addOperatorForm(BuildContext context, String header, String opt,
-    GlobalKey<FormState> _formKey) {
-  String fname, lname, phonenum, type, email;
+    GlobalKey<FormState> _formKey, Operator op) {
+  // String fname, lname, phonenum, type, email;
   return showDialog(
       context: context,
       builder: (context) {
@@ -31,7 +32,7 @@ addOperatorForm(BuildContext context, String header, String opt,
                         Container(
                           height: 75,
                           child: TextFormField(
-                            controller: TextEditingController(text: fname),
+                            controller: TextEditingController(text: op.fname),
                             decoration: InputDecoration(
                               labelText: 'First Name',
                               labelStyle: TextStyle(color: Colors.blueAccent),
@@ -45,13 +46,13 @@ addOperatorForm(BuildContext context, String header, String opt,
                             validator: (input) => input.length < 1
                                 ? 'This field is required'
                                 : null,
-                            onSaved: (input) => fname = input,
+                            onSaved: (input) => op.fname = input,
                           ),
                         ),
                         Container(
                           height: 75,
                           child: TextFormField(
-                            controller: TextEditingController(text: lname),
+                            controller: TextEditingController(text: op.lname),
                             decoration: InputDecoration(
                               labelText: 'Last Name',
                               labelStyle: TextStyle(color: Colors.blueAccent),
@@ -65,13 +66,13 @@ addOperatorForm(BuildContext context, String header, String opt,
                             validator: (input) => input.length < 1
                                 ? 'This field is required'
                                 : null,
-                            onSaved: (input) => lname = input,
+                            onSaved: (input) => op.lname = input,
                           ),
                         ),
                         Container(
                           height: 75,
                           child: TextFormField(
-                            controller: TextEditingController(text: email),
+                            controller: TextEditingController(text: op.email),
                             decoration: InputDecoration(
                               labelText: 'Email Address',
                               labelStyle: TextStyle(color: Colors.blueAccent),
@@ -85,14 +86,13 @@ addOperatorForm(BuildContext context, String header, String opt,
                             validator: (input) => EmailValidator.validate(input)
                                 ? null
                                 : "Invalid E-mail Address",
-                            onSaved: (input) => email = input,
+                            onSaved: (input) => op.email = input,
                           ),
                         ),
                         Container(
                           height: 75,
                           child: TextFormField(
-                            controller:
-                                TextEditingController(text:phonenum),
+                            controller: TextEditingController(text:  op.phonenum),
                             decoration: InputDecoration(
                               labelText: 'Phone Number',
                               labelStyle: TextStyle(color: Colors.blueAccent),
@@ -106,14 +106,14 @@ addOperatorForm(BuildContext context, String header, String opt,
                             validator: (input) => input.length != 11
                                 ? 'Invalid Phone Number'
                                 : null,
-                            onSaved: (input) => phonenum = input,
+                            onSaved: (input) => op.phonenum = input,
                           ),
                         ),
                         Container(
                           padding: EdgeInsets.all(5),
                           child: DropdownSearch(
                             searchBoxController:
-                                TextEditingController(text: type),
+                                TextEditingController(text: op.type),
                             dialogMaxWidth: 500,
                             maxHeight: 100,
                             items: ["Bus", "Jeepney"],
@@ -126,7 +126,7 @@ addOperatorForm(BuildContext context, String header, String opt,
                               else
                                 return null;
                             },
-                            onSaved: (input) => type = input,
+                            onSaved: (input) => op.type = input,
                           ),
                         ),
                         Divider(height: 25, color: Colors.white),
@@ -148,8 +148,8 @@ addOperatorForm(BuildContext context, String header, String opt,
                                   ),
                                   onPressed: () {
                                     Navigator.of(context).pop(
-                                      print(fname)// You can call OperatorController().createOperator() here instead, just for testing purposes ang print.
-                                    );
+                                        // print(fname)// You can call OperatorController().createOperator() here instead, just for testing purposes ang print.
+                                        submit(context, _formKey, op));
                                   })
                             ],
                           ),
@@ -157,4 +157,13 @@ addOperatorForm(BuildContext context, String header, String opt,
                       ])),
                     ))));
       });
+}
+
+submit(context, _formKey, op) {
+  if (_formKey.currentState.validate()) {
+    _formKey.currentState.save();
+
+    print(op.fname);
+    // OperatorController().createController(fname, lname)
+  }
 }
