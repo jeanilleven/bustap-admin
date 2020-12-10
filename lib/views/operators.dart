@@ -184,7 +184,7 @@ class _OperatorsPageState extends State<OperatorsPage> {
                                   option,
                                   style: TextStyle(color: Colors.white),
                                 ),
-                                onPressed: _submit,
+                                onPressed: _submit(context),
                               )
                             ],
                           ),
@@ -195,7 +195,7 @@ class _OperatorsPageState extends State<OperatorsPage> {
         });
   }
 
-  void _submit() {
+  _submit(context) {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       setState(() {
