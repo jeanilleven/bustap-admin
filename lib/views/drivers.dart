@@ -3,11 +3,12 @@ import '../common/packages.dart';
 import '../controller/employeecontroller.dart';
 import '../models/employee.dart';
 import '../partials/partials.dart';
+import 'package:bustap/services/auth.dart';
 
 class Drivers extends StatelessWidget {
-  const Drivers(this.userDoc, this.userCred, {Key key}) : super(key: key);
+  const Drivers(this.userDoc, this.userCred, this.auth, {Key key}) : super(key: key);
 
-
+  final Auth auth;
   final DocumentSnapshot userDoc;
   final User userCred;
   @override
@@ -16,15 +17,16 @@ class Drivers extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'BusTap Admin | Drivers',
       theme: ThemeData(primaryColor: Colors.blue),
-      home: DriversPage(userDoc, userCred, title: 'BusTap Admin | Employees'),
+      home: DriversPage(userDoc, userCred, auth, title: 'BusTap Admin | Employees'),
     );
   }
 }
 
 class DriversPage extends StatefulWidget {
-  DriversPage(this.userDoc, this.userCred, {Key key, this.title}) : super(key: key);
+  DriversPage(this.userDoc, this.userCred, this.auth, {Key key, this.title}) : super(key: key);
   final String title;
 
+  final Auth auth;
   final DocumentSnapshot userDoc;
   final User userCred;
   @override
@@ -72,7 +74,7 @@ class _DriversPageState extends State<DriversPage> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        drawer: MainDrawer(widget.userDoc, widget.userCred),
+        drawer: MainDrawer(widget.userDoc, widget.userCred, widget.auth),
         appBar: AppBar(
           backgroundColor: Colors.white,
           iconTheme: IconThemeData(color: Colors.teal),

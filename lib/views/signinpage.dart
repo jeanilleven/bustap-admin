@@ -9,7 +9,7 @@ enum FormType { login, register, forgot_password, re_login }
 enum ErrorType { wrong_credentials, other }
 
 class SignInPage extends StatefulWidget {
-  SignInPage({this.auth, this.onSignedIn, this.isReLogin});
+  SignInPage(this.auth, {this.onSignedIn, this.isReLogin});
   final BaseAuth auth;
   final VoidCallback onSignedIn;
   bool isReLogin;
@@ -160,7 +160,7 @@ class _SignInPageState extends State<SignInPage> {
               new MaterialPageRoute(
                   builder: (BuildContext
                           context) =>
-                      new Dashboard(value, widget.auth.currentUser())));
+                      new Dashboard(value, widget.auth.currentUser(), widget.auth)));
         }).catchError((e) {
           setState(() {
             print(
@@ -171,6 +171,7 @@ class _SignInPageState extends State<SignInPage> {
           });
         });
     }
+
     return FutureBuilder(
       future: Firebase.initializeApp(),
       builder: (context, snapshot) {
@@ -278,7 +279,7 @@ class _SignInPageState extends State<SignInPage> {
                                                     new MaterialPageRoute(
                                                         builder: (BuildContext
                                                                 context) =>
-                                                            new Dashboard(value, widget.auth.currentUser())));
+                                                            new Dashboard(value, widget.auth.currentUser(), widget.auth)));
                                               }).catchError((e) {
                                                 setState(() {
                                                   print(
@@ -304,7 +305,7 @@ class _SignInPageState extends State<SignInPage> {
                                                   new MaterialPageRoute(
                                                       builder: (BuildContext
                                                               context) =>
-                                                          new Dashboard(userDoc, widget.auth.currentUser())));
+                                                          new Dashboard(userDoc, widget.auth.currentUser(), widget.auth)));
                                             }).catchError((e) {
                                               setState(() {
                                                 print(

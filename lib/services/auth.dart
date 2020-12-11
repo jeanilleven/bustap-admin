@@ -72,7 +72,7 @@ class Auth implements BaseAuth {
     await _firebase.currentUser.updatePassword(newPassword);
   }
 
-  void signOut() async {
+  Future<void> signOut() async {
     await _firebase.signOut();
   }
 

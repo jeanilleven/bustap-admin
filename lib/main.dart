@@ -39,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: Container(
           child: ListView(
-        children: <Widget>[SignInPage(auth: new Auth())],
+        children: <Widget>[SignInPage(new Auth())],
       )),
     );
   }

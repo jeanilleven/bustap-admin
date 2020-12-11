@@ -3,9 +3,11 @@ import '../partials/partials.dart';
 import '../common/packages.dart';
 import '../controller/vehiclecontroller.dart';
 
-class Vehicles extends StatelessWidget {
-  const Vehicles(this.userDoc, this.userCred, {Key key}) : super(key: key);
+import 'package:bustap/services/auth.dart';
 
+class Vehicles extends StatelessWidget {
+  const Vehicles(this.userDoc, this.userCred, this.auth, {Key key}) : super(key: key);
+  final Auth auth;
   final DocumentSnapshot userDoc;
   final User userCred;
   @override
@@ -16,15 +18,17 @@ class Vehicles extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: VehiclesPage(userDoc, userCred, title: 'BusTap Admin | Vehicles'),
+      home: VehiclesPage(userDoc, userCred, auth,
+          title: 'BusTap Admin | Vehicles'),
     );
   }
 }
 
 class VehiclesPage extends StatefulWidget {
-  VehiclesPage(this.userDoc, this.userCred, {Key key, this.title}) : super(key: key);
+  VehiclesPage(this.userDoc, this.userCred, this.auth, {Key key, this.title})
+      : super(key: key);
   final String title;
-
+  final Auth auth;
 
   final DocumentSnapshot userDoc;
   final User userCred;
@@ -242,7 +246,7 @@ class _VehiclesPageState extends State<VehiclesPage> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        drawer: MainDrawer(widget.userDoc, widget.userCred),
+        drawer: MainDrawer(widget.userDoc, widget.userCred, widget.auth),
         appBar: AppBar(
           backgroundColor: Colors.white,
           iconTheme: IconThemeData(color: Colors.teal),
@@ -328,7 +332,7 @@ class _VehiclesPageState extends State<VehiclesPage> {
                             context,
                             new MaterialPageRoute(
                                 builder: (BuildContext context) =>
-                                    new ScheduleTable(widget.userDoc, widget.userCred)));
+                                    new ScheduleTable(widget.userDoc, widget.userCred, widget.auth)));
                       },
                       tooltip: 'View Schedule and Assignments',
                       icon: Icon(CupertinoIcons.calendar,

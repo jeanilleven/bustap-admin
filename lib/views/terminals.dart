@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import '../partials/partials.dart';
 import '../common/packages.dart';
 import '../controller/terminalcontroller.dart';
+import 'package:bustap/services/auth.dart';
 
 class Terminals extends StatefulWidget {
-  Terminals(this.userDoc, this.userCred, {Key key}) : super(key: key);
-
-
+  Terminals(this.userDoc, this.userCred, this.auth, {Key key}) : super(key: key);
+  final Auth auth;
   final DocumentSnapshot userDoc;
   final User userCred;
   @override
@@ -265,7 +265,7 @@ class _TerminalsState extends State<Terminals> {
         } else {
           //this adds to the list
           // createTerminal(_stationNo, _terminalName, _adCity, _adStreet,
-              // _adProvince, _country);
+          // _adProvince, _country);
         }
       });
       Navigator.of(context, rootNavigator: true).pop(context);
@@ -380,7 +380,7 @@ class _TerminalsState extends State<Terminals> {
             backgroundColor: Colors.white,
             iconTheme: IconThemeData(color: Colors.teal),
             title: Text('Terminals', style: TextStyle(color: Colors.blue))),
-        drawer: MainDrawer(widget.userDoc, widget.userCred),
+        drawer: MainDrawer(widget.userDoc, widget.userCred, widget.auth),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             TerminalDetails td = new TerminalDetails('', '', '', '', '', '');

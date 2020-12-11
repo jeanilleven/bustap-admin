@@ -4,10 +4,12 @@ import '../controller/operatorcontroller.dart';
 import '../models/operator.dart';
 import '../partials/partials.dart';
 
+import 'package:bustap/services/auth.dart';
+
 class Operators extends StatelessWidget {
-  const Operators(this.userDoc, this.userCred, {Key key}) : super(key: key);
-
-
+  const Operators(this.userDoc, this.userCred, this.auth, {Key key})
+      : super(key: key);
+  final Auth auth;
   final DocumentSnapshot userDoc;
   final User userCred;
   @override
@@ -18,16 +20,17 @@ class Operators extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: OperatorsPage(userDoc, userCred, title: 'BusTap Admin | Operators'),
+      home: OperatorsPage(userDoc, userCred, auth, title: 'BusTap Admin | Operators'),
     );
   }
 }
 
 class OperatorsPage extends StatefulWidget {
-  OperatorsPage(this.userDoc, this.userCred, {Key key, this.title}) : super(key: key);
+  OperatorsPage(this.userDoc, this.userCred, this.auth, {Key key, this.title})
+      : super(key: key);
   final String title;
-  
 
+  final Auth auth;
   final DocumentSnapshot userDoc;
   final User userCred;
   @override
@@ -75,7 +78,7 @@ class _OperatorsPageState extends State<OperatorsPage> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        drawer: MainDrawer(widget.userDoc, widget.userCred),
+        drawer: MainDrawer(widget.userDoc, widget.userCred, widget.auth),
         appBar: AppBar(
           backgroundColor: Colors.white,
           iconTheme: IconThemeData(color: Colors.teal),
@@ -102,7 +105,7 @@ class _OperatorsPageState extends State<OperatorsPage> {
               Container(
                   color: Colors.grey[250],
                   child: Padding(
-                      padding: EdgeInsets.all(30), 
+                      padding: EdgeInsets.all(30),
                       child: OperatorList(operatorType: "Bus"))),
               Container(
                   color: Colors.grey[250],
@@ -116,7 +119,8 @@ class _OperatorsPageState extends State<OperatorsPage> {
             tooltip: 'Add a new operator',
             child: Icon(CupertinoIcons.add),
             onPressed: () {
-              Operator op = new Operator(fname: "", lname: "", email: "", phonenum: "", type: "");
+              Operator op = new Operator(
+                  fname: "", lname: "", email: "", phonenum: "", type: "");
               addOperatorForm(context, "Add Operator", "Add", _formKey, op);
             }),
       ),

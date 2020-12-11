@@ -8,7 +8,9 @@ import 'package:bustap/services/auth.dart';
 class MainDrawer extends StatelessWidget {
   final DocumentSnapshot userDoc;
   final User userCred;
-  const MainDrawer(this.userDoc, this.userCred, {Key key}) : super(key: key);
+  const MainDrawer(this.userDoc, this.userCred, this.auth, {Key key})
+      : super(key: key);
+  final Auth auth;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,8 @@ class MainDrawer extends StatelessWidget {
             Navigator.push(
                 context,
                 new MaterialPageRoute(
-                    builder: (BuildContext context) => new Dashboard(userDoc, userCred)));
+                    builder: (BuildContext context) =>
+                        new Dashboard(userDoc, userCred, auth)));
           }),
       ListTile(
         leading: Icon(Icons.bar_chart_outlined),
@@ -47,7 +50,8 @@ class MainDrawer extends StatelessWidget {
           Navigator.push(
               context,
               new MaterialPageRoute(
-                  builder: (BuildContext context) => new Statistics(userDoc, userCred)));
+                  builder: (BuildContext context) =>
+                      new Statistics(userDoc, userCred, auth)));
         },
       ),
       ListTile(
@@ -58,7 +62,8 @@ class MainDrawer extends StatelessWidget {
             Navigator.push(
                 context,
                 new MaterialPageRoute(
-                    builder: (BuildContext context) => new Operators(userDoc, userCred)));
+                    builder: (BuildContext context) =>
+                        new Operators(userDoc, userCred, auth)));
           }),
       ListTile(
           leading: Icon(CupertinoIcons.person),
@@ -68,7 +73,8 @@ class MainDrawer extends StatelessWidget {
             Navigator.push(
                 context,
                 new MaterialPageRoute(
-                    builder: (BuildContext context) => new Drivers(userDoc, userCred)));
+                    builder: (BuildContext context) =>
+                        new Drivers(userDoc, userCred, auth)));
           }),
       ListTile(
           leading: Icon(CupertinoIcons.bus),
@@ -78,18 +84,20 @@ class MainDrawer extends StatelessWidget {
             Navigator.push(
                 context,
                 new MaterialPageRoute(
-                    builder: (BuildContext context) => new Vehicles(userDoc, userCred)));
+                    builder: (BuildContext context) =>
+                        new Vehicles(userDoc, userCred, auth)));
           }),
       ListTile(
-        leading: Icon(CupertinoIcons.location),
-        title: Text('Terminals'),
-        hoverColor: Colors.lightBlue[100],
-        onTap: () {
-          Navigator.push(
-            context,
-            new MaterialPageRoute(
-              builder: (BuildContext context) => new Terminals(userDoc, userCred)));
-      }),
+          leading: Icon(CupertinoIcons.location),
+          title: Text('Terminals'),
+          hoverColor: Colors.lightBlue[100],
+          onTap: () {
+            Navigator.push(
+                context,
+                new MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        new Terminals(userDoc, userCred, auth)));
+          }),
       ListTile(
         leading: Icon(Icons.person),
         title: Text('User Management'),
@@ -106,14 +114,16 @@ class MainDrawer extends StatelessWidget {
         title: Text('Settings'),
       ),
       ListTile(
-        hoverColor: Colors.lightBlue[100],
-        leading: Icon(Icons.logout),
-        title: Text('Logout'),
-        onTap: () {
-          Navigator.push(         
-            context,
-            new MaterialPageRoute(
-              builder: (BuildContext context) => new SignInPage()));
+          hoverColor: Colors.lightBlue[100],
+          leading: Icon(Icons.logout),
+          title: Text('Logout'),
+          onTap: () {
+            auth.signOut().then((value){
+              Navigator.push(
+                  context,
+                  new MaterialPageRoute(
+                      builder: (BuildContext context) =>  new SignInPage(auth)));
+            });
           }),
     ]));
   }
