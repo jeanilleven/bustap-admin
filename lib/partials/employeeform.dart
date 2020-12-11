@@ -96,6 +96,7 @@ import '../partials/partials.dart';
                           height: 75,
                           width: 250,
                           child: TextFormField(
+                              controller: TextEditingController(text: em.licensenum),
                               decoration: InputDecoration(
                                 labelText: 'License Number',
                                 labelStyle: TextStyle(color: Colors.blueAccent),

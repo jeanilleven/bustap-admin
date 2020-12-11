@@ -25,8 +25,8 @@ class EmployeeController{
             fname: doc.data()['fname'],
             lname: doc.data()['lname'],
             email: doc.data()['email'],
-            phonenum: doc.data()['phonenum'],
-            licensenum: doc.data()['licensenum'],
+            phonenum: doc.data()['phone_number'],
+            licensenum: doc.data()['license_number'],
             type: doc.data()['type']);
       }).toList();
     } catch (e) {

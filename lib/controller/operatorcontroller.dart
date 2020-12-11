@@ -24,7 +24,7 @@ class OperatorController {
             fname: doc.data()['fname'],
             lname: doc.data()['lname'],
             email: doc.data()['email'],
-            phonenum: doc.data()['phonenum'],
+            phonenum: doc.data()['phone_number'],
             type: doc.data()['type']);
       }).toList();
     } catch (e) {

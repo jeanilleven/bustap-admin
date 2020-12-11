@@ -261,8 +261,8 @@ class _TerminalsState extends State<Terminals> {
           //Some update code here
         } else {
           //this adds to the list
-          createTerminal(_stationNo, _terminalName, _adCity, _adStreet,
-              _adProvince, _country);
+          // createTerminal(_stationNo, _terminalName, _adCity, _adStreet,
+              // _adProvince, _country);
         }
       });
       Navigator.of(context, rootNavigator: true).pop(context);
