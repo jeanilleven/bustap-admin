@@ -75,7 +75,7 @@ class _OperatorListState extends State<OperatorList> {
                 Column(children: [
                   IconButton(
                     onPressed: () {
-                      // askConfirmation(context, op);
+                     askConfirmation(context, operatorDisplay[index]);
                     },
                     tooltip: 'Delete',
                     icon: Icon(CupertinoIcons.trash, color: Colors.red[200]),

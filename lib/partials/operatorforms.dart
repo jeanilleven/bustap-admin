@@ -32,23 +32,22 @@ addOperatorForm(BuildContext context, String header, String opt,
                         Container(
                           height: 75,
                           child: TextFormField(
-                            controller: TextEditingController(text: op.fname),
-                            decoration: InputDecoration(
-                              labelText: 'First Name',
-                              labelStyle: TextStyle(color: Colors.blueAccent),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.grey, width: 0.5)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.blueAccent, width: 0.5)),
-                            ),
-                            validator: (input) => input.length < 1
-                                ? 'This field is required'
-                                : null,
-                            // onSaved: (input) => op.fname = input,
-                            onSaved: (input) => op.fname = input
-                          ),
+                              controller: TextEditingController(text: op.fname),
+                              decoration: InputDecoration(
+                                labelText: 'First Name',
+                                labelStyle: TextStyle(color: Colors.blueAccent),
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.grey, width: 0.5)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.blueAccent, width: 0.5)),
+                              ),
+                              validator: (input) => input.length < 1
+                                  ? 'This field is required'
+                                  : null,
+                              // onSaved: (input) => op.fname = input,
+                              onSaved: (input) => op.fname = input),
                         ),
                         Container(
                           height: 75,
@@ -93,7 +92,8 @@ addOperatorForm(BuildContext context, String header, String opt,
                         Container(
                           height: 75,
                           child: TextFormField(
-                            controller: TextEditingController(text: op.phonenum),
+                            controller:
+                                TextEditingController(text: op.phonenum),
                             decoration: InputDecoration(
                               labelText: 'Phone Number',
                               labelStyle: TextStyle(color: Colors.blueAccent),
@@ -148,14 +148,8 @@ addOperatorForm(BuildContext context, String header, String opt,
                                     opt,
                                     style: TextStyle(color: Colors.white),
                                   ),
-                                  // onPressed: () {
-                                  //   Navigator.of(context).pop(
-                                  //       // print(fname)// You can call OperatorController().createOperator() here instead, just for testing purposes ang print.
-                                  //       submit(context, _formKey, op, opt));
-                                  // })
-                                  // onPressed:submit(context, _formKey, op, opt))
                                   onPressed: () {
-                                    if(_formKey.currentState.validate()){
+                                    if (_formKey.currentState.validate()) {
                                       submit(context, _formKey, op, opt);
                                     }
                                   })
@@ -172,6 +166,7 @@ submit(context, _formKey, op, opt) {
     _formKey.currentState.save();
     if (opt == "Update") {
       //Some update code here
+      OperatorController().updateOperator(op);
     } else {
       //this adds to the list
       OperatorController().createOperator(op);
@@ -180,4 +175,34 @@ submit(context, _formKey, op, opt) {
     // OperatorController().createController(fname, lname)
     Navigator.of(context).pop();
   }
+}
+
+askConfirmation(BuildContext context, Operator op) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+            title: Text('Removal Confirmation'),
+            content: Text('Are you sure you want to remove ' +
+                op.fname + ' ' + op.lname+
+                ' from the list of operators?'),
+            actions: [
+              FlatButton(
+                child: Text('No'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: Text('Yes'),
+                onPressed: () {
+                  Navigator.of(context).pop(removeOperator(op));
+                },
+              )
+            ]);
+      });
+}
+
+removeOperator(op) {
+  OperatorController().deleteOperator(op);
 }

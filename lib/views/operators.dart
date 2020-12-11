@@ -29,39 +29,6 @@ class OperatorsPage extends StatefulWidget {
 
 class _OperatorsPageState extends State<OperatorsPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  askConfirmation(BuildContext context, object) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-              title: Text('Removal Confirmation'),
-              content: Text('Are you sure you want to remove ' +
-                  object.id +
-                  ' - ' +
-                  object.name +
-                  ' from the list of operators?'),
-              actions: [
-                FlatButton(
-                  child: Text('No'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                FlatButton(
-                  child: Text('Yes'),
-                  onPressed: () {
-                    Navigator.of(context).pop(removeOperator(object));
-                  },
-                )
-              ]);
-        });
-  }
-
-  removeOperator(object) {
-    setState(() {
-      // busOps.remove(object);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,12 +82,4 @@ class _OperatorsPageState extends State<OperatorsPage> {
       ),
     );
   }
-}
-
-class OpDetails {
-  String id;
-  String name;
-  String email;
-
-  OpDetails(this.id, this.name, this.email);
 }
