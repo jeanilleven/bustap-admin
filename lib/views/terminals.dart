@@ -55,7 +55,7 @@ class _TerminalsState extends State<Terminals> {
         drawer: MainDrawer(),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Terminal term = new Terminal(city: '', country: '', name: '', province: '', stationnum: '', street: '' );
+            Terminal term = new Terminal(city: '', country: '', name: '', province: '', stationnum: '', street: '');
             addTerminalForm(context, "Add Terminal", "Add", _formKey, term);
           },
           child: Icon(CupertinoIcons.add),

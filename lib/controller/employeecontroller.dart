@@ -26,6 +26,7 @@ class EmployeeController{
             lname: doc.data()['lname'],
             email: doc.data()['email'],
             phonenum: doc.data()['phone_number'],
+            status: doc.data()['deleted'],
             licensenum: doc.data()['license_number'],
             type: doc.data()['type']);
       }).toList();

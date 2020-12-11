@@ -157,13 +157,14 @@ import '../partials/partials.dart';
                             hint: "City/Municipality",
                             showClearButton: true,
                             showSearchBox: true,
-                            selectedItem: term.city,
+                            selectedItem: term.city == '' ? null : term.city,
                             validator: (String item) {
                               if (item == null)
                                 return "This field is required";
                               else
                                 return null;
                             },
+                            // validator: (input)=>input == null ? 'This field is required' : null,
                             onSaved: (input) => term.city = input,
                           ),
                         ),
@@ -177,14 +178,14 @@ import '../partials/partials.dart';
                             hint: "Province",
                             showClearButton: true,
                             showSearchBox: true,
-                            selectedItem: term.province,
+                            selectedItem: term.province == '' ? null : term.province,
                             validator: (String item) {
                               if (item == null)
                                 return "This field is required";
                               else
                                 return null;
                             },
-                            onSaved: (input) => term.country = input,
+                            onSaved: (input) => term.province = input,
                           ),
                         ),
                         Container(
@@ -204,7 +205,7 @@ import '../partials/partials.dart';
                                 return null;
                             },
                             onSaved: (input) => term.country = input,
-                            selectedItem: term.country,
+                            selectedItem: term.country == '' ? null : term.country,
                           ),
                         ),
                         Divider(height: 25, color: Colors.white),

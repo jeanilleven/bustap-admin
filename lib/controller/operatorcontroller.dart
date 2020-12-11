@@ -25,6 +25,7 @@ class OperatorController {
             lname: doc.data()['lname'],
             email: doc.data()['email'],
             phonenum: doc.data()['phone_number'],
+            status: doc.data()['deleted'],
             type: doc.data()['type']);
       }).toList();
     } catch (e) {

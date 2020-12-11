@@ -5,6 +5,7 @@ class Employee {
   String phonenum;
   String type;
   String licensenum;
+  bool status;
 
-  Employee({this.email, this.fname, this.licensenum, this.lname, this.phonenum, this.type});
+  Employee({this.email, this.fname, this.licensenum, this.lname, this.phonenum, this.type, this.status});
 }

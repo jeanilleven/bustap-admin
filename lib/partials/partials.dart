@@ -10,3 +10,5 @@ export 'employeeslist.dart';
 export 'employeeform.dart';
 export 'terminalslist.dart';
 export 'terminalform.dart';
+export 'vehiclelist.dart';
+export 'vehicleform.dart';

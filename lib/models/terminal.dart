@@ -5,5 +5,6 @@ class Terminal {
   String province;
   String stationnum;
   String street;
-  Terminal ({this.city, this.country, this.name, this.province, this.stationnum, this.street});
+  bool status;
+  Terminal ({this.city, this.country, this.name, this.province, this.stationnum, this.street, this.status});
 }

@@ -16,7 +16,7 @@ class _EmployeeListState extends State<EmployeeList> {
   @override
   Widget build(BuildContext context) {
     final employeeSnapshot = Provider.of<List<Employee>>(context) ?? [];
-    final employeeDisplay = employeeSnapshot.where((element) => element.type == widget.employeeType).toList();
+    final employeeDisplay = employeeSnapshot.where((element) => element.type == widget.employeeType && element.status == false).toList();
     return ListView.builder(
       itemCount: employeeDisplay.length,
       itemBuilder: (context, index){

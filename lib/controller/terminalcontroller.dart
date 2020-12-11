@@ -28,6 +28,7 @@ class TerminalController{
             name: doc.data()['name'],
             province: doc.data()['province'],
             stationnum: doc.data()['station_number'],
+            status: doc.data()['deleted'],
             street: doc.data()['street']);
       }).toList();
     } catch (e) {

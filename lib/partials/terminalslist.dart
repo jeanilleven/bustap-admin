@@ -4,7 +4,8 @@ import '../models/terminal.dart';
 import '../partials/partials.dart';
 
 class TerminalList extends StatefulWidget {
-  // TerminalList(Key key) : super(key:key);
+  // final String terminalStatus;
+  // TerminalList({this.terminalStatus}) : super();
 
   @override
   _TerminalListState createState() => _TerminalListState();
@@ -15,8 +16,9 @@ class _TerminalListState extends State<TerminalList> {
   @override
   Widget build(BuildContext context) {
     final terminalSnapshot = Provider.of<List<Terminal>>(context) ?? [];
+    final terminalDisplay = terminalSnapshot.where((element) => element.status == false).toList();
     return ListView.builder(
-      itemCount: terminalSnapshot.length,
+      itemCount: terminalDisplay.length,
       itemBuilder: (context, index){
         return Container(
         margin: EdgeInsets.all(5),
@@ -30,23 +32,23 @@ class _TerminalListState extends State<TerminalList> {
                     Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                   Expanded(
                     flex: 3,
-                    child: Text(terminalSnapshot[index].stationnum,
+                    child: Text(terminalDisplay[index].stationnum,
                         style: TextStyle(color: Colors.blue, fontSize: 20)),
                   ),
                   Expanded(
                     flex: 3,
-                    child: Text(terminalSnapshot[index].name, style: TextStyle(fontSize: 20)),
+                    child: Text(terminalDisplay[index].name, style: TextStyle(fontSize: 20)),
                   ),
                   Expanded(
                     flex: 4,
-                    child: Text(terminalSnapshot[index].street + ", " + terminalSnapshot[index].city + ", " + terminalSnapshot[index].province,
+                    child: Text(terminalDisplay[index].street + ", " + terminalDisplay[index].city + ", " + terminalDisplay[index].province,
                         style: TextStyle(fontSize: 16)),
                   ),
                   Spacer(),
                   Column(children: [
                     IconButton(
                       onPressed: () {
-                        addTerminalForm(context, "View Terminal Details", "Update", _formKey, terminalSnapshot[index]);
+                        addTerminalForm(context, "View Terminal Details", "Update", _formKey, terminalDisplay[index]);
                         // addTerminal(
                         //     context, "View Terminal Details", "Update", td);
                       },

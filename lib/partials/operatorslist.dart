@@ -16,8 +16,7 @@ class _OperatorListState extends State<OperatorList> {
   @override
   Widget build(BuildContext context) {
     final operatorSnapshot = Provider.of<List<Operator>>(context) ?? [];
-    final operatorDisplay = operatorSnapshot.where((element) => element.type == widget.operatorType).toList();
-    // final jeepOperators = operatorSnapshot.where((element) => element.type == 'Jeepney').toList();
+    final operatorDisplay = operatorSnapshot.where((element) => element.type == widget.operatorType && element.status == false).toList();
     return ListView.builder(
       itemCount: operatorDisplay.length,
       itemBuilder: (context, index) {
