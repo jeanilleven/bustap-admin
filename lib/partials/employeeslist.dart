@@ -1,29 +1,25 @@
 import 'package:flutter/material.dart';
 import '../common/packages.dart';
-import '../models/operator.dart';
+import '../models/employee.dart';
 import '../partials/partials.dart';
 
-class OperatorList extends StatefulWidget {
-  final String operatorType;
-  OperatorList({this.operatorType}) : super();
-  
+class EmployeeList extends StatefulWidget {
+  final String employeeType;
+  EmployeeList({this.employeeType}) : super();
+
   @override
-  _OperatorListState createState() => _OperatorListState();
+  _EmployeeListState createState() => _EmployeeListState();
 }
 
-class _OperatorListState extends State<OperatorList> {
+class _EmployeeListState extends State<EmployeeList> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    final operatorSnapshot = Provider.of<List<Operator>>(context) ?? [];
-    final operatorDisplay = operatorSnapshot.where((element) => element.type == widget.operatorType).toList();
-    // final jeepOperators = operatorSnapshot.where((element) => element.type == 'Jeepney').toList();
+    final employeeSnapshot = Provider.of<List<Employee>>(context) ?? [];
+    final employeeDisplay = employeeSnapshot.where((element) => element.type == widget.employeeType).toList();
     return ListView.builder(
-      itemCount: operatorDisplay.length,
-      itemBuilder: (context, index) {
-        // return ListTile(
-        //     onTap: () {}, 
-        //     title: Text(operatorSnapshot[index].email)); 
+      itemCount: employeeDisplay.length,
+      itemBuilder: (context, index){
         return Container(
         margin: EdgeInsets.all(5),
         child: Material(
@@ -34,30 +30,22 @@ class _OperatorListState extends State<OperatorList> {
               padding: EdgeInsets.all(20),
               child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 Expanded(
-                  flex: 1,
-                  child: Text(operatorDisplay[index].hashCode.toString(),
+                  child: Text(employeeDisplay[index].hashCode.toString(),
                       style: TextStyle(color: Colors.blue, fontSize: 20)),
                 ),
                 Expanded(
                   flex: 2,
-                  child: Text(operatorDisplay[index].fname + ' ' + operatorDisplay[index].lname, style: TextStyle(fontSize: 20)),
+                  child: Text(employeeDisplay[index].fname + ' ' + employeeDisplay[index].lname, style: TextStyle(fontSize: 20)),
                 ),
                 Expanded(
                   flex: 2,
-                  child: Text(operatorDisplay[index].email, style: TextStyle(fontSize: 16)),
+                  child: Text(employeeDisplay[index].email, style: TextStyle(fontSize: 16)),
                 ),
                 Spacer(),
                 Column(children: [
                   IconButton(
                     onPressed: () {},
-                    tooltip: 'View Managed Drivers',
-                    icon: Icon(CupertinoIcons.person, color: Colors.blue[200]),
-                  )
-                ]),
-                Column(children: [
-                  IconButton(
-                    onPressed: () {},
-                    tooltip: 'View Managed Buses',
+                    tooltip: 'View Managed Vehicles',
                     icon: Icon(CupertinoIcons.bus, color: Colors.blue[200]),
                   )
                 ]),
@@ -65,8 +53,7 @@ class _OperatorListState extends State<OperatorList> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        addOperatorForm(
-                            context, "View Operator Details", "Update", _formKey, operatorDisplay[index]);
+                        addEmployeeForm(context, "View Employee Details", "Update", _formKey, employeeDisplay[index]);
                       },
                       tooltip: 'View Profile',
                       icon: Icon(CupertinoIcons.eye, color: Colors.blue[200]),
@@ -76,7 +63,7 @@ class _OperatorListState extends State<OperatorList> {
                 Column(children: [
                   IconButton(
                     onPressed: () {
-                      // askConfirmation(context, op);
+                      // askConfirmation(context, drv);
                     },
                     tooltip: 'Delete',
                     icon: Icon(CupertinoIcons.trash, color: Colors.red[200]),
@@ -85,7 +72,6 @@ class _OperatorListState extends State<OperatorList> {
               ]),
             )));
       },
-      // children: busOps.map((op) => listoperator(op)).toList(),
     );
   }
 }

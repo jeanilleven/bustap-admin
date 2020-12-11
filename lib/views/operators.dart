@@ -95,15 +95,13 @@ class _OperatorsPageState extends State<OperatorsPage> {
               Container(
                   color: Colors.grey[250],
                   child: Padding(
-                      padding: EdgeInsets.all(30), child: OperatorList())),
+                      padding: EdgeInsets.all(30), 
+                      child: OperatorList(operatorType: "Bus"))),
               Container(
                   color: Colors.grey[250],
                   child: Padding(
                       padding: EdgeInsets.all(30),
-                      child: ListView(
-                          // children:
-                          //     jeepOps.map((op) => listoperator(op)).toList(),
-                          ))),
+                      child: OperatorList(operatorType: "Jeepney"))),
             ],
           ),
         ),
