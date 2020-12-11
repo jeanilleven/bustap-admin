@@ -4,7 +4,7 @@ import '../controller/employeecontroller.dart';
 import '../models/employee.dart';
 import '../partials/partials.dart';
 
-  addEmployeeForm(BuildContext context, String header, String opt, GlobalKey<FormState> _formKey, Employee em) {
+  addScheduleForm(BuildContext context, String header, String opt, GlobalKey<FormState> _formKey, Employee em) {
     return showDialog(
         context: context,
         builder: (context) {
