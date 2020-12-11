@@ -12,7 +12,7 @@ class SignInPage extends StatefulWidget {
   SignInPage(this.auth, {this.onSignedIn, this.isReLogin});
   final BaseAuth auth;
   final VoidCallback onSignedIn;
-  bool isReLogin;
+  final bool isReLogin;
 
   @override
   _SignInPageState createState() => _SignInPageState();
@@ -257,8 +257,8 @@ class _SignInPageState extends State<SignInPage> {
                                     style: TextStyle(color: Colors.white)),
                                 color: Colors.lightBlueAccent,
                                 onPressed: () {
-                                  DocumentSnapshot userDoc;
-                                  User userCred;
+                                  // DocumentSnapshot userDoc;
+                                  // User userCred;
                                     if (validateAndSave()) {
                                       // try {
                                       Firebase.initializeApp();

@@ -13,3 +13,4 @@ export 'package:google_sign_in_all/google_sign_in_all.dart';
 export 'package:provider/provider.dart';
 export 'package:auth_buttons/auth_buttons.dart';
 export 'firebase.dart';
+export 'package:bustap/services/auth.dart';

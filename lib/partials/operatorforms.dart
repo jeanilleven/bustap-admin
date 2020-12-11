@@ -185,7 +185,7 @@ askConfirmation(BuildContext context, Operator op) {
             title: Text('Removal Confirmation'),
             content: Text('Are you sure you want to remove ' +
                 op.fname + ' ' + op.lname+
-                ' from the list of operators?'),
+                ' from the list of employees?'),
             actions: [
               FlatButton(
                 child: Text('No'),

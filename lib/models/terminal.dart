@@ -6,5 +6,14 @@ class Terminal {
   String stationnum;
   String street;
   bool status;
-  Terminal ({this.city, this.country, this.name, this.province, this.stationnum, this.street, this.status});
+  String uid;
+  Terminal(
+      {this.city,
+      this.country,
+      this.name,
+      this.province,
+      this.stationnum,
+      this.street,
+      this.status,
+      this.uid});
 }

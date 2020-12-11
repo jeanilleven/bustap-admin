@@ -20,6 +20,24 @@ class VehicleController{
         .catchError((error) => print("Failed to add operator: $error"));
   }
 
+  updateVehicle(Vehicle ve) {
+    return vehicles.doc(ve.uid).update({
+      'bus_code': ve.buscode,
+      'capacity': ve.capacity,
+      'manufacturer': ve.manufacturer,
+      'plate_number': ve.platenum, 
+      'route': ve.route, 
+      'seats_taken': ve.seatstaken, 
+      'type': ve.type
+    }).then((value) => print("Vehicle updated")).catchError((e) => print("Failed to update vehicle: $e"));
+  }
+
+  deleteVehicle(Vehicle ve){
+    return vehicles.doc(ve.uid).update({
+      'deleted': true,
+    }).then((value) => print("Vehicle deleted")).catchError((e) => print("Failed to delete vehicle: $e"));
+  }
+
   List<Vehicle> _vehicleList(QuerySnapshot snapshot) {
     try {
       return snapshot.docs.map((doc) {
@@ -31,7 +49,8 @@ class VehicleController{
             route: doc.data()['route'],
             status: doc.data()['deleted'],
             seatstaken: doc.data()['seats_taken'],
-            type: doc.data()['type']);
+            type: doc.data()['type'], 
+            uid: doc.id);
             // status: doc.data()['deleted'];
       }).toList();
     } catch (e) {

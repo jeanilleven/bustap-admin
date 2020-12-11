@@ -3,11 +3,13 @@ import '../common/packages.dart';
 import '../controller/vehiclecontroller.dart';
 import '../models/vehicle.dart';
 import '../partials/partials.dart';
+import '../partials/vepartials.dart';
 
 import 'package:bustap/services/auth.dart';
 
 class Vehicles extends StatelessWidget {
-  const Vehicles(this.userDoc, this.userCred, this.auth, {Key key}) : super(key: key);
+  const Vehicles(this.userDoc, this.userCred, this.auth, {Key key})
+      : super(key: key);
   final Auth auth;
   final DocumentSnapshot userDoc;
   final User userCred;
@@ -108,25 +110,29 @@ class _VehiclesPageState extends State<VehiclesPage> {
               Container(
                   child: Padding(
                       padding: EdgeInsets.all(30),
-                      child: VehicleList(vehicleType: "Bus")
-                      )),
+                      child: VehicleList(vehicleType: "Bus"))),
               Container(
                   child: Padding(
                       padding: EdgeInsets.all(30),
-                      child: VehicleList(vehicleType: "Jeepney")
-                      )),
+                      child: VehicleList(vehicleType: "Jeepney"))),
             ],
           ),
         ),
         floatingActionButton: FloatingActionButton(
             tooltip: 'Add a new vehicle',
             onPressed: () {
-              Vehicle vehicle = new Vehicle(buscode: '', capacity: 0, manufacturer: '', platenum: '', route: '', seatstaken: 0, type: '');
-              addVehicleForm(context, "Add Vehice", "Add", _formKey, vehicle);
+              Vehicle vehicle = new Vehicle(
+                  buscode: '',
+                  capacity: 0,
+                  manufacturer: '',
+                  platenum: '',
+                  route: '',
+                  seatstaken: 0,
+                  type: '');
+              addVehicleForm(context, "Add Vehicle", "Add", _formKey, vehicle);
             },
             child: Icon(CupertinoIcons.add)),
       ),
     );
   }
 }
-

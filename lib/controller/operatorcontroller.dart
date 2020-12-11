@@ -33,6 +33,7 @@ class OperatorController {
       'deleted': true,
     }).then((value) => print("Operator deleted")).catchError((e) => print("Failed to delete operator: $e"));
   }
+  
   List<Operator> _operatorList(QuerySnapshot snapshot) {
     try {
       return snapshot.docs.map((doc) {

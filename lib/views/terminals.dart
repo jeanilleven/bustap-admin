@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import '../partials/partials.dart';
+import '../partials/trmnlpartials.dart';
 import '../common/packages.dart';
 import '../models/terminal.dart';
 import '../controller/terminalcontroller.dart';
-import 'package:bustap/services/auth.dart';
 
 class Terminals extends StatefulWidget {
-  Terminals(this.userDoc, this.userCred, this.auth, {Key key}) : super(key: key);
+  Terminals(this.userDoc, this.userCred, this.auth, {Key key})
+      : super(key: key);
   final Auth auth;
   final DocumentSnapshot userDoc;
   final User userCred;
@@ -16,38 +17,6 @@ class Terminals extends StatefulWidget {
 
 class _TerminalsState extends State<Terminals> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  askConfirmation(BuildContext context, object) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-              title: Text('Removal Confirmation'),
-              content: Text('Are you sure you want to remove ' +
-                  object.id +
-                  ' from the list of terminals?'),
-              actions: [
-                FlatButton(
-                  child: Text('No'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                FlatButton(
-                  child: Text('Yes'),
-                  onPressed: () {
-                    Navigator.of(context).pop(removeTerminal(object));
-                  },
-                )
-              ]);
-        });
-  }
-
-  removeTerminal(object) {
-    setState(() {
-      // terminaldetails.remove(object);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +27,13 @@ class _TerminalsState extends State<Terminals> {
         drawer: MainDrawer(widget.userDoc, widget.userCred, widget.auth),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Terminal term = new Terminal(city: '', country: '', name: '', province: '', stationnum: '', street: '');
+            Terminal term = new Terminal(
+                city: '',
+                country: '',
+                name: '',
+                province: '',
+                stationnum: '',
+                street: '');
             addTerminalForm(context, "Add Terminal", "Add", _formKey, term);
           },
           child: Icon(CupertinoIcons.add),
@@ -67,13 +42,11 @@ class _TerminalsState extends State<Terminals> {
         body: StreamProvider<List<Terminal>>.value(
           value: TerminalController().retrieveAllTerminals,
           child: Container(
-            child: Padding(
-                padding: EdgeInsets.all(30),
-                child: TerminalList(),
-            )
-          ),
-        )
-    );
+              child: Padding(
+            padding: EdgeInsets.all(30),
+            child: TerminalList(),
+          )),
+        ));
   }
 }
 

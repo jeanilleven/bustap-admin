@@ -4,7 +4,7 @@ import '../models/employee.dart';
 class EmployeeController{
   CollectionReference employees = FirebaseFirestore.instance.collection('employees');
   createEmployee(Employee em) {
-  return employees
+    return employees
           .add({
             'fname': em.fname,
             'lname': em.lname,
@@ -18,6 +18,23 @@ class EmployeeController{
           .catchError((error) => print("Failed to add operator: $error"));
   }
 
+  updateEmployee(Employee em) {
+    return employees.doc(em.uid).update({
+      'fname': em.fname,
+      'lname': em.lname,
+      'email': em.email,
+      'license_number': em.licensenum,
+      'phone_number': em.phonenum,
+      'type': em.type,
+    }).then((value) => print("Employee updated")).catchError((e) => print("Failed to update employee: $e"));
+  }
+
+  deleteEmployee(Employee em){
+    return employees.doc(em.uid).update({
+      'deleted': true,
+    }).then((value) => print("Employee deleted")).catchError((e) => print("Failed to delete employee: $e"));
+  }
+
   List<Employee> _employeeList(QuerySnapshot snapshot) {
     try {
       return snapshot.docs.map((doc) {
@@ -28,7 +45,8 @@ class EmployeeController{
             phonenum: doc.data()['phone_number'],
             status: doc.data()['deleted'],
             licensenum: doc.data()['license_number'],
-            type: doc.data()['type']);
+            type: doc.data()['type'], 
+            uid: doc.id);
       }).toList();
     } catch (e) {
       print(e.toString());

@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
-import '../partials/partials.dart';
+
 abstract class BaseAuth {
   Future<UserCredential> signInWithEmailAndPassword(
       String email, String password);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../common/packages.dart';
 import '../models/vehicle.dart';
-import '../partials/partials.dart';
+import '../partials/vepartials.dart';
 
 class VehicleList extends StatefulWidget {
   final String vehicleType;
@@ -53,11 +53,7 @@ class _VehicleListState extends State<VehicleList> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            new MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    new ScheduleTable()));
+                       
                       },
                       tooltip: 'View Schedule and Assignments',
                       icon: Icon(CupertinoIcons.calendar,
@@ -68,7 +64,7 @@ class _VehicleListState extends State<VehicleList> {
                 Column(children: [
                   IconButton(
                     onPressed: () {
-                      // askConfirmation(context, vehicle);
+                      askConfirmation(context, vehicleDisplay[index]);
                     },
                     tooltip: 'Delete',
                     icon: Icon(CupertinoIcons.trash, color: Colors.red[200]),

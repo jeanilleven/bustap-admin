@@ -1,6 +1,5 @@
 import 'package:bustap/views/signinpage.dart';
 import 'package:flutter/material.dart';
-import '../main.dart';
 import '../views/views.dart';
 import '../common/packages.dart';
 import 'package:bustap/services/auth.dart';
