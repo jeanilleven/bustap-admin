@@ -10,7 +10,7 @@ abstract class BaseAuth {
   Future<UserCredential> createUserWithEmailAndPassword(
       String email, String password);
 
-  Future<User> currentUser();
+  User currentUser();
 
   void resetUserPasswordWithEmail(String email);
 
@@ -56,7 +56,7 @@ class Auth implements BaseAuth {
     return user;
   }
 
-  Future<User> currentUser() async {
+  User currentUser(){
     User user = _firebase.currentUser;
     return user;
   }

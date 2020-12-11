@@ -3,6 +3,11 @@ import '../partials/partials.dart';
 import '../common/packages.dart';
 
 class Dashboard extends StatelessWidget {
+  final DocumentSnapshot userDoc;
+  final User userCred;
+
+  Dashboard(this.userDoc, this.userCred);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

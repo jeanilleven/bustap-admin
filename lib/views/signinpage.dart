@@ -25,6 +25,7 @@ class _SignInPageState extends State<SignInPage> {
   ErrorType _error;
   String header = "Bustap Login";
   final formKey = new GlobalKey<FormState>();
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   bool validateAndSave() {
     final form = formKey.currentState;
@@ -146,11 +147,29 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.auth.currentUser() == null) {
-      Navigator.push(
-          context,
-          new MaterialPageRoute(
-              builder: (BuildContext context) => new Dashboard()));
+    if (widget.auth.currentUser() != null) {
+      firestore
+            .doc(
+                'users/${widget.auth.currentUser().uid}')
+            .get()
+            .then((value) {
+          print(
+              "Signed user admin: ${value.id}");
+          Navigator.push(
+              context,
+              new MaterialPageRoute(
+                  builder: (BuildContext
+                          context) =>
+                      new Dashboard(value, widget.auth.currentUser())));
+        }).catchError((e) {
+          setState(() {
+            print(
+                "LOL NAAY ERROR: uid of operator not found in collection" +
+                    e.message);
+            _error =
+                ErrorType.wrong_credentials;
+          });
+        });
     }
     return FutureBuilder(
       future: Firebase.initializeApp(),
@@ -237,7 +256,11 @@ class _SignInPageState extends State<SignInPage> {
                                     style: TextStyle(color: Colors.white)),
                                 color: Colors.lightBlueAccent,
                                 onPressed: () {
-                                  if (widget.auth.currentUser() == null) {
+                                  DocumentSnapshot userDoc;
+                                  User userCred;
+
+                                  if (widget.auth.currentUser() != null) {
+                                    userCred = widget.auth.currentUser();
                                     Navigator.push(
                                         context,
                                         new MaterialPageRoute(
@@ -250,60 +273,46 @@ class _SignInPageState extends State<SignInPage> {
                                       if (_formType == FormType.login) {
                                         //use widget member to access members at extended classs
 
-                                          widget.auth
-                                              .signInWithEmailAndPassword(
-                                                  _email, _password)
-                                              .then((value) {
-                                            if (value.user.uid ==
-                                                'qTNGN4LWmaYBJ7LITUqJ0BM3Cb12') {
+                                        widget.auth.signInWithEmailAndPassword( _email, _password).then((value) {
+                                          if (value.user.uid == 'qTNGN4LWmaYBJ7LITUqJ0BM3Cb12') {
+                                          } else {
+                                            // try {
+                                            DocumentSnapshot userDoc;
+                                            firestore
+                                                .doc(
+                                                    'operators/${value.user.uid}')
+                                                .get()
+                                                .then((value) {
+                                              userDoc = value;
                                               print(
-                                                  "Signed user admin: ${value.user.uid}");
+                                                  "Signed user admin: ${value.id}");
                                               Navigator.push(
                                                   context,
                                                   new MaterialPageRoute(
                                                       builder: (BuildContext
                                                               context) =>
                                                           new Dashboard()));
-                                            } else {
-                                              // try {
-                                              FirebaseFirestore firestore =
-                                                  FirebaseFirestore.instance;
-                                              DocumentSnapshot userDoc;
-                                              firestore
-                                                  .doc(
-                                                      'operators/${value.user.uid}')
-                                                  .get()
-                                                  .then((value) {
-                                                userDoc = value;
+                                            }).catchError((e) {
+                                              setState(() {
                                                 print(
-                                                    "Signed user admin: ${value.id}");
-                                                Navigator.push(
-                                                    context,
-                                                    new MaterialPageRoute(
-                                                        builder: (BuildContext
-                                                                context) =>
-                                                            new Dashboard()));
-                                              }).catchError((e) {
-                                                setState(() {
-                                                  print(
-                                                      "LOL NAAY ERROR: uid of operator not found in collection" +
-                                                          e.message);
-                                                  _error = ErrorType
-                                                      .wrong_credentials;
-                                                });
+                                                    "LOL NAAY ERROR: uid of operator not found in collection" +
+                                                        e.message);
+                                                _error =
+                                                    ErrorType.wrong_credentials;
                                               });
-                                              // } catch (e) {
-                                              // }
-                                            }
-                                          }).catchError((e) {
-                                            setState(() {
-                                              print(
-                                                  "LOL NAAY ERROR: uid of operator not found in collection" +
-                                                      e.message);
-                                              _error = ErrorType
-                                                  .wrong_credentials;
                                             });
+                                            // } catch (e) {
+                                            // }
+                                          }
+                                        }).catchError((e) {
+                                          setState(() {
+                                            print(
+                                                "LOL NAAY ERROR: wrong credentials" +
+                                                    e.message);
+                                            _error =
+                                                ErrorType.wrong_credentials;
                                           });
+                                        });
                                       }
                                       // } catch (e) {
                                       //   print("Error :)): $e");
