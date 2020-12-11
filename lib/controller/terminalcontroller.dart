@@ -18,22 +18,33 @@ class TerminalController{
       .then((value) => print("Terminal Added"))
       .catchError((error) => print("Failed to add terminal: $error"));
   }
-  // List<Terminal> _terminalList(QuerySnapshot snapshot) {
-  //   try {
-  //     return snapshot.docs.map((doc) {
-  //       return Terminal(
-  //           name: doc.data()['name'],
-  //           stationnum: doc.data()['stationnum'],
-  //           email: doc.data()['email'],
-  //           phonenum: doc.data()['phonenum'],
-  //           licensenum: doc.data()['licensenum'],
-  //           type: doc.data()['type']);
-  //     }).toList();
-  //   } catch (e) {
-  //     print(e.toString());
-  //     return null;
-  //   }
-  // }
+
+  List<Terminal> _terminalList(QuerySnapshot snapshot) {
+    try {
+      return snapshot.docs.map((doc) {
+        return Terminal(
+            city: doc.data()['city'],
+            country: doc.data()['country'],
+            name: doc.data()['name'],
+            province: doc.data()['province'],
+            stationnum: doc.data()['station_number'],
+            street: doc.data()['street']);
+      }).toList();
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Stream<List<Terminal>> get retrieveAllTerminals {
+    try {
+      print(terminals.snapshots().map(_terminalList));
+      return terminals.snapshots().map(_terminalList);
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 }
 
 

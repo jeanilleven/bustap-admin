@@ -8,3 +8,5 @@ export 'operatorslist.dart';
 export 'operatorforms.dart';
 export 'employeeslist.dart';
 export 'employeeform.dart';
+export 'terminalslist.dart';
+export 'terminalform.dart';
