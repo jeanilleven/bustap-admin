@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import './views/signinpage.dart';
 import 'common/packages.dart';
+import 'package:bustap/services/auth.dart';
 
 void main() async {
+  
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
@@ -37,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: Container(
           child: ListView(
-        children: <Widget>[SignInPage()],
+        children: <Widget>[SignInPage(auth: new Auth())],
       )),
     );
   }
