@@ -1,0 +1,17 @@
+-------------------- Auto-Git Log --------------------
+		Fri Dec 11 2020 19:03:08 GMT+0800 (Singapore Standard Time)
+------------------------------------------------------
+
+Modified files:
+* lib/services/auth.dart
+* lib/views/dashboard.dart
+* lib/views/signinpage.dart
+
+
+Created files:
+
+
+Deleted files:
+
+
+Renamed files:

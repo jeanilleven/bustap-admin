@@ -3,10 +3,13 @@ import '../partials/partials.dart';
 import '../common/packages.dart';
 import '../models/terminal.dart';
 import '../controller/terminalcontroller.dart';
+import 'package:bustap/services/auth.dart';
 
 class Terminals extends StatefulWidget {
-  Terminals({Key key}) : super(key: key);
-
+  Terminals(this.userDoc, this.userCred, this.auth, {Key key}) : super(key: key);
+  final Auth auth;
+  final DocumentSnapshot userDoc;
+  final User userCred;
   @override
   _TerminalsState createState() => _TerminalsState();
 }
@@ -52,7 +55,7 @@ class _TerminalsState extends State<Terminals> {
             backgroundColor: Colors.white,
             iconTheme: IconThemeData(color: Colors.teal),
             title: Text('Terminals', style: TextStyle(color: Colors.blue))),
-        drawer: MainDrawer(),
+        drawer: MainDrawer(widget.userDoc, widget.userCred, widget.auth),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Terminal term = new Terminal(city: '', country: '', name: '', province: '', stationnum: '', street: '');

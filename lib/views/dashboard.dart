@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import '../partials/partials.dart';
 import '../common/packages.dart';
+import 'package:bustap/services/auth.dart';
 
 class Dashboard extends StatelessWidget {
+  final DocumentSnapshot userDoc;
+  final User userCred;
+  final Auth auth;
+
+  Dashboard(this.userDoc, this.userCred, this.auth);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -11,15 +18,20 @@ class Dashboard extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: DashboardPage(title: 'BusTap Admin | Dashboard'),
+      home: DashboardPage(userDoc, userCred, auth,
+          title: 'BusTap Admin | Dashboard'),
     );
   }
 }
 
 class DashboardPage extends StatefulWidget {
-  DashboardPage({Key key, this.title}) : super(key: key);
+  DashboardPage(this.userDoc, this.userCred, this.auth, {Key key, this.title})
+      : super(key: key);
 
+  final DocumentSnapshot userDoc;
+  final User userCred;
   final String title;
+  final Auth auth;
 
   @override
   _DashboardState createState() => _DashboardState();
@@ -36,7 +48,7 @@ class _DashboardState extends State<DashboardPage> {
               style: TextStyle(color: Colors.lightBlue, fontSize: 20)),
         ),
         body: Container(child: DashboardGrid()),
-        drawer: MainDrawer());
+        drawer: MainDrawer(widget.userDoc, widget.userCred, widget.auth));
   }
 }
 

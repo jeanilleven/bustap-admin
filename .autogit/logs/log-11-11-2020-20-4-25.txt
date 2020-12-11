@@ -1,0 +1,24 @@
+-------------------- Auto-Git Log --------------------
+		Fri Dec 11 2020 20:04:25 GMT+0800 (Singapore Standard Time)
+------------------------------------------------------
+
+Modified files:
+* lib/partials/maindrawer.dart
+* lib/partials/schedule.dart
+* lib/views/dashboard.dart
+* lib/views/drivers.dart
+* lib/views/operators.dart
+* lib/views/signinpage.dart
+* lib/views/statistics.dart
+* lib/views/terminals.dart
+* lib/views/vehicles.dart
+
+
+Created files:
+* .autogit/logs/log-11-11-2020-19-3-8.txt
+
+
+Deleted files:
+
+
+Renamed files:
