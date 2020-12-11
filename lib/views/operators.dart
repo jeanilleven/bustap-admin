@@ -5,8 +5,11 @@ import '../models/operator.dart';
 import '../partials/partials.dart';
 
 class Operators extends StatelessWidget {
-  const Operators({Key key}) : super(key: key);
+  const Operators(this.userDoc, this.userCred, {Key key}) : super(key: key);
 
+
+  final DocumentSnapshot userDoc;
+  final User userCred;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,14 +18,18 @@ class Operators extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: OperatorsPage(title: 'BusTap Admin | Operators'),
+      home: OperatorsPage(userDoc, userCred, title: 'BusTap Admin | Operators'),
     );
   }
 }
 
 class OperatorsPage extends StatefulWidget {
-  OperatorsPage({Key key, this.title}) : super(key: key);
+  OperatorsPage(this.userDoc, this.userCred, {Key key, this.title}) : super(key: key);
   final String title;
+  
+
+  final DocumentSnapshot userDoc;
+  final User userCred;
   @override
   _OperatorsPageState createState() => _OperatorsPageState();
 }
@@ -68,7 +75,7 @@ class _OperatorsPageState extends State<OperatorsPage> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        drawer: MainDrawer(),
+        drawer: MainDrawer(widget.userDoc, widget.userCred),
         appBar: AppBar(
           backgroundColor: Colors.white,
           iconTheme: IconThemeData(color: Colors.teal),

@@ -1,10 +1,14 @@
+import 'package:bustap/views/signinpage.dart';
 import 'package:flutter/material.dart';
 import '../main.dart';
 import '../views/views.dart';
 import '../common/packages.dart';
+import 'package:bustap/services/auth.dart';
 
 class MainDrawer extends StatelessWidget {
-  const MainDrawer({Key key}) : super(key: key);
+  final DocumentSnapshot userDoc;
+  final User userCred;
+  const MainDrawer(this.userDoc, this.userCred, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +37,7 @@ class MainDrawer extends StatelessWidget {
             Navigator.push(
                 context,
                 new MaterialPageRoute(
-                    builder: (BuildContext context) => new Dashboard()));
+                    builder: (BuildContext context) => new Dashboard(userDoc, userCred)));
           }),
       ListTile(
         leading: Icon(Icons.bar_chart_outlined),
@@ -43,7 +47,7 @@ class MainDrawer extends StatelessWidget {
           Navigator.push(
               context,
               new MaterialPageRoute(
-                  builder: (BuildContext context) => new Statistics()));
+                  builder: (BuildContext context) => new Statistics(userDoc, userCred)));
         },
       ),
       ListTile(
@@ -54,7 +58,7 @@ class MainDrawer extends StatelessWidget {
             Navigator.push(
                 context,
                 new MaterialPageRoute(
-                    builder: (BuildContext context) => new Operators()));
+                    builder: (BuildContext context) => new Operators(userDoc, userCred)));
           }),
       ListTile(
           leading: Icon(CupertinoIcons.person),
@@ -64,7 +68,7 @@ class MainDrawer extends StatelessWidget {
             Navigator.push(
                 context,
                 new MaterialPageRoute(
-                    builder: (BuildContext context) => new Drivers()));
+                    builder: (BuildContext context) => new Drivers(userDoc, userCred)));
           }),
       ListTile(
           leading: Icon(CupertinoIcons.bus),
@@ -74,7 +78,7 @@ class MainDrawer extends StatelessWidget {
             Navigator.push(
                 context,
                 new MaterialPageRoute(
-                    builder: (BuildContext context) => new Vehicles()));
+                    builder: (BuildContext context) => new Vehicles(userDoc, userCred)));
           }),
       ListTile(
         leading: Icon(CupertinoIcons.location),
@@ -84,7 +88,7 @@ class MainDrawer extends StatelessWidget {
           Navigator.push(
             context,
             new MaterialPageRoute(
-              builder: (BuildContext context) => new Terminals()));
+              builder: (BuildContext context) => new Terminals(userDoc, userCred)));
       }),
       ListTile(
         leading: Icon(Icons.person),
@@ -109,7 +113,7 @@ class MainDrawer extends StatelessWidget {
           Navigator.push(         
             context,
             new MaterialPageRoute(
-              builder: (BuildContext context) => new MyApp()));
+              builder: (BuildContext context) => new SignInPage()));
           }),
     ]));
   }

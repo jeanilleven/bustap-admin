@@ -154,7 +154,7 @@ class _SignInPageState extends State<SignInPage> {
             .get()
             .then((value) {
           print(
-              "Signed user admin: ${value.id}");
+              "LINE 157: CURRENT USER DETECTED: Signed user admin: ${value.id}");
           Navigator.push(
               context,
               new MaterialPageRoute(
@@ -164,7 +164,7 @@ class _SignInPageState extends State<SignInPage> {
         }).catchError((e) {
           setState(() {
             print(
-                "LOL NAAY ERROR: uid of operator not found in collection" +
+                "LINE 167: Admin not found in collection" +
                     e.message);
             _error =
                 ErrorType.wrong_credentials;
@@ -258,15 +258,6 @@ class _SignInPageState extends State<SignInPage> {
                                 onPressed: () {
                                   DocumentSnapshot userDoc;
                                   User userCred;
-
-                                  if (widget.auth.currentUser() != null) {
-                                    userCred = widget.auth.currentUser();
-                                    Navigator.push(
-                                        context,
-                                        new MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                new Dashboard()));
-                                  } else {
                                     if (validateAndSave()) {
                                       // try {
                                       Firebase.initializeApp();
@@ -275,6 +266,28 @@ class _SignInPageState extends State<SignInPage> {
 
                                         widget.auth.signInWithEmailAndPassword( _email, _password).then((value) {
                                           if (value.user.uid == 'qTNGN4LWmaYBJ7LITUqJ0BM3Cb12') {
+                                            firestore
+                                                  .doc(
+                                                      'users/${widget.auth.currentUser().uid}')
+                                                  .get()
+                                                  .then((value) {
+                                                print(
+                                                    "LINE 275: Signed user admin: ${value.id}");
+                                                Navigator.push(
+                                                    context,
+                                                    new MaterialPageRoute(
+                                                        builder: (BuildContext
+                                                                context) =>
+                                                            new Dashboard(value, widget.auth.currentUser())));
+                                              }).catchError((e) {
+                                                setState(() {
+                                                  print(
+                                                      "LINE 285: uid of operator not found in collection" +
+                                                          e.message);
+                                                  _error =
+                                                      ErrorType.wrong_credentials;
+                                                });
+                                              });
                                           } else {
                                             // try {
                                             DocumentSnapshot userDoc;
@@ -291,7 +304,7 @@ class _SignInPageState extends State<SignInPage> {
                                                   new MaterialPageRoute(
                                                       builder: (BuildContext
                                                               context) =>
-                                                          new Dashboard()));
+                                                          new Dashboard(userDoc, widget.auth.currentUser())));
                                             }).catchError((e) {
                                               setState(() {
                                                 print(
@@ -318,8 +331,7 @@ class _SignInPageState extends State<SignInPage> {
                                       //   print("Error :)): $e");
                                       // }
                                     }
-                                  }
-                                })),
+                                  })),
                         Divider(
                           height: 10,
                         ),

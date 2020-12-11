@@ -4,8 +4,11 @@ import '../common/packages.dart';
 import '../controller/terminalcontroller.dart';
 
 class Terminals extends StatefulWidget {
-  Terminals({Key key}) : super(key: key);
+  Terminals(this.userDoc, this.userCred, {Key key}) : super(key: key);
 
+
+  final DocumentSnapshot userDoc;
+  final User userCred;
   @override
   _TerminalsState createState() => _TerminalsState();
 }
@@ -377,7 +380,7 @@ class _TerminalsState extends State<Terminals> {
             backgroundColor: Colors.white,
             iconTheme: IconThemeData(color: Colors.teal),
             title: Text('Terminals', style: TextStyle(color: Colors.blue))),
-        drawer: MainDrawer(),
+        drawer: MainDrawer(widget.userDoc, widget.userCred),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             TerminalDetails td = new TerminalDetails('', '', '', '', '', '');

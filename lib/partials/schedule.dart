@@ -3,8 +3,11 @@ import '../views/views.dart';
 import '../common/packages.dart';
 
 class ScheduleTable extends StatefulWidget {
-  ScheduleTable({Key key}) : super(key: key);
+  ScheduleTable(this.userDoc, this.userCred, {Key key}) : super(key: key);
+  
 
+  final DocumentSnapshot userDoc;
+  final User userCred;
   @override
   _ScheduleTableState createState() => _ScheduleTableState();
 }
@@ -32,7 +35,7 @@ class _ScheduleTableState extends State<ScheduleTable> {
                 Navigator.push(
                     context,
                     new MaterialPageRoute(
-                        builder: (BuildContext context) => new Vehicles()));
+                        builder: (BuildContext context) => new Vehicles(widget.userDoc, widget.userCred)));
               },
             )),
         body: Padding(

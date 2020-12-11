@@ -16,14 +16,17 @@ class Dashboard extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: DashboardPage(title: 'BusTap Admin | Dashboard'),
+      home: DashboardPage(userDoc, userCred, title: 'BusTap Admin | Dashboard'),
     );
   }
 }
 
 class DashboardPage extends StatefulWidget {
-  DashboardPage({Key key, this.title}) : super(key: key);
+  DashboardPage(this.userDoc, this.userCred, {Key key, this.title}) : super(key: key);
 
+
+  final DocumentSnapshot userDoc;
+  final User userCred;
   final String title;
 
   @override
@@ -41,7 +44,7 @@ class _DashboardState extends State<DashboardPage> {
               style: TextStyle(color: Colors.lightBlue, fontSize: 20)),
         ),
         body: Container(child: DashboardGrid()),
-        drawer: MainDrawer());
+        drawer: MainDrawer(widget.userDoc, widget.userCred));
   }
 }
 

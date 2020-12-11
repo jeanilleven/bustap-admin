@@ -4,8 +4,10 @@ import '../common/packages.dart';
 import '../controller/vehiclecontroller.dart';
 
 class Vehicles extends StatelessWidget {
-  const Vehicles({Key key}) : super(key: key);
+  const Vehicles(this.userDoc, this.userCred, {Key key}) : super(key: key);
 
+  final DocumentSnapshot userDoc;
+  final User userCred;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,15 +16,18 @@ class Vehicles extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: VehiclesPage(title: 'BusTap Admin | Vehicles'),
+      home: VehiclesPage(userDoc, userCred, title: 'BusTap Admin | Vehicles'),
     );
   }
 }
 
 class VehiclesPage extends StatefulWidget {
-  VehiclesPage({Key key, this.title}) : super(key: key);
+  VehiclesPage(this.userDoc, this.userCred, {Key key, this.title}) : super(key: key);
   final String title;
 
+
+  final DocumentSnapshot userDoc;
+  final User userCred;
   @override
   _VehiclesPageState createState() => _VehiclesPageState();
 }
@@ -237,7 +242,7 @@ class _VehiclesPageState extends State<VehiclesPage> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        drawer: MainDrawer(),
+        drawer: MainDrawer(widget.userDoc, widget.userCred),
         appBar: AppBar(
           backgroundColor: Colors.white,
           iconTheme: IconThemeData(color: Colors.teal),
@@ -323,7 +328,7 @@ class _VehiclesPageState extends State<VehiclesPage> {
                             context,
                             new MaterialPageRoute(
                                 builder: (BuildContext context) =>
-                                    new ScheduleTable()));
+                                    new ScheduleTable(widget.userDoc, widget.userCred)));
                       },
                       tooltip: 'View Schedule and Assignments',
                       icon: Icon(CupertinoIcons.calendar,
