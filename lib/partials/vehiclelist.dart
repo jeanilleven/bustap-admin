@@ -42,7 +42,7 @@ class _VehicleListState extends State<VehicleList> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        addVehicleForm(context, "Add Vehice", "Add", _formKey, vehicleDisplay[index]);
+                        addVehicleForm(context, "View Vehicle Details", "Update", _formKey, vehicleDisplay[index]);
                       },
                       tooltip: 'View Details',
                       icon: Icon(CupertinoIcons.eye, color: Colors.blue[200]),

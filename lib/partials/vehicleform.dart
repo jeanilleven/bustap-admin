@@ -128,6 +128,7 @@ import '../partials/partials.dart';
                             // onChanged: print,
                             hint: "Vehicle",
                             showClearButton: true,
+                            selectedItem: v.type == '' ? null : v.type,
                             validator: (String item) {
                               if (item == null)
                                 return "Invalid Vehicle";

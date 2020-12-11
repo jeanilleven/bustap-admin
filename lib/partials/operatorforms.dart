@@ -113,14 +113,15 @@ addOperatorForm(BuildContext context, String header, String opt,
                         Container(
                           padding: EdgeInsets.all(5),
                           child: DropdownSearch(
-                            searchBoxController:
-                                TextEditingController(text: op.type),
+                            // searchBoxController:
+                            //     TextEditingController(text: op.type),
                             dialogMaxWidth: 500,
                             maxHeight: 100,
                             items: ["Bus", "Jeepney"],
                             label: "Select a Vehicle",
                             hint: "Vehicle",
                             showClearButton: true,
+                            selectedItem: op.type == '' ? null : op.type,
                             validator: (String item) {
                               if (item == null)
                                 return "Invalid Vehicle";
