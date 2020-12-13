@@ -1,23 +1,30 @@
-import 'package:flutter/material.dart';
 import '../views/views.dart';
+import 'package:bustap/services/auth.dart';
+import 'package:flutter/material.dart';
 import '../common/packages.dart';
+import '../controller/schedulecontroller.dart';
+import '../models/schedules.dart';
+import 'vepartials.dart';
 
 class ScheduleTable extends StatefulWidget {
-  ScheduleTable({Key key}) : super(key: key);
-
+  final String busID;
+  ScheduleTable(this.userDoc, this.userCred, this.auth, {this.busID}) : super();
+  final Auth auth;
+  final DocumentSnapshot userDoc;
+  final User userCred;
   @override
   _ScheduleTableState createState() => _ScheduleTableState();
 }
 
 class _ScheduleTableState extends State<ScheduleTable> {
-  CalendarController _controller;
+  // CalendarController _controller;
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = CalendarController();
-  }
-
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _controller = CalendarController();
+  // }
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,48 +39,32 @@ class _ScheduleTableState extends State<ScheduleTable> {
                 Navigator.push(
                     context,
                     new MaterialPageRoute(
-                        builder: (BuildContext context) => new Vehicles()));
+                        builder: (BuildContext context) => new Vehicles(
+                            widget.userDoc, widget.userCred, widget.auth)));
               },
             )),
-        body: Padding(
-          padding: EdgeInsets.all(30),
-          child: Material(
-            elevation: 20, 
-            borderRadius: BorderRadius.circular(20),
-            shadowColor: Colors.blueGrey,
-            child: SingleChildScrollView(
-              child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                    padding: EdgeInsets.fromLTRB(0, 30, 0, 30),
-                    child: TableCalendar(
-                      initialCalendarFormat: CalendarFormat.twoWeeks,
-                      calendarController: _controller,
-                      calendarStyle: CalendarStyle(
-                          todayColor: Colors.blue[100],
-                          todayStyle:
-                              TextStyle(color: Colors.white,fontSize: 20, fontWeight: FontWeight.bold),
-                          selectedColor: Colors.cyan[400],
-                          selectedStyle:
-                              TextStyle(color: Colors.black, fontSize: 20)),
-                      headerStyle: HeaderStyle(
-                        formatButtonShowsNext: false,
-                      ),
-                      onDaySelected: (day, events, holidays) {
-                        print(day.toString());
-                      },
-                    ))
-              ],
-            ))
-          ) 
-        ),
+        body: StreamProvider<List<Schedule>>.value(
+            value: ScheduleController().retrieveAllSchedules,
+            child: Container(
+                color: Colors.grey[250],
+                child: Padding(
+                  padding: EdgeInsets.all(30),
+                  child: ScheduleList(busID: widget.busID),
+                ))),
         floatingActionButton: FloatingActionButton(
-          onPressed: (){},
-          tooltip: 'Assign a new schedule',
-          child: Icon(CupertinoIcons.add)
-        ),
-        
-        );
+            tooltip: 'Add a new schedule',
+            child: Icon(CupertinoIcons.add),
+            onPressed: () {
+              // Employee em = new Employee(
+              //     email: '',
+              //     fname: '',
+              //     licensenum: '',
+              //     lname: '',
+              //     phonenum: '',
+              //     type: '');
+              // addEmployeeForm(context, "Add Employee", "Add", _formKey, em);
+              Schedule sched = new Schedule(time: "00000", terminal: "", type: "", vehiclecode: "", vehicleid: "");
+              addScheduleForm(context, "Assign Schedule", "Add", _formKey, sched);
+            }));
   }
 }

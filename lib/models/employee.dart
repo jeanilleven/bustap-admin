@@ -1,18 +1,20 @@
-class Operator {
+class Employee {
   String fname;
   String lname;
   String email;
   String phonenum;
   String type;
-  String uid;
+  String licensenum;
   bool status;
+  String uid;
 
-  Operator(
-      {this.fname,
+  Employee(
+      {this.email,
+      this.fname,
+      this.licensenum,
       this.lname,
-      this.email,
       this.phonenum,
       this.type,
-      this.status,
+      this.status, 
       this.uid});
 }

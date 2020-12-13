@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import './views/signinpage.dart';
 import 'common/packages.dart';
+import 'package:bustap/services/auth.dart';
 
 void main() async {
+  
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
@@ -13,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'BusTap Admin | Sign In',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -37,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: Container(
           child: ListView(
-        children: <Widget>[SignInPage()],
+        children: <Widget>[SignInPage(new Auth())],
       )),
     );
   }

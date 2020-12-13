@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import '../common/packages.dart';
 import '../models/operator.dart';
+import '../partials/partials.dart';
 
 class OperatorList extends StatefulWidget {
-  OperatorList({Key key}) : super(key: key);
-
+  final String operatorType;
+  OperatorList({this.operatorType}) : super();
+  
   @override
   _OperatorListState createState() => _OperatorListState();
 }
 
 class _OperatorListState extends State<OperatorList> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final operatorSnapshot = Provider.of<List<Operator>>(context) ?? [];
+    final operatorDisplay = operatorSnapshot.where((element) => element.type == widget.operatorType && element.status == false).toList();
     return ListView.builder(
-      itemCount: operatorSnapshot.length,
+      itemCount: operatorDisplay.length,
       itemBuilder: (context, index) {
         // return ListTile(
         //     onTap: () {}, 
@@ -30,16 +34,16 @@ class _OperatorListState extends State<OperatorList> {
               child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 Expanded(
                   flex: 1,
-                  child: Text(operatorSnapshot.hashCode.toString(),
+                  child: Text(operatorDisplay[index].hashCode.toString(),
                       style: TextStyle(color: Colors.blue, fontSize: 20)),
                 ),
                 Expanded(
                   flex: 2,
-                  child: Text(operatorSnapshot[index].fname + ' ' + operatorSnapshot[index].lname, style: TextStyle(fontSize: 20)),
+                  child: Text(operatorDisplay[index].fname + ' ' + operatorDisplay[index].lname, style: TextStyle(fontSize: 20)),
                 ),
                 Expanded(
                   flex: 2,
-                  child: Text(operatorSnapshot[index].email, style: TextStyle(fontSize: 16)),
+                  child: Text(operatorDisplay[index].email, style: TextStyle(fontSize: 16)),
                 ),
                 Spacer(),
                 Column(children: [
@@ -60,8 +64,8 @@ class _OperatorListState extends State<OperatorList> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        // addOperator(
-                            // context, "View Operator Details", "Update", operatorSnapshot);
+                        addOperatorForm(
+                            context, "View Operator Details", "Update", _formKey, operatorDisplay[index]);
                       },
                       tooltip: 'View Profile',
                       icon: Icon(CupertinoIcons.eye, color: Colors.blue[200]),
@@ -71,7 +75,7 @@ class _OperatorListState extends State<OperatorList> {
                 Column(children: [
                   IconButton(
                     onPressed: () {
-                      // askConfirmation(context, op);
+                     askConfirmation(context, operatorDisplay[index]);
                     },
                     tooltip: 'Delete',
                     icon: Icon(CupertinoIcons.trash, color: Colors.red[200]),
