@@ -4,9 +4,10 @@ import 'common/packages.dart';
 import 'package:bustap/services/auth.dart';
 
 void main() async {
-  
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  Firebase.initializeApp().then((value) {
+    runApp(MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
