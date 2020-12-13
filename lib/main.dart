@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'BusTap Admin | Sign In',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

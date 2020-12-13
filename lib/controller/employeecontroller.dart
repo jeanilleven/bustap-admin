@@ -3,9 +3,12 @@ import '../models/employee.dart';
 
 class EmployeeController{
   CollectionReference employees = FirebaseFirestore.instance.collection('employees');
-  createEmployee(Employee em) {
-    return employees
-          .add({
+  createEmployee(Employee em) async {
+    UserCredential result = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(
+            email: em.email, password: "bustapEMP2020");
+
+    return employees.doc(result.user.uid).set({
             'fname': em.fname,
             'lname': em.lname,
             'email': em.email,

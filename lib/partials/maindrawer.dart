@@ -26,8 +26,9 @@ class MainDrawer extends StatelessWidget {
                 'https://images-na.ssl-images-amazon.com/images/I/41dn8MN3O3L._SX342_QL70_ML2_.jpg'),
             backgroundColor: Colors.lightBlueAccent,
             radius: 30),
-        title: Text('John Doe', style: TextStyle(fontSize: 18)),
-        subtitle: Text('johndoe@email.com'),
+        title: Text("temp",
+            style: TextStyle(fontSize: 18)),
+        subtitle: Text(userCred.email.toString()),
       ),
       Divider(height: 40),
       ListTile(
@@ -117,12 +118,16 @@ class MainDrawer extends StatelessWidget {
           leading: Icon(Icons.logout),
           title: Text('Logout'),
           onTap: () {
-            auth.signOut().then((value){
-              Navigator.push(
-                  context,
-                  new MaterialPageRoute(
-                      builder: (BuildContext context) =>  new SignInPage(auth)));
-            });
+            // auth.signOut().then((value){
+            //   Navigator.push(
+            //       context,
+            //       new MaterialPageRoute(
+            //           builder: (BuildContext context) =>  new SignInPage(auth)));
+            // });
+            Navigator.push(
+                context,
+                new MaterialPageRoute(
+                    builder: (BuildContext context) => new SignInPage(auth)));
           }),
     ]));
   }
