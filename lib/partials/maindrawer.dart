@@ -118,16 +118,18 @@ class MainDrawer extends StatelessWidget {
           leading: Icon(Icons.logout),
           title: Text('Logout'),
           onTap: () {
-            // auth.signOut().then((value){
-            //   Navigator.push(
-            //       context,
-            //       new MaterialPageRoute(
-            //           builder: (BuildContext context) =>  new SignInPage(auth)));
-            // });
-            Navigator.push(
-                context,
-                new MaterialPageRoute(
-                    builder: (BuildContext context) => new SignInPage(auth)));
+            auth.signOut().then((value){
+              Navigator.push(
+                  context,
+                  new MaterialPageRoute(
+                      builder: (BuildContext context) => new Scaffold( 
+                        body: Container(
+                          child: ListView(children: [
+                            SignInPage(new Auth())
+                          ],)
+                        ))
+                      ));
+            });
           }),
     ]));
   }
