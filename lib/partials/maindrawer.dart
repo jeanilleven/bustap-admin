@@ -1,8 +1,8 @@
-import 'package:bustap/views/signinpage.dart';
 import 'package:flutter/material.dart';
 import '../views/views.dart';
 import '../common/packages.dart';
 import 'package:bustap/services/auth.dart';
+import '../main.dart';
 
 class MainDrawer extends StatelessWidget {
   final DocumentSnapshot userDoc;
@@ -26,8 +26,7 @@ class MainDrawer extends StatelessWidget {
                 'https://images-na.ssl-images-amazon.com/images/I/41dn8MN3O3L._SX342_QL70_ML2_.jpg'),
             backgroundColor: Colors.lightBlueAccent,
             radius: 30),
-        title: Text("temp",
-            style: TextStyle(fontSize: 18)),
+        title: Text("temp", style: TextStyle(fontSize: 18)),
         subtitle: Text(userCred.email.toString()),
       ),
       Divider(height: 40),
@@ -118,17 +117,11 @@ class MainDrawer extends StatelessWidget {
           leading: Icon(Icons.logout),
           title: Text('Logout'),
           onTap: () {
-            auth.signOut().then((value){
+            auth.signOut().then((value) {
               Navigator.push(
                   context,
                   new MaterialPageRoute(
-                      builder: (BuildContext context) => new Scaffold( 
-                        body: Container(
-                          child: ListView(children: [
-                            SignInPage(new Auth())
-                          ],)
-                        ))
-                      ));
+                      builder: (BuildContext context) => new MyHomePage()));
             });
           }),
     ]));

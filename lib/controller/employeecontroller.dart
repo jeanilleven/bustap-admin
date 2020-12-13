@@ -1,41 +1,53 @@
 import '../common/packages.dart';
 import '../models/employee.dart';
+import '../models/vehicle.dart';
 
-class EmployeeController{
-  CollectionReference employees = FirebaseFirestore.instance.collection('employees');
+class EmployeeController {
+  CollectionReference employees =
+      FirebaseFirestore.instance.collection('employees');
   createEmployee(Employee em) async {
     UserCredential result = await FirebaseAuth.instance
         .createUserWithEmailAndPassword(
             email: em.email, password: "bustapEMP2020");
 
-    return employees.doc(result.user.uid).set({
-            'fname': em.fname,
-            'lname': em.lname,
-            'email': em.email,
-            'license_number': em.licensenum,
-            'phone_number': em.phonenum,
-            'type': em.type,
-            'deleted': false
-          })
-          .then((value) => print("Employee Added"))
-          .catchError((error) => print("Failed to add operator: $error"));
+    return employees
+        .doc(result.user.uid)
+        .set({
+          'fname': em.fname,
+          'lname': em.lname,
+          'email': em.email,
+          'license_number': em.licensenum,
+          'phone_number': em.phonenum,
+          'type': em.type,
+          'deleted': false
+        })
+        .then((value) => print("Employee Added"))
+        .catchError((error) => print("Failed to add operator: $error"));
   }
 
   updateEmployee(Employee em) {
-    return employees.doc(em.uid).update({
-      'fname': em.fname,
-      'lname': em.lname,
-      'email': em.email,
-      'license_number': em.licensenum,
-      'phone_number': em.phonenum,
-      'type': em.type,
-    }).then((value) => print("Employee updated")).catchError((e) => print("Failed to update employee: $e"));
+    return employees
+        .doc(em.uid)
+        .update({
+          'fname': em.fname,
+          'lname': em.lname,
+          'email': em.email,
+          'license_number': em.licensenum,
+          'phone_number': em.phonenum,
+          'type': em.type,
+        })
+        .then((value) => print("Employee updated"))
+        .catchError((e) => print("Failed to update employee: $e"));
   }
 
-  deleteEmployee(Employee em){
-    return employees.doc(em.uid).update({
-      'deleted': true,
-    }).then((value) => print("Employee deleted")).catchError((e) => print("Failed to delete employee: $e"));
+  deleteEmployee(Employee em) {
+    return employees
+        .doc(em.uid)
+        .update({
+          'deleted': true,
+        })
+        .then((value) => print("Employee deleted"))
+        .catchError((e) => print("Failed to delete employee: $e"));
   }
 
   List<Employee> _employeeList(QuerySnapshot snapshot) {
@@ -48,7 +60,7 @@ class EmployeeController{
             phonenum: doc.data()['phone_number'],
             status: doc.data()['deleted'],
             licensenum: doc.data()['license_number'],
-            type: doc.data()['type'], 
+            type: doc.data()['type'],
             uid: doc.id);
       }).toList();
     } catch (e) {
@@ -56,6 +68,7 @@ class EmployeeController{
       return null;
     }
   }
+
   Stream<List<Employee>> get retrieveAllEmployees {
     try {
       print(employees.snapshots().map(_employeeList));
@@ -65,9 +78,6 @@ class EmployeeController{
       return null;
     }
   }
+
+  
 }
-
-
-
-
-

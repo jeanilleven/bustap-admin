@@ -38,40 +38,6 @@ class DriversPage extends StatefulWidget {
 
 class _DriversPageState extends State<DriversPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  askConfirmation(BuildContext context, object) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-              title: Text('Removal Confirmation'),
-              content: Text('Are you sure you want to remove ' +
-                  object.id +
-                  ' - ' +
-                  object.name +
-                  ' from the list of drivers?'),
-              actions: [
-                FlatButton(
-                  child: Text('No'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                FlatButton(
-                  child: Text('Yes'),
-                  onPressed: () {
-                    // Navigator.of(context).pop(removeDriver(object));
-                  },
-                )
-              ]);
-        });
-  }
-
-  removeDriver(object) {
-    setState(() {
-      // busOps.remove(object);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
