@@ -274,8 +274,6 @@ class _SignInPageState extends State<SignInPage> {
                                                 .get()
                                                 .then((value) {
                                               userDoc = value;
-                                              print(
-                                                  "Signed user admin: ${value.id}");
                                               if(value.exists){
                                                 Navigator.push(
                                                     context,
