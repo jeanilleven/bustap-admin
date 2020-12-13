@@ -14,4 +14,3 @@ export 'package:provider/provider.dart';
 export 'package:auth_buttons/auth_buttons.dart';
 export 'firebase.dart';
 export 'package:bustap/services/auth.dart';
-export 'package:flutter_datetime_picker/flutter_datetime_picker.dart';

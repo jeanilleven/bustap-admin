@@ -1,16 +1,20 @@
 import '../common/packages.dart';
 import '../models/schedules.dart';
+import 'package:intl/intl.dart';
+
 
 class ScheduleController {
   CollectionReference schedules = FirebaseFirestore.instance.collection('busSchedules');
   List<Schedule> _scheduleList(QuerySnapshot snapshot) {
     try {
       return snapshot.docs.map((doc) {
+        var displayTime = new DateFormat.jm().format(doc.data()['datetime'].toDate());
         return Schedule(
-            time: doc.data()['datetime'].toString(),
-            terminal: doc.data()['terminal_id'].toString(),
+            time: displayTime.toString(),
+            terminal: doc.data()['terminal_id'],
             type: doc.data()['type'],
             vehiclecode: doc.data()['vehicle_code'],
+            status:doc.data()['deleted'],
             vehicleid: doc.data()['vehicle_id'].toString(),
           );
       }).toList();

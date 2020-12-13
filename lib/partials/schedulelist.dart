@@ -14,7 +14,7 @@ class _ScheduleListState extends State<ScheduleList> {
   @override
   Widget build(BuildContext context) {
     final scheduleSnapshot = Provider.of<List<Schedule>>(context) ?? [];
-    final scheduleDisplay = scheduleSnapshot.where((element) => element.uid == widget.busID).toList();
+    final scheduleDisplay = scheduleSnapshot.where((element) => element.vehicleid == 'DocumentReference(buses/'+widget.busID+')' && element.status == false).toList();
     return ListView.builder(
       itemCount: scheduleDisplay.length,
       itemBuilder: (context, index){
