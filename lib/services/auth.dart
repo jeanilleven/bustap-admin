@@ -16,6 +16,8 @@ abstract class BaseAuth {
 
   void signOut();
 
+  // bool isAdmin();
+
   Future changeUserPassword(String newPassword);
 
   Future<String> userType();
@@ -56,8 +58,9 @@ class Auth implements BaseAuth {
     return user;
   }
 
-  User currentUser(){
+  User currentUser() {
     User user = _firebase.currentUser;
+  
     return user;
   }
 
@@ -78,25 +81,31 @@ class Auth implements BaseAuth {
 
   Future<String> userType() async {
     String type = await _firestore
-        .collection("users")
+        .collection("operators")
         .doc(_firebase.currentUser.uid)
         .get()
-        .then((value) => value.data()['type']);
+        .then((value) => value.data()['admin']);
     return type;
   }
 
   Future<List<String>> userFullName() async {
     String fname = await _firestore
-        .collection("users")
+        .collection("operators")
         .doc(_firebase.currentUser.uid)
         .get()
-        .then((value) => value.data()['f_name']);
+        .then((value) => value.data()['fname']);
     String lname = await _firestore
-        .collection("users")
+        .collection("operators")
         .doc(_firebase.currentUser.uid)
         .get()
-        .then((value) => value.data()['l_name']);
+        .then((value) => value.data()['lname']);
 
     return [fname, lname];
   }
+
+  // bool isAdmin(){
+  //   var user = _firestore.collection('operators').doc(currentUser().uid).
+
+  //   return user.admin;
+  // }
 }
