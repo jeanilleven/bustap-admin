@@ -147,30 +147,6 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.auth.currentUser() != null) {
-      firestore
-            .doc(
-                'users/${widget.auth.currentUser().uid}')
-            .get()
-            .then((value) {
-          print(
-              "LINE 157: CURRENT USER DETECTED: Signed user admin: ${value.id}");
-          Navigator.push(
-              context,
-              new MaterialPageRoute(
-                  builder: (BuildContext
-                          context) =>
-                      new Dashboard(value, widget.auth.currentUser(), widget.auth)));
-        }).catchError((e) {
-          setState(() {
-            print(
-                "LINE 167: Admin not found in collection" +
-                    e.message);
-            _error =
-                ErrorType.wrong_credentials;
-          });
-        });
-    }
 
     return FutureBuilder(
       future: Firebase.initializeApp(),
