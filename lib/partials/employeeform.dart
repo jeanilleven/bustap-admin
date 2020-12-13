@@ -231,7 +231,7 @@ removeEmployee(em) {
 }
 
 addManagedVehicle(
-  BuildContext context, Employee em, GlobalKey<FormState> _formKey) {
+    BuildContext context, Employee em, GlobalKey<FormState> _formKey) {
   return showDialog(
       context: context,
       builder: (context) {
@@ -249,7 +249,11 @@ addManagedVehicle(
                             const EdgeInsets.fromLTRB(20.0, 35.0, 20.0, 20.0),
                         child: IntrinsicWidth(
                             child: ListView(children: [
-                          Text("Assigned Vehicle of "+em.fname+" "+em.lname,
+                          Text(
+                              "Assigned Vehicle of " +
+                                  em.fname +
+                                  " " +
+                                  em.lname,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 24,
@@ -259,69 +263,99 @@ addManagedVehicle(
                           Divider(height: 5, color: Colors.grey[300]),
                           Divider(height: 5, color: Colors.white),
                           Container(
-                            height: 75,
-                            child: DropdownSearch(
-                              dialogMaxWidth: 500,
-                              maxHeight: 150,
-                              items: ["Bus Driver", "Jeepney Driver", "Conductor"],
-                              label: "Select Vehicle",
-                              // onChanged: print,
-                              hint: "Vehicle",
-                              showClearButton: true,
-                              validator: (String item) {
-                                if (item == null)
-                                  return "Invalid Vehicle";
-                                else
-                                  return null;
-                              },
-                              onSaved: (input) => em.type = input,
-                                )
-                            ),
+                              height: 75,
+                              child: DropdownSearch(
+                                dialogMaxWidth: 500,
+                                maxHeight: 150,
+                                items: [
+                                  "Bus Driver",
+                                  "Jeepney Driver",
+                                  "Conductor"
+                                ],
+                                label: "Select Vehicle",
+                                // onChanged: print,
+                                hint: "Vehicle",
+                                showClearButton: true,
+                                validator: (String item) {
+                                  if (item == null)
+                                    return "Invalid Vehicle";
+                                  else
+                                    return null;
+                                },
+                                onSaved: (input) => em.type = input,
+                              )),
                           Container(
-                            height: 75,
-                            child: DropdownSearch(
-                              dialogMaxWidth: 500,
-                              maxHeight: 150,
-                              items: ["Bus Driver", "Jeepney Driver", "Conductor"],
-                              label: "Select Conductor",
-                              // onChanged: print,
-                              hint: "Vehicle",
-                              showClearButton: true,
-                              validator: (String item) {
-                                if (item == null)
-                                  return "Invalid Vehicle";
-                                else
-                                  return null;
-                              },
-                              onSaved: (input) => em.type = input,
-                                )
-                            ),  
-                        Divider(height: 25, color: Colors.white),
-                        Container(
-                          padding: EdgeInsets.only(bottom: 15.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              FlatButton(
-                                  child: Text("Cancel"),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  }),
-                              RaisedButton(
-                                  color: Colors.lightBlue,
-                                  child: Text(
-                                    "Assign",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  onPressed: () {
-                                    if (_formKey.currentState.validate()) {
-                                      submitEmployeeForm(
-                                          context, _formKey, em, "Assign");
-                                    }
-                                  })
-                            ],
+                              height: 75,
+                              child: DropdownSearch(
+                                dialogMaxWidth: 500,
+                                maxHeight: 150,
+                                items: [
+                                  "Bus Driver",
+                                  "Jeepney Driver",
+                                  "Conductor"
+                                ],
+                                label: "Select Conductor",
+                                // onChanged: print,
+                                hint: "Vehicle",
+                                showClearButton: true,
+                                validator: (String item) {
+                                  if (item == null)
+                                    return "Invalid Vehicle";
+                                  else
+                                    return null;
+                                },
+                                onSaved: (input) => em.type = input,
+                              )),
+                          Divider(height: 25, color: Colors.white),
+                          Container(
+                            padding: EdgeInsets.only(bottom: 15.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                FlatButton(
+                                    child: Text("Cancel"),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    }),
+                                RaisedButton(
+                                    color: Colors.lightBlue,
+                                    child: Text(
+                                      "Assign",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    onPressed: () {
+                                      if (_formKey.currentState.validate()) {
+                                        submitEmployeeForm(
+                                            context, _formKey, em, "Assign");
+                                      }
+                                    })
+                              ],
+                            ),
                           ),
-                        ),
                         ]))))));
       });
+}
+
+Widget employeeDropDown(Employee em) {
+  return StreamBuilder(
+    stream: EmployeeController.,
+    builder: (context, snapshot) {},
+  );
+
+  return DropdownSearch(
+    dialogMaxWidth: 500,
+    maxHeight: 150,
+    items: ["Bus Driver", "Jeepney Driver", "Conductor"],
+    label: "Select Conductor",
+    // onChanged: print,
+    hint: "Vehicle",
+    showClearButton: true,
+    validator: (String item) {
+      if (item == null)
+        return "Invalid Vehicle";
+      else
+        return null;
+    },
+    onSaved: (input) => em.type = input,
+  );
 }
