@@ -298,6 +298,7 @@ class _SignInPageState extends State<SignInPage> {
                                             } else {
                                               print(
                                                   "user is not an admin or an operator");
+
                                               setState(() {
                                                 _error =
                                                     ErrorType.wrong_credentials;
