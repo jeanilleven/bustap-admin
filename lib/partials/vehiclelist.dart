@@ -1,3 +1,4 @@
+import 'package:bustap/partials/schedule.dart';
 import 'package:flutter/material.dart';
 import '../common/packages.dart';
 import '../models/vehicle.dart';
@@ -5,7 +6,10 @@ import '../partials/vepartials.dart';
 
 class VehicleList extends StatefulWidget {
   final String vehicleType;
-  VehicleList({this.vehicleType}) : super();
+  final DocumentSnapshot userDoc;
+  final User userCred;
+  VehicleList(this.userDoc, this.userCred, this.auth,{this.vehicleType}) : super();
+  final Auth auth;
 
   @override
   _VehicleListState createState() => _VehicleListState();
@@ -53,7 +57,12 @@ class _VehicleListState extends State<VehicleList> {
                   children: [
                     IconButton(
                       onPressed: () {
-                       
+                       //some code here to go to calendar page
+                       Navigator.push(
+                        context,
+                        new MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                new ScheduleTable(widget.userDoc, widget.userCred, widget.auth, busID:vehicleDisplay[index].uid)));
                       },
                       tooltip: 'View Schedule and Assignments',
                       icon: Icon(CupertinoIcons.calendar,

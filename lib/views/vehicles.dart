@@ -110,11 +110,11 @@ class _VehiclesPageState extends State<VehiclesPage> {
               Container(
                   child: Padding(
                       padding: EdgeInsets.all(30),
-                      child: VehicleList(vehicleType: "Bus"))),
+                      child: VehicleList(widget.userDoc, widget.userCred, widget.auth, vehicleType: "Bus"))),
               Container(
                   child: Padding(
                       padding: EdgeInsets.all(30),
-                      child: VehicleList(vehicleType: "Jeepney"))),
+                      child: VehicleList(widget.userDoc, widget.userCred, widget.auth, vehicleType: "Jeepney"))),
             ],
           ),
         ),
