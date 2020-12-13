@@ -235,86 +235,101 @@ class _SignInPageState extends State<SignInPage> {
                                 onPressed: () {
                                   // DocumentSnapshot userDoc;
                                   // User userCred;
-                                    if (validateAndSave()) {
-                                      // try {
-                                      Firebase.initializeApp();
-                                      if (_formType == FormType.login) {
-                                        //use widget member to access members at extended classs
+                                  if (validateAndSave()) {
+                                    // try {
+                                    Firebase.initializeApp();
+                                    if (_formType == FormType.login) {
+                                      //use widget member to access members at extended classs
 
-                                        widget.auth.signInWithEmailAndPassword( _email, _password).then((value) {
-                                          if (value.user.uid == 'qTNGN4LWmaYBJ7LITUqJ0BM3Cb12') {
-                                            firestore
-                                                  .doc(
-                                                      'users/${widget.auth.currentUser().uid}')
-                                                  .get()
-                                                  .then((value) {
-                                                print(
-                                                    "LINE 275: Signed user admin: ${value.id}");
-                                                Navigator.push(
-                                                    context,
-                                                    new MaterialPageRoute(
-                                                        builder: (BuildContext
-                                                                context) =>
-                                                            new Dashboard(value, widget.auth.currentUser(), widget.auth)));
-                                              }).catchError((e) {
-                                                setState(() {
-                                                  print(
-                                                      "LINE 285: uid of operator not found in collection" +
-                                                          e.message);
-                                                  _error =
-                                                      ErrorType.wrong_credentials;
-                                                });
-                                              });
-                                          } else {
-                                            // try {
-                                            DocumentSnapshot userDoc;
-                                            firestore
-                                                .doc(
-                                                    'operators/${value.user.uid}')
-                                                .get()
-                                                .then((value) {
-                                              userDoc = value;
-                                              if(value.exists){
-                                                Navigator.push(
-                                                    context,
-                                                    new MaterialPageRoute(
-                                                        builder: (BuildContext
-                                                                context) =>
-                                                            new Dashboard(userDoc, widget.auth.currentUser(), widget.auth)));
-                                              }else{
-                                                setState(() {
-                                                  _error =
-                                                      ErrorType.wrong_credentials;
-                                                });
+                                      widget.auth
+                                          .signInWithEmailAndPassword(
+                                              _email, _password)
+                                          .then((value) {
+                                        if (value.user.uid ==
+                                            'qTNGN4LWmaYBJ7LITUqJ0BM3Cb12') {
+                                          firestore
+                                              .doc(
+                                                  'users/${widget.auth.currentUser().uid}')
+                                              .get()
+                                              .then((value) {
+                                            print(
+                                                "LINE 275: Signed user admin: ${value.id}");
+                                            Navigator.push(
+                                                context,
+                                                new MaterialPageRoute(
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        new Dashboard(
+                                                            value,
+                                                            widget.auth
+                                                                .currentUser(),
+                                                            widget.auth)));
+                                          }).catchError((e) {
+                                            setState(() {
+                                              print(
+                                                  "LINE 285: uid of operator not found in collection" +
+                                                      e.message);
+                                              _error =
+                                                  ErrorType.wrong_credentials;
+                                            });
+                                          });
+                                        } else {
+                                          // try {
+                                          DocumentSnapshot userDoc;
+                                          firestore
+                                              .doc(
+                                                  'operators/${value.user.uid}')
+                                              .get()
+                                              .then((value) {
+                                            userDoc = value;
+                                            print(
+                                                "Signed user admin: ${value.id}");
+                                            if (value.exists) {
+                                              Navigator.push(
+                                                  context,
+                                                  new MaterialPageRoute(
+                                                      builder: (BuildContext
+                                                              context) =>
+                                                          new Dashboard(
+                                                              userDoc,
+                                                              widget.auth
+                                                                  .currentUser(),
+                                                              widget.auth)));
+                                            } else {
+                                              print(
+                                                  "user is not an admin or an operator");
 
-                                              }
-                                            }).catchError((e) {
                                               setState(() {
-                                                print(
-                                                    "LOL NAAY ERROR: uid of operator not found in collection" +
-                                                        e.message);
                                                 _error =
                                                     ErrorType.wrong_credentials;
                                               });
+                                            }
+                                          }).catchError((e) {
+                                            setState(() {
+                                              print(
+                                                  "LOL NAAY ERROR: uid of operator not found in collection" +
+                                                      e.message);
+                                              _error =
+                                                  ErrorType.wrong_credentials;
                                             });
-                                            // } catch (e) {
-                                            // }
-                                          }
-                                        }).catchError((e) {
-                                          setState(() {
-                                            print(
-                                                "LOL NAAY ERROR: wrong credentials" +
-                                                    e.message);
-                                            _error =
-                                                ErrorType.wrong_credentials;
                                           });
+                                          // } catch (e) {
+                                          // }
+                                        }
+                                      }).catchError((e) {
+                                        setState(() {
+                                          print(
+                                              "LOL NAAY ERROR: wrong credentials" +
+                                                  e.message);
+                                          _error = ErrorType.wrong_credentials;
                                         });
-                                      }
-                                      // } catch (e) {
-                                      //   print("Error :)): $e");
-                                      // }
+                                      });
                                     }
-                                  })),
+                                    // } catch (e) {
+                                    //   print("Error :)): $e");
+                                    // }
+                                  }
+                                })),
                         Divider(
                           height: 10,
                         ),
