@@ -61,7 +61,8 @@ class EmployeeController {
             status: doc.data()['deleted'],
             licensenum: doc.data()['license_number'],
             type: doc.data()['type'],
-            uid: doc.id);
+            uid: doc.id, 
+            employeeRef: doc.reference);
       }).toList();
     } catch (e) {
       print(e.toString());
@@ -79,5 +80,29 @@ class EmployeeController {
     }
   }
 
-  
+  Stream<List<Employee>> get retrieveConductors {
+    try {
+      // print(employees.snapshots().map(_employeeList));
+      return employees
+          .where('type', isEqualTo: 'Conductor')
+          .snapshots()
+          .map(_employeeList);
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future assignSchedule(Vehicle v, Employee c, Employee em) async {
+    await employees
+        .doc(em.uid)
+        .collection('buses_assigned')
+        .add(
+          {'bus': v.vehicleRef
+          });
+
+    await employees.doc(em.uid).collection('conductors_assigned').add({
+      'conductor': c.employeeRef
+    });
+  }
 }

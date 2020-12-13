@@ -50,7 +50,8 @@ class VehicleController{
             status: doc.data()['deleted'],
             seatstaken: doc.data()['seats_taken'],
             type: doc.data()['type'], 
-            uid: doc.id);
+            uid: doc.id, 
+            vehicleRef: doc.reference);
             // status: doc.data()['deleted'];
       }).toList();
     } catch (e) {

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Employee {
   String fname;
   String lname;
@@ -7,6 +9,7 @@ class Employee {
   String licensenum;
   bool status;
   String uid;
+  DocumentReference employeeRef;
 
   Employee(
       {this.email,
@@ -15,6 +18,7 @@ class Employee {
       this.lname,
       this.phonenum,
       this.type,
-      this.status, 
-      this.uid});
+      this.status,
+      this.uid, 
+      this.employeeRef});
 }

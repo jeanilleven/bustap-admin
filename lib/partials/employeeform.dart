@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import '../common/packages.dart';
 import '../controller/employeecontroller.dart';
+import '../controller/vehiclecontroller.dart';
 import '../models/employee.dart';
+import '../models/vehicle.dart';
 import '../partials/partials.dart';
 
 addEmployeeForm(BuildContext context, String header, String opt,
@@ -231,97 +233,139 @@ removeEmployee(em) {
 }
 
 addManagedVehicle(
-  BuildContext context, Employee em, GlobalKey<FormState> _formKey) {
+    BuildContext context, Employee em, GlobalKey<FormState> _formKey) {
   return showDialog(
       context: context,
       builder: (context) {
-        return Dialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-            child: Form(
-                key: _formKey,
-                child: Container(
-                    height: 350,
-                    width: 550,
-                    child: Padding(
-                        padding:
-                            const EdgeInsets.fromLTRB(20.0, 35.0, 20.0, 20.0),
-                        child: IntrinsicWidth(
-                            child: ListView(children: [
-                          Text("Assigned Vehicle of "+em.fname+" "+em.lname,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              )),
-                          Divider(height: 15, color: Colors.white),
-                          Divider(height: 5, color: Colors.grey[300]),
-                          Divider(height: 5, color: Colors.white),
-                          Container(
-                            height: 75,
-                            child: DropdownSearch(
-                              dialogMaxWidth: 500,
-                              maxHeight: 150,
-                              items: ["Bus Driver", "Jeepney Driver", "Conductor"],
-                              label: "Select Vehicle",
-                              // onChanged: print,
-                              hint: "Vehicle",
-                              showClearButton: true,
-                              validator: (String item) {
-                                if (item == null)
-                                  return "Invalid Vehicle";
-                                else
-                                  return null;
-                              },
-                              onSaved: (input) => em.type = input,
-                                )
-                            ),
-                          Container(
-                            height: 75,
-                            child: DropdownSearch(
-                              dialogMaxWidth: 500,
-                              maxHeight: 150,
-                              items: ["Bus Driver", "Jeepney Driver", "Conductor"],
-                              label: "Select Conductor",
-                              // onChanged: print,
-                              hint: "Vehicle",
-                              showClearButton: true,
-                              validator: (String item) {
-                                if (item == null)
-                                  return "Invalid Vehicle";
-                                else
-                                  return null;
-                              },
-                              onSaved: (input) => em.type = input,
-                                )
-                            ),  
-                        Divider(height: 25, color: Colors.white),
-                        Container(
-                          padding: EdgeInsets.only(bottom: 15.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              FlatButton(
-                                  child: Text("Cancel"),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  }),
-                              RaisedButton(
-                                  color: Colors.lightBlue,
-                                  child: Text(
-                                    "Assign",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  onPressed: () {
-                                    if (_formKey.currentState.validate()) {
-                                      submitEmployeeForm(
-                                          context, _formKey, em, "Assign");
-                                    }
-                                  })
-                            ],
-                          ),
+        return StreamBuilder<List<Employee>>(
+            stream: EmployeeController().retrieveConductors,
+            builder: (context, conductors) {
+              return StreamBuilder<List<Vehicle>>(
+                  stream: VehicleController().retrieveAllVehicles,
+                  builder: (context, vehicles) {
+                    List temp1 = [];
+                    List temp2 = [];
+                    String v_assigned;
+                    String c_assigned;
+                    conductors.data
+                        .forEach((element) => temp1.add(element.lname));
+                    vehicles.data
+                        .forEach((element) => temp2.add(element.buscode));
+                    return Dialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
                         ),
-                        ]))))));
+                        child: Form(
+                            key: _formKey,
+                            child: Container(
+                                height: 350,
+                                width: 550,
+                                child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        20.0, 35.0, 20.0, 20.0),
+                                    child: IntrinsicWidth(
+                                        child: ListView(children: [
+                                      Text(
+                                          "Assigned Vehicle of " +
+                                              em.fname +
+                                              " " +
+                                              em.lname,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                          )),
+                                      Divider(height: 15, color: Colors.white),
+                                      Divider(
+                                          height: 5, color: Colors.grey[300]),
+                                      Divider(height: 5, color: Colors.white),
+                                      Container(
+                                          height: 75,
+                                          child: DropdownSearch(
+                                            dialogMaxWidth: 500,
+                                            maxHeight: 250,
+                                            items: temp2,
+                                            label: "Select Vehicle",
+                                            // onChanged: print,
+                                            hint: "Vehicle",
+                                            showClearButton: true,
+                                            onSaved: (input) =>
+                                                v_assigned = input,
+                                            onChanged: (input) =>
+                                                v_assigned = input,
+                                          )),
+                                      Container(
+                                          height: 75,
+                                          child: DropdownSearch(
+                                            dialogMaxWidth: 500,
+                                            maxHeight: 250,
+                                            items: temp1,
+                                            label: "Select Conductor",
+                                            // onChanged: print,
+                                            showClearButton: true,
+                                            onSaved: (input) =>
+                                                c_assigned = input,
+                                            onChanged: (input) =>
+                                                c_assigned = input
+                                          )),
+                                      Divider(height: 25, color: Colors.white),
+                                      Container(
+                                        padding: EdgeInsets.only(bottom: 15.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            FlatButton(
+                                                child: Text("Cancel"),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                }),
+                                            RaisedButton(
+                                                color: Colors.lightBlue,
+                                                child: Text(
+                                                  "Assign",
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                                onPressed: () {
+                                                  if (_formKey.currentState
+                                                      .validate()) {
+                                                    submitAssignmentForm(
+                                                        context,
+                                                        _formKey,
+                                                        em,
+                                                        v_assigned,
+                                                        c_assigned,
+                                                        conductors.data,
+                                                        vehicles.data);
+                                                  }
+                                                })
+                                          ],
+                                        ),
+                                      ),
+                                    ]))))));
+                  });
+            });
       });
+}
+
+void submitAssignmentForm(
+    BuildContext context,
+    _formKey,
+    Employee em,
+    String v_assigned,
+    String c_assigned,
+    List<Employee> conductor_List,
+    List<Vehicle> vehicle_List) async {
+  Vehicle v =
+      vehicle_List.firstWhere((e) => e.buscode == v_assigned, orElse: () {return null;});
+  Employee c = conductor_List.firstWhere((e) => e.lname == c_assigned, orElse: (){return null;});
+
+  // Vehicle v = vehicle_List.where((element) => element.buscode == v_assigned).first;
+  // Employee c = conductor_List.where((element) => element.lname == c_assigned).first;
+  await EmployeeController().assignSchedule(v, c, em);
+  print(v_assigned);
+  print(c_assigned);
+
+  Navigator.of(context, rootNavigator: true).pop(context);
 }
