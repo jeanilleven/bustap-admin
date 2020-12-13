@@ -135,8 +135,7 @@ addEmployeeForm(BuildContext context, String header, String opt,
                       Container(
                         padding: EdgeInsets.all(5),
                         child: DropdownSearch(
-                          searchBoxController:
-                              TextEditingController(text: em.type),
+                          selectedItem: em.type,
                           dialogMaxWidth: 500,
                           maxHeight: 150,
                           items: ["Bus Driver", "Jeepney Driver", "Conductor"],
@@ -206,7 +205,9 @@ askEmConfirmation(BuildContext context, Employee em) {
         return AlertDialog(
             title: Text('Removal Confirmation'),
             content: Text('Are you sure you want to remove ' +
-                em.fname + ' ' + em.lname+
+                em.fname +
+                ' ' +
+                em.lname +
                 ' from the list of operators?'),
             actions: [
               FlatButton(
@@ -227,4 +228,100 @@ askEmConfirmation(BuildContext context, Employee em) {
 
 removeEmployee(em) {
   EmployeeController().deleteEmployee(em);
+}
+
+addManagedVehicle(
+  BuildContext context, Employee em, GlobalKey<FormState> _formKey) {
+  return showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            child: Form(
+                key: _formKey,
+                child: Container(
+                    height: 350,
+                    width: 550,
+                    child: Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(20.0, 35.0, 20.0, 20.0),
+                        child: IntrinsicWidth(
+                            child: ListView(children: [
+                          Text("Assigned Vehicle of "+em.fname+" "+em.lname,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              )),
+                          Divider(height: 15, color: Colors.white),
+                          Divider(height: 5, color: Colors.grey[300]),
+                          Divider(height: 5, color: Colors.white),
+                          Container(
+                            height: 75,
+                            child: DropdownSearch(
+                              dialogMaxWidth: 500,
+                              maxHeight: 150,
+                              items: ["Bus Driver", "Jeepney Driver", "Conductor"],
+                              label: "Select Vehicle",
+                              // onChanged: print,
+                              hint: "Vehicle",
+                              showClearButton: true,
+                              validator: (String item) {
+                                if (item == null)
+                                  return "Invalid Vehicle";
+                                else
+                                  return null;
+                              },
+                              onSaved: (input) => em.type = input,
+                                )
+                            ),
+                          Container(
+                            height: 75,
+                            child: DropdownSearch(
+                              dialogMaxWidth: 500,
+                              maxHeight: 150,
+                              items: ["Bus Driver", "Jeepney Driver", "Conductor"],
+                              label: "Select Conductor",
+                              // onChanged: print,
+                              hint: "Vehicle",
+                              showClearButton: true,
+                              validator: (String item) {
+                                if (item == null)
+                                  return "Invalid Vehicle";
+                                else
+                                  return null;
+                              },
+                              onSaved: (input) => em.type = input,
+                                )
+                            ),  
+                        Divider(height: 25, color: Colors.white),
+                        Container(
+                          padding: EdgeInsets.only(bottom: 15.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              FlatButton(
+                                  child: Text("Cancel"),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  }),
+                              RaisedButton(
+                                  color: Colors.lightBlue,
+                                  child: Text(
+                                    "Assign",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  onPressed: () {
+                                    if (_formKey.currentState.validate()) {
+                                      submitEmployeeForm(
+                                          context, _formKey, em, "Assign");
+                                    }
+                                  })
+                            ],
+                          ),
+                        ),
+                        ]))))));
+      });
 }

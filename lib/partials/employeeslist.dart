@@ -56,8 +56,10 @@ class _EmployeeListState extends State<EmployeeList> {
                         Spacer(),
                         Column(children: [
                           IconButton(
-                            onPressed: () {},
-                            tooltip: 'View Managed Vehicles',
+                            onPressed: () {
+                              addManagedVehicle(context, employeeDisplay[index], _formKey);
+                            },
+                            tooltip: 'View Managed Vehicle',
                             icon: Icon(CupertinoIcons.bus,
                                 color: Colors.blue[200]),
                           )
