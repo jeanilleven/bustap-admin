@@ -300,12 +300,20 @@ class _SignInPageState extends State<SignInPage> {
                                               userDoc = value;
                                               print(
                                                   "Signed user admin: ${value.id}");
-                                              Navigator.push(
-                                                  context,
-                                                  new MaterialPageRoute(
-                                                      builder: (BuildContext
-                                                              context) =>
-                                                          new Dashboard(userDoc, widget.auth.currentUser(), widget.auth)));
+                                              if(value.exists){
+                                                Navigator.push(
+                                                    context,
+                                                    new MaterialPageRoute(
+                                                        builder: (BuildContext
+                                                                context) =>
+                                                            new Dashboard(userDoc, widget.auth.currentUser(), widget.auth)));
+                                              }else{
+                                                setState(() {
+                                                  _error =
+                                                      ErrorType.wrong_credentials;
+                                                });
+
+                                              }
                                             }).catchError((e) {
                                               setState(() {
                                                 print(
