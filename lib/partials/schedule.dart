@@ -8,7 +8,9 @@ import 'vepartials.dart';
 
 class ScheduleTable extends StatefulWidget {
   final String busID;
-  ScheduleTable(this.userDoc, this.userCred, this.auth, {this.busID}) : super();
+  final String vType;
+  final String vCode;
+  ScheduleTable(this.userDoc, this.userCred, this.auth, {this.vType, this.vCode, this.busID}) : super();
   final Auth auth;
   final DocumentSnapshot userDoc;
   final User userCred;
@@ -55,15 +57,10 @@ class _ScheduleTableState extends State<ScheduleTable> {
             tooltip: 'Add a new schedule',
             child: Icon(CupertinoIcons.add),
             onPressed: () {
-              // Employee em = new Employee(
-              //     email: '',
-              //     fname: '',
-              //     licensenum: '',
-              //     lname: '',
-              //     phonenum: '',
-              //     type: '');
-              // addEmployeeForm(context, "Add Employee", "Add", _formKey, em);
-              Schedule sched = new Schedule(time: "00000", terminal: "", type: "", vehiclecode: "", vehicleid: "");
+              Schedule sched = new Schedule(time: DateTime.now(), 
+                                            type: widget.vType, 
+                                            vehiclecode: widget.vCode, 
+                                            vehicleid: "DocumentReference(buses/"+widget.busID+")");
               addScheduleForm(context, "Assign Schedule", "Add", _formKey, sched);
             }));
   }

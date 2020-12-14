@@ -1,21 +1,49 @@
 import '../common/packages.dart';
 import '../models/schedules.dart';
-import 'package:intl/intl.dart';
 
 
 class ScheduleController {
   CollectionReference schedules = FirebaseFirestore.instance.collection('busSchedules');
+  createSchedule(Schedule sched) {
+  return schedules
+    .add({
+        'datetime': sched.time,
+        'terminal_code':sched.terminalcode,
+        'terminal_id': sched.terminal,
+        'type': sched.type,
+        'vehicle_code': sched.vehiclecode,
+        'vehicle_id':sched.vehicleid.toString(),
+        'deleted': false
+      })
+      .then((value) => print("Schedule Added"))
+      .catchError((error) => print("Failed to add schedule: $error"));
+  }
+
+  updateSchedule(Schedule sc) {
+    return schedules.doc(sc.uid).update({
+      'datetime': sc.time,
+      'terminal_code': sc.terminalcode,
+    }).then((value) => print("Schedule updated")).catchError((e) => print("Failed to update schedule: $e"));
+  }
+
+  deleteSchedule(Schedule sc){
+    return schedules.doc(sc.uid).update({
+      'deleted': true,
+    }).then((value) => print("Schedule deleted")).catchError((e) => print("Failed to delete schedule: $e"));
+  }
+
   List<Schedule> _scheduleList(QuerySnapshot snapshot) {
     try {
       return snapshot.docs.map((doc) {
-        var displayTime = new DateFormat.jm().format(doc.data()['datetime'].toDate());
         return Schedule(
-            time: displayTime.toString(),
-            terminal: doc.data()['terminal_id'],
+            time: doc.data()['datetime'].toDate(),
+            terminal: doc.data()['terminal_id'].toString(),
+            terminalcode: doc.data()['terminal_code'],
             type: doc.data()['type'],
             vehiclecode: doc.data()['vehicle_code'],
             status:doc.data()['deleted'],
             vehicleid: doc.data()['vehicle_id'].toString(),
+            uid:doc.id,
           );
       }).toList();
     } catch (e) {

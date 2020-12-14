@@ -1,6 +1,7 @@
 class Schedule {
-  String time;
+  DateTime time;
   String terminal;
+  String terminalcode;
   String type;
   String vehiclecode;
   String vehicleid;
@@ -10,6 +11,7 @@ class Schedule {
   Schedule(
       {this.time,
       this.terminal,
+      this.terminalcode,
       this.type,
       this.vehiclecode,
       this.vehicleid,
