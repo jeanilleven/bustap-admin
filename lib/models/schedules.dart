@@ -2,7 +2,7 @@ import 'package:bustap/common/packages.dart';
 
 class Schedule {
   DateTime time;
-  String terminal;
+  DocumentReference terminalId;
   String terminalcode;
   String type;
   String vehiclecode;
@@ -12,7 +12,7 @@ class Schedule {
 
   Schedule(
       {this.time,
-      this.terminal,
+      this.terminalId,
       this.terminalcode,
       this.type,
       this.vehiclecode,

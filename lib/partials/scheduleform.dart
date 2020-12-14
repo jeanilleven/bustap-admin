@@ -77,15 +77,6 @@ import 'package:bustap/partials/loadingPage.dart';
                           showSearchBox: true,
                           onChanged: (value) => sched.terminalcode = value, 
                           selectedItem: sched.terminalcode,
-                          // selectedItem: term.city == '' ? null : term.city,
-                          // validator: (String item) {
-                          //   if (item == null)
-                          //     return "This field is required";
-                          //   else
-                          //     return null;
-                          // },
-                          // validator: (input)=>input == null ? 'This field is required' : null,
-                          // onSaved: (input) => term.city = input,
                         ),
                       ),
                             Divider(height: 25, color: Colors.white),
@@ -107,7 +98,7 @@ import 'package:bustap/partials/loadingPage.dart';
                                     ),
                                     onPressed: () {
                                         if(_formKey.currentState.validate()){
-                                          submitScheduleForm(context, _formKey, sched, opt);
+                                          submitScheduleForm(context, _formKey, sched, opt, snapshot.data);
                                         }
                                     })
                                 ],
@@ -121,15 +112,16 @@ import 'package:bustap/partials/loadingPage.dart';
         });
   }
 
-  void submitScheduleForm(context, _formKey, sched, opt) {
+  void submitScheduleForm(context, _formKey, sched, opt, List<Terminal>terminals) {
     if (_formKey.currentState.validate()) {
+      Terminal temp = terminals.firstWhere((element)=>element.stationnum == sched.terminalcode);
       _formKey.currentState.save();
       if (opt == "Update") {
         //Some code to update here
-        ScheduleController().updateSchedule(sched);
+        ScheduleController().updateSchedule(sched, temp);
       } else {
         //this adds to the list
-        ScheduleController().createSchedule(sched);
+        ScheduleController().createSchedule(sched, temp);
       }
       Navigator.of(context, rootNavigator: true).pop(context);
     }

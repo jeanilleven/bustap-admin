@@ -1,15 +1,17 @@
+import 'package:bustap/models/terminal.dart';
+
 import '../common/packages.dart';
 import '../models/schedules.dart';
 
 
 class ScheduleController {
   CollectionReference schedules = FirebaseFirestore.instance.collection('busSchedules');
-  createSchedule(Schedule sched) {
+  createSchedule(Schedule sched, Terminal terminal) {
   return schedules
     .add({
         'datetime': sched.time,
         'terminal_code':sched.terminalcode,
-        'terminal_id': sched.terminal,
+        'terminal_id': terminal.termRef,
         'type': sched.type,
         'vehicle_code': sched.vehiclecode,
         'vehicle_id':sched.vehicleid,
@@ -19,10 +21,11 @@ class ScheduleController {
       .catchError((error) => print("Failed to add schedule: $error"));
   }
 
-  updateSchedule(Schedule sc) {
+  updateSchedule(Schedule sc, Terminal terminal) {
     return schedules.doc(sc.uid).update({
       'datetime': sc.time,
       'terminal_code': sc.terminalcode,
+      'terminal_id':terminal.termRef,
     }).then((value) => print("Schedule updated")).catchError((e) => print("Failed to update schedule: $e"));
   }
 
@@ -37,7 +40,7 @@ class ScheduleController {
       return snapshot.docs.map((doc) {
         return Schedule(
             time: doc.data()['datetime'].toDate(),
-            terminal: doc.data()['terminal_id'].toString(),
+            terminalId: doc.data()['terminal_id'],
             terminalcode: doc.data()['terminal_code'],
             type: doc.data()['type'],
             vehiclecode: doc.data()['vehicle_code'],
