@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 // import 'employeeform.dart';
 
 class ScheduleList extends StatefulWidget {
-  final String busID;
+  final DocumentReference busID;
   @override
   ScheduleList({this.busID}) : super();
   _ScheduleListState createState() => _ScheduleListState();
@@ -18,7 +18,8 @@ class _ScheduleListState extends State<ScheduleList> {
   @override
   Widget build(BuildContext context) {
     final scheduleSnapshot = Provider.of<List<Schedule>>(context) ?? [];
-    final scheduleDisplay = scheduleSnapshot.where((element) => element.vehicleid == 'DocumentReference(buses/'+widget.busID+')' && element.status == false).toList();
+    final scheduleDisplay = scheduleSnapshot.where((element) => element.vehicleid == widget.busID 
+                                                          && element.status == false).toList();
     return ListView.builder(
       itemCount: scheduleDisplay.length,
       itemBuilder: (context, index){

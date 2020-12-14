@@ -1,105 +1,123 @@
+import 'package:bustap/controller/terminalcontroller.dart';
 import 'package:flutter/material.dart';
 import '../common/packages.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import '../controller/schedulecontroller.dart';
 import '../models/schedules.dart';
+import '../models/terminal.dart';
+import 'package:dropdown_search/dropdown_search.dart';
+import 'package:bustap/partials/loadingPage.dart';
 
   addScheduleForm(BuildContext context, String header, String opt, GlobalKey<FormState> _formKey, Schedule sched) {
     return showDialog(
         context: context,
         builder: (context) {
-          return Dialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              child: Form(
-                key: _formKey,
-                child: Container(
-                  height: 370,
-                  width: 550,
-                  child: Padding(
-                      padding:
-                          const EdgeInsets.fromLTRB(20.0, 35.0, 20.0, 20.0),
-                      child: IntrinsicWidth(
-                          child: ListView(children: [
-                        Text(header,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            )),
-                        Divider(height: 15, color: Colors.white),
-                        Divider(height: 5, color: Colors.grey[300]),
-                        Divider(height: 5, color: Colors.white),
-                        Container(
-                        height: 75,
-                        child: DateTimePicker(
-                          type: DateTimePickerType.dateTimeSeparate,
-                          firstDate: sched.time,
-                          lastDate: DateTime(2100),
-                          dateLabelText: 'Bus Schedule',
-                          initialValue: sched.time.toString(),
-                          onChanged: (val) => print(val),
-                          validator: (val) {
-                            if(val == ''){
-                              return "This field is required";
-                            }else{
-                              return null;
-                            }
-                          },
-                          onSaved: (val) => sched.time = DateTime.parse(val),
-                        )
-                      ),
-                        Divider(height: 25, color: Colors.white),
-                        Container(
-                        height: 75,
-                        child: TextFormField(
-                          controller:
-                              TextEditingController(text: sched.terminalcode),
-                          decoration: InputDecoration(
-                            labelText: 'Terminal Code(Station Number)',
-                            labelStyle: TextStyle(color: Colors.blueAccent),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.grey, width: 0.5)),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors.blueAccent, width: 0.5)),
+          return StreamBuilder<List<Terminal>>(
+            stream: TerminalController().retrieveAllTerminals,
+            builder: (context, snapshot) {
+              if(!snapshot.hasData){
+                return Loading();
+              }
+              List<String> terminalCodes = [];
+              snapshot.data.forEach((element) {
+                terminalCodes.add(element.stationnum);
+              });
+              return Dialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Form(
+                    key: _formKey,
+                    child: Container(
+                      height: 370,
+                      width: 550,
+                      child: Padding(
+                          padding:
+                              const EdgeInsets.fromLTRB(20.0, 35.0, 20.0, 20.0),
+                          child: IntrinsicWidth(
+                              child: ListView(children: [
+                            Text(header,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            Divider(height: 15, color: Colors.white),
+                            Divider(height: 5, color: Colors.grey[300]),
+                            Divider(height: 5, color: Colors.white),
+                            Container(
+                            height: 75,
+                            child: DateTimePicker(
+                              type: DateTimePickerType.dateTimeSeparate,
+                              firstDate: sched.time,
+                              lastDate: DateTime(2100),
+                              dateLabelText: 'Bus Schedule',
+                              initialValue: sched.time.toString(),
+                              onChanged: (val) => print(val),
+                              validator: (val) {
+                                if(val == ''){
+                                  return "This field is required";
+                                }else{
+                                  return null;
+                                }
+                              },
+                              onSaved: (val) => sched.time = DateTime.parse(val),
+                            )
                           ),
-                          validator: (input) => input.length < 1
-                              ? 'This field is required'
-                              : null,
-                          onSaved: (input) => sched.terminalcode = input,
+                            Divider(height: 25, color: Colors.white),
+                            Container(
+                        padding: EdgeInsets.all(5),
+                        child: DropdownSearch(
+                          dialogMaxWidth: 500,
+                          maxHeight: 325,
+                          items: terminalCodes,
+                          label: "Select a Terminal",
+                          hint: "Terminal Code",
+                          showClearButton: true,
+                          showSearchBox: true,
+                          onChanged: (value) => sched.terminalcode = value, 
+                          selectedItem: sched.terminalcode,
+                          // selectedItem: term.city == '' ? null : term.city,
+                          // validator: (String item) {
+                          //   if (item == null)
+                          //     return "This field is required";
+                          //   else
+                          //     return null;
+                          // },
+                          // validator: (input)=>input == null ? 'This field is required' : null,
+                          // onSaved: (input) => term.city = input,
                         ),
                       ),
-                        Divider(height: 25, color: Colors.white),
-                        Container(
-                          padding: EdgeInsets.only(bottom: 15.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              FlatButton(
-                                  child: Text("Cancel"),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  }),
-                              RaisedButton(
-                                color: Colors.lightBlue,
-                                child: Text(
-                                  opt,
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                onPressed: () {
-                                    if(_formKey.currentState.validate()){
-                                      submitScheduleForm(context, _formKey, sched, opt);
-                                    }
-                                })
-                            ],
-                          ),
-                        ),
-                      ]))),
-                ),
-              ));
+                            Divider(height: 25, color: Colors.white),
+                            Container(
+                              padding: EdgeInsets.only(bottom: 15.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  FlatButton(
+                                      child: Text("Cancel"),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      }),
+                                  RaisedButton(
+                                    color: Colors.lightBlue,
+                                    child: Text(
+                                      opt,
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    onPressed: () {
+                                        if(_formKey.currentState.validate()){
+                                          submitScheduleForm(context, _formKey, sched, opt);
+                                        }
+                                    })
+                                ],
+                              ),
+                            ),
+                          ]))),
+                    ),
+                  ));
+            }
+          );
         });
   }
 

@@ -12,7 +12,7 @@ class ScheduleController {
         'terminal_id': sched.terminal,
         'type': sched.type,
         'vehicle_code': sched.vehiclecode,
-        'vehicle_id':sched.vehicleid.toString(),
+        'vehicle_id':sched.vehicleid,
         'deleted': false
       })
       .then((value) => print("Schedule Added"))
@@ -42,7 +42,7 @@ class ScheduleController {
             type: doc.data()['type'],
             vehiclecode: doc.data()['vehicle_code'],
             status:doc.data()['deleted'],
-            vehicleid: doc.data()['vehicle_id'].toString(),
+            vehicleid: doc.data()['vehicle_id'],
             uid:doc.id,
           );
       }).toList();

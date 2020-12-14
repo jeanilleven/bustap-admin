@@ -7,7 +7,7 @@ import '../models/schedules.dart';
 import 'vepartials.dart';
 
 class ScheduleTable extends StatefulWidget {
-  final String busID;
+  final DocumentReference busID;
   final String vType;
   final String vCode;
   ScheduleTable(this.userDoc, this.userCred, this.auth, {this.vType, this.vCode, this.busID}) : super();
@@ -60,8 +60,8 @@ class _ScheduleTableState extends State<ScheduleTable> {
               Schedule sched = new Schedule(time: DateTime.now(), 
                                             type: widget.vType, 
                                             vehiclecode: widget.vCode, 
-                                            vehicleid: "DocumentReference(buses/"+widget.busID+")");
+                                            vehicleid: widget.busID);
               addScheduleForm(context, "Assign Schedule", "Add", _formKey, sched);
-            }));
+              }));
   }
 }

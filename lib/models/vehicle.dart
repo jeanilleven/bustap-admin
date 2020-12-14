@@ -1,3 +1,5 @@
+import 'package:bustap/common/packages.dart';
+
 class Vehicle {
   String buscode;
   int capacity;
@@ -8,6 +10,7 @@ class Vehicle {
   String type;
   bool status;
   String uid;
+  DocumentReference vehicleRef;
 
   Vehicle(
       {this.buscode,
@@ -18,5 +21,7 @@ class Vehicle {
       this.seatstaken,
       this.type,
       this.status, 
-      this.uid});
+      this.uid,
+      this.vehicleRef,
+      });
 }

@@ -1,10 +1,12 @@
+import 'package:bustap/common/packages.dart';
+
 class Schedule {
   DateTime time;
   String terminal;
   String terminalcode;
   String type;
   String vehiclecode;
-  String vehicleid;
+  DocumentReference vehicleid;
   bool status;
   String uid;
 

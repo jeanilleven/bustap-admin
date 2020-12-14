@@ -67,7 +67,7 @@ class _VehicleListState extends State<VehicleList> {
                                         widget.auth, 
                                         vType: widget.vehicleType.toLowerCase(),
                                         vCode: vehicleDisplay[index].buscode,
-                                        busID:vehicleDisplay[index].uid)));
+                                        busID:vehicleDisplay[index].vehicleRef)));
                       },
                       tooltip: 'View Schedule and Assignments',
                       icon: Icon(CupertinoIcons.calendar,
