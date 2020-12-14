@@ -49,7 +49,9 @@ class TerminalController{
             stationnum: doc.data()['station_number'],
             status: doc.data()['deleted'],
             street: doc.data()['street'], 
-            uid: doc.id);
+            uid: doc.id,
+            termRef: doc.reference,
+            );
       }).toList();
     } catch (e) {
       print(e.toString());

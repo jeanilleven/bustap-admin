@@ -1,3 +1,5 @@
+import 'package:bustap/common/packages.dart';
+
 class Terminal {
   String city;
   String country;
@@ -7,6 +9,7 @@ class Terminal {
   String street;
   bool status;
   String uid;
+  DocumentReference termRef;
   Terminal(
       {this.city,
       this.country,
@@ -15,5 +18,7 @@ class Terminal {
       this.stationnum,
       this.street,
       this.status,
-      this.uid});
+      this.uid,
+      this.termRef,
+      });
 }
