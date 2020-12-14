@@ -1,6 +1,8 @@
+import 'package:bustap/partials/scheduleform.dart';
 import 'package:flutter/material.dart';
 import '../common/packages.dart';
 import '../models/schedules.dart';
+import 'package:intl/intl.dart';
 // import 'employeeform.dart';
 
 class ScheduleList extends StatefulWidget {
@@ -11,6 +13,7 @@ class ScheduleList extends StatefulWidget {
 }
 
 class _ScheduleListState extends State<ScheduleList> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final scheduleSnapshot = Provider.of<List<Schedule>>(context) ?? [];
@@ -18,6 +21,7 @@ class _ScheduleListState extends State<ScheduleList> {
     return ListView.builder(
       itemCount: scheduleDisplay.length,
       itemBuilder: (context, index){
+        var displayTime = new DateFormat.jm().format(scheduleDisplay[index].time).toString();
         return Container(
             margin: EdgeInsets.all(5),
             child: Material(
@@ -31,14 +35,14 @@ class _ScheduleListState extends State<ScheduleList> {
                       children: [
                         Expanded(
                           child: Text(
-                              scheduleDisplay[index].terminal.toString(),
+                              scheduleDisplay[index].terminalcode,
                               style:
                                   TextStyle(color: Colors.blue, fontSize: 20)),
                         ),
                         Expanded(
                           flex: 2,
                           child: Text(
-                              scheduleDisplay[index].time.toString(),
+                              displayTime,
                               style: TextStyle(fontSize: 20)),
                         ),
                         Expanded(
@@ -57,6 +61,7 @@ class _ScheduleListState extends State<ScheduleList> {
                                 //     "Update",
                                 //     _formKey,
                                 //     employeeDisplay[index]);
+                                addScheduleForm(context, "View Schedule Details", "Update", _formKey, scheduleDisplay[index]);
                               },
                               tooltip: 'View Schedule',
                               icon: Icon(CupertinoIcons.eye,

@@ -1,8 +1,9 @@
 class Schedule {
-  String time;
+  DateTime time;
   String terminal;
   String type;
   String vehiclecode;
+  String terminalcode;
   String vehicleid;
   bool status;
   String uid;
@@ -12,6 +13,7 @@ class Schedule {
       this.terminal,
       this.type,
       this.vehiclecode,
+      this.terminalcode,
       this.vehicleid,
       this.status,
       this.uid,

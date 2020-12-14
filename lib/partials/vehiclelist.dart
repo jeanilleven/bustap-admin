@@ -62,7 +62,12 @@ class _VehicleListState extends State<VehicleList> {
                         context,
                         new MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                new ScheduleTable(widget.userDoc, widget.userCred, widget.auth, busID:vehicleDisplay[index].uid)));
+                                new ScheduleTable(widget.userDoc, 
+                                                  widget.userCred, 
+                                                  widget.auth, 
+                                                  busID:vehicleDisplay[index].uid,
+                                                  vType: widget.vehicleType,
+                                                  )));
                       },
                       tooltip: 'View Schedule and Assignments',
                       icon: Icon(CupertinoIcons.calendar,

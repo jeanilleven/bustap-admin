@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../common/packages.dart';
 import '../controller/schedulecontroller.dart';
 import '../models/schedules.dart';
+import 'package:date_time_picker/date_time_picker.dart';
 
   addScheduleForm(BuildContext context, String header, String opt, GlobalKey<FormState> _formKey, Schedule sched) {
     return showDialog(
@@ -14,7 +15,7 @@ import '../models/schedules.dart';
               child: Form(
                 key: _formKey,
                 child: Container(
-                  height: 550,
+                  height: 370,
                   width: 550,
                   child: Padding(
                       padding:
@@ -30,8 +31,47 @@ import '../models/schedules.dart';
                         Divider(height: 15, color: Colors.white),
                         Divider(height: 5, color: Colors.grey[300]),
                         Divider(height: 5, color: Colors.white),
-                        
+                        Container(
+                        height: 75,
+                        child: DateTimePicker(
+                          type: DateTimePickerType.dateTimeSeparate,
+                          firstDate: sched.time,
+                          lastDate: DateTime(2100),
+                          initialValue: sched.time.toString(),
+                          dateLabelText: 'Bus Schedule',
+                          onChanged: (val) => print(val),
+                          validator: (val) {
+                            if (val!=''){
+                              return null;
+                            }else{
+                              return "This field is required";
+                            }
+                          },
+                          onSaved: (val) => sched.time = DateTime.parse(val),
+                        )
+                      ),
                         Divider(height: 25, color: Colors.white),
+                        Container(
+                        height: 75,
+                        child: TextFormField(
+                          controller: TextEditingController(text: sched.terminalcode),
+                          decoration: InputDecoration(
+                            labelText: 'Terminal Code',
+                            labelStyle: TextStyle(color: Colors.blueAccent),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.grey, width: 0.5)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.blueAccent, width: 0.5)),
+                          ),
+                          validator: (input) => input.length < 1
+                              ? "This field is required"
+                              : null,
+                          onSaved: (input) => sched.terminalcode = input,
+                        ),
+                      ),
+                      Divider(height: 25, color: Colors.white),
                         Container(
                           padding: EdgeInsets.only(bottom: 15.0),
                           child: Row(

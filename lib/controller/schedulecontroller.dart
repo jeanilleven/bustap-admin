@@ -1,6 +1,5 @@
 import '../common/packages.dart';
 import '../models/schedules.dart';
-import 'package:intl/intl.dart';
 
 
 class ScheduleController {
@@ -8,10 +7,10 @@ class ScheduleController {
   List<Schedule> _scheduleList(QuerySnapshot snapshot) {
     try {
       return snapshot.docs.map((doc) {
-        var displayTime = new DateFormat.jm().format(doc.data()['datetime'].toDate());
         return Schedule(
-            time: displayTime.toString(),
-            terminal: doc.data()['terminal_id'],
+            time: doc.data()['datetime'].toDate(),
+            terminal: doc.data()['terminal_id'].toString(),
+            terminalcode: doc.data()['terminal_code'],
             type: doc.data()['type'],
             vehiclecode: doc.data()['vehicle_code'],
             status:doc.data()['deleted'],
