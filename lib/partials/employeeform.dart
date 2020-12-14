@@ -335,27 +335,3 @@ addManagedVehicle(
                         ]))))));
       });
 }
-
-Widget employeeDropDown(Employee em) {
-  return StreamBuilder(
-    stream: EmployeeController.,
-    builder: (context, snapshot) {},
-  );
-
-  return DropdownSearch(
-    dialogMaxWidth: 500,
-    maxHeight: 150,
-    items: ["Bus Driver", "Jeepney Driver", "Conductor"],
-    label: "Select Conductor",
-    // onChanged: print,
-    hint: "Vehicle",
-    showClearButton: true,
-    validator: (String item) {
-      if (item == null)
-        return "Invalid Vehicle";
-      else
-        return null;
-    },
-    onSaved: (input) => em.type = input,
-  );
-}
