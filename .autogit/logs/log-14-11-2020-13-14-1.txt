@@ -1,0 +1,15 @@
+-------------------- Auto-Git Log --------------------
+		Mon Dec 14 2020 13:14:01 GMT+0800 (Singapore Standard Time)
+------------------------------------------------------
+
+Modified files:
+
+
+Created files:
+* .autogit/logs/log-14-11-2020-12-43-40.txt
+
+
+Deleted files:
+
+
+Renamed files:
