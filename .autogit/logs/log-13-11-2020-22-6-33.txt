@@ -1,0 +1,16 @@
+-------------------- Auto-Git Log --------------------
+		Sun Dec 13 2020 22:06:33 GMT+0800 (Singapore Standard Time)
+------------------------------------------------------
+
+Modified files:
+* lib/views/signinpage.dart
+
+
+Created files:
+* .autogit/logs/log-13-11-2020-21-36-9.txt
+
+
+Deleted files:
+
+
+Renamed files:
