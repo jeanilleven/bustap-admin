@@ -98,7 +98,8 @@ class EmployeeController {
         .doc(em.uid)
         .collection('buses_assigned')
         .add(
-          {'bus': v.vehicleRef
+          {'bus': v.vehicleRef, 
+           'time_end': null
           });
 
     await employees.doc(em.uid).collection('conductors_assigned').add({
